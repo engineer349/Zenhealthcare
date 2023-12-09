@@ -30,6 +30,7 @@
                 <div class="signup-content">
                     <div class="signup-form">
                         <h3 class="form-title">Sign up</h3>
+                        <h5 style="color:red" class="form-title"> @ViewBag.Message</h5>
                         <form method="POST" class="register-form" id="register-form" asp-action="Register" asp-controller="Account">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>                         
                                 <div class="form-group">
@@ -74,13 +75,13 @@
                                 <input type="date" asp-for="Dob" id="dob" class="form-control" style="padding: 5px; border-radius: 5px; border: 1px solid #ccc; margin-bottom: 10px;" placeholder="Date of Birth"  />
                                 <span asp-validation-for="Dob" class="text-danger"></span>
                             </div>                         
-                            <div class="form-group">                     
+                           @*  <div class="form-group">                     
                                <select id="roleDropdown" name="RoleId" asp-items="ViewBag.Roles" class="form-control">
                                     <option value="">-- Select Role --</option>
                                 </select>                                  
-                            </div>
+                            </div> *@
                             <div>
-                                <span>@ViewBag.Message</span>
+                                <span>@ViewBag.Message1</span>
                             </div>
                             <div class="form-group">
                              

@@ -9,6 +9,14 @@
         "Children": {
           "css": {
             "Children": {
+              "site.css": {
+                "Children": null,
+                "Asset": {
+                  "ContentRootIndex": 0,
+                  "SubPath": "assets/css/site.css"
+                },
+                "Patterns": null
+              },
               "style.css": {
                 "Children": null,
                 "Asset": {
@@ -1239,6 +1247,14 @@
             },
             "Patterns": null
           },
+          "Profile.css": {
+            "Children": null,
+            "Asset": {
+              "ContentRootIndex": 0,
+              "SubPath": "css/Profile.css"
+            },
+            "Patterns": null
+          },
           "site.css": {
             "Children": null,
             "Asset": {
@@ -1252,6 +1268,14 @@
             "Asset": {
               "ContentRootIndex": 0,
               "SubPath": "css/style.css"
+            },
+            "Patterns": null
+          },
+          "termsofservice.css": {
+            "Children": null,
+            "Asset": {
+              "ContentRootIndex": 0,
+              "SubPath": "css/termsofservice.css"
             },
             "Patterns": null
           },
@@ -1750,6 +1774,22 @@
               "SubPath": "forms/Contact.php"
             },
             "Patterns": null
+          },
+          "mailsend.html": {
+            "Children": null,
+            "Asset": {
+              "ContentRootIndex": 0,
+              "SubPath": "forms/mailsend.html"
+            },
+            "Patterns": null
+          },
+          "termsofservice.html": {
+            "Children": null,
+            "Asset": {
+              "ContentRootIndex": 0,
+              "SubPath": "forms/termsofservice.html"
+            },
+            "Patterns": null
           }
         },
         "Asset": null,
@@ -1814,6 +1854,14 @@
             "Asset": {
               "ContentRootIndex": 0,
               "SubPath": "js/datatables-simple-demo.js"
+            },
+            "Patterns": null
+          },
+          "dob.js": {
+            "Children": null,
+            "Asset": {
+              "ContentRootIndex": 0,
+              "SubPath": "js/dob.js"
             },
             "Patterns": null
           },

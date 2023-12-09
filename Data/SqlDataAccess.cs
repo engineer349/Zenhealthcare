@@ -6,7 +6,7 @@ namespace Zencareservice.Data
 {
     public class SqlDataAccess
     {
-        string connectionString = @"Data Source=Gopi\SQLEXPRESS;Database=zencareservice;Integrated Security=True;TrustServerCertificate=true;";
+        string connectionString = @"Data Source=GOPI\SQLEXPRESS;Initial Catalog = zencareservice; User Id = sa; Password=Devops@22;";
         SqlConnection sqlcon;
         SqlCommand cmd = new SqlCommand();
         SqlDataAdapter da = new SqlDataAdapter();

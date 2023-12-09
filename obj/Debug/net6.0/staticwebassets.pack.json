@@ -549,6 +549,10 @@
       "PackagePath": "staticwebassets\\css\\loginstyle.map"
     },
     {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\css\\my-login.css",
+      "PackagePath": "staticwebassets\\css\\my-login.css"
+    },
+    {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
@@ -809,12 +813,20 @@
       "PackagePath": "staticwebassets\\images\\zencare-logo1.png"
     },
     {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\img\\logo.jpg",
+      "PackagePath": "staticwebassets\\img\\logo.jpg"
+    },
+    {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\js\\datatables-simple-demo.js",
       "PackagePath": "staticwebassets\\js\\datatables-simple-demo.js"
     },
     {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\js\\dob.js",
       "PackagePath": "staticwebassets\\js\\dob.js"
+    },
+    {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\js\\my-login.js",
+      "PackagePath": "staticwebassets\\js\\my-login.js"
     },
     {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\js\\qr.js",

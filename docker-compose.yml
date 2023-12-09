@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sql_server_container
+    environment:
+      SA_PASSWORD: "Devops@22"  # Set a strong password for the 'sa' user
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./data:/var/opt/mssql/data
+      # Add a volume to mount your custom database files   
+      - ./database_files/Zencare_log.ldf:/var/opt/mssql/data/Zencare_log.ldf
+      - ./database_files/Zencare.mdf:/var/opt/mssql/data/Zencare.mdf
+    healthcheck:
+      test: [ "CMD", "/opt/mssql-tools/bin/sqlcmd", "-U", "sa", "-P", "Devops@22", "-Q", "SELECT 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+

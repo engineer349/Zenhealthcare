@@ -5,6 +5,7 @@ using Zencareservice.Data;
 using System.Xml.Linq;
 using Zencareservice.Models;
 using Zencareservice.Controllers;
+using System;
 
 namespace Zencareservice.Repository
 {
@@ -120,27 +121,25 @@ namespace Zencareservice.Repository
 
             try
             {
-                DataSet ds = new DataSet();
-                string StrSPName = "CheckEmail_SP";
+                DataSet dse = new DataSet();
+                string StrSPName = "GetAllEmaildetails";
 
                 SqlParameter[] param = new SqlParameter[1];
 
                 param[0] = new SqlParameter("@Email", SqlDbType.NVarChar);
                 param[0].Value = Obj.Email;
 
-                ds = Obj_SqlDataAccess.GetDataWithParamStoredprocedure(StrSPName, param);
+                dse = Obj_SqlDataAccess.GetDataWithParamStoredprocedure(StrSPName, param);
 
-                return ds;
+                return dse;
             }
             catch(SqlException ex)
             {
                 throw ex;
             }
-            
-           
         }
 
-        public DataSet GetProfile()
+        public DataSet GetProfile( string UsrId)
         {
 
             try
@@ -148,7 +147,12 @@ namespace Zencareservice.Repository
                 DataSet ds = new DataSet();
                 string StrSPName = "GetAllPersonalDetails";
 
-                ds = Obj_SqlDataAccess.GetDataWithStoredprocedure(StrSPName);
+                SqlParameter[] param = new SqlParameter[1];
+
+                param[0] = new SqlParameter("@UsrId", SqlDbType.Int);
+                param[0].Value = UsrId;
+
+                ds = Obj_SqlDataAccess.GetDataWithParamStoredprocedure(StrSPName, param);
 
                 return ds;
             }
