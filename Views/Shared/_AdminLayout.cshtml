@@ -1,4 +1,17 @@
-﻿
+﻿@* @{
+    var dataSet = Model.MyDataset;
+    var roleId = 
+    var modules = GetModulesByRole(roleId); // Execute the stored procedure to get modules for the role;
+} *@
+
+<!-- Render dynamic menu based on user's role and modules -->
+@* <ul>
+    @foreach (var module in modules)
+    {
+        <li><a href="@Url.Action(module.ModuleName, "Home")">@module.ModuleName</a></li>
+    }
+</ul> *@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

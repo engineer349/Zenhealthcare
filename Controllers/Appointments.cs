@@ -24,6 +24,19 @@ namespace Zencareservice.Controllers
     {
         public IActionResult Index()
         {
+
+            Appts model = new Appts();
+
+            // Example: Create a DataSet and populate it
+
+            DataAccess Obj_DataAccess = new DataAccess();
+            DataSet dataSet = new DataSet("MyDataSet");
+            // ... populate the DataSet with data ...
+
+            model.MyDataSet = dataSet;
+
+            dataSet = Obj_DataAccess.FetchData();
+
             return View();
         }
         

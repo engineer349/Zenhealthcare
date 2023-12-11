@@ -49,9 +49,57 @@ namespace Zencareservice.Controllers
         {
             return View();
         }
-        
+        public IActionResult Register()
+        {
+			string returnUrl = "/Account/Register";
+			ViewData["ReturnUrl"] = returnUrl;
+			return View();
+        }
+        public IActionResult PatientRegister()
+        {
+			string returnUrl = "/Account/PatientRegister";
+			ViewData["ReturnUrl"] = returnUrl;
+			return View();
+        }
+		public IActionResult AdminRegister()
+		{
+			string returnUrl = "/Account/AdminRegister";
+			ViewBag.Roles = new SelectList(roles, "RoleId", "RoleName");
+			// Set your desired return URL
+			ViewData["ReturnUrl"] = returnUrl;
+			return View();
+		}
+		public IActionResult Login()
+		{
+			ViewBag.Message = "Your LoginPage is loaded";
+			return View();
+		}
+		public IActionResult PatientLogin()
+        {
+			string returnUrl = "/Account/PatientLogin";
+			ViewData["ReturnUrl"] = returnUrl;
+			return View();
+        }
 
-        public IActionResult VerifyOtp()
+
+		public IActionResult PatForgot()
+		{
+			string returnUrl = "/Account/PatForgot";
+			ViewData["ReturnUrl"] = returnUrl;
+			return View();
+		}
+
+		public IActionResult ResetPassword()
+		{
+			return View();
+		}
+
+		public IActionResult ForgotPassword()
+		{
+
+			return View();
+		}
+		public IActionResult VerifyOtp()
         {
 			string gotp = Request.Cookies["OTP"];
 
@@ -117,35 +165,6 @@ namespace Zencareservice.Controllers
         };
 
 
-        public IActionResult Register()
-        {
-            string returnUrl = "/Account/Register";
-            ViewBag.Roles = new SelectList(roles, "RoleId", "RoleName");
-          // Set your desired return URL
-            ViewData["ReturnUrl"] = returnUrl;
-            return View();
-        }
-        public IActionResult AdminRegister()
-        {
-            string returnUrl = "/Account/AdminRegister";
-            ViewBag.Roles = new SelectList(roles, "RoleId", "RoleName");
-            // Set your desired return URL
-            ViewData["ReturnUrl"] = returnUrl;
-            return View();
-        }
-
-        public IActionResult ResetPassword()
-        {
-            return View();
-        }        
-
-        public IActionResult ForgotPassword()
-        {
-            
-            return View();
-        }
-
-
         [HttpPost]
         public IActionResult ResetPassword(Signup Obj)
         {
@@ -189,15 +208,6 @@ namespace Zencareservice.Controllers
             
         }
 
-      
-       
-
-        public IActionResult Login() 
-        {
-            ViewBag.Message = "Your LoginPage is loaded";
-            return View();
-        }
-  
 
         public IActionResult ResendEmail(Signup Obj)
         {
@@ -208,7 +218,6 @@ namespace Zencareservice.Controllers
             {
 
                 ViewBag.Message = myEmail;
-
                 Obj.Email = Convert.ToString(ViewBag.Message);
 
                 SendMail sendMail = new SendMail();
@@ -331,9 +340,9 @@ namespace Zencareservice.Controllers
             return true;
         }
         [HttpPost]
-        public IActionResult Register(Signup Obj, string returnUrl)
+        public IActionResult PatientRegister(Signup Obj, string returnUrl)
         {
-            ViewBag.Roles = new SelectList(roles, "RoleId", "RoleName");
+            //ViewBag.Roles = new SelectList(roles, "RoleId", "RoleName");
 
             if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
             {
@@ -456,7 +465,7 @@ namespace Zencareservice.Controllers
         [HttpPost]
         public IActionResult AdminRegister(Signup Obj, string returnUrl)
         {
-            ViewBag.Roles = new SelectList(roles, "RoleId", "RoleName");
+            //ViewBag.Roles = new SelectList(roles, "RoleId", "RoleName");
 
             if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
             {
@@ -559,8 +568,112 @@ namespace Zencareservice.Controllers
 
         }
 
-      
-        private string SendingEmail(Signup Obj)
+		[HttpPost]
+		public IActionResult Register(Signup Obj, string returnUrl)
+		{
+			//ViewBag.Roles = new SelectList(roles, "RoleId", "RoleName");
+
+			if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+			{
+
+				// Perform additional validation
+				if (IsDateOfBirthValid(Obj.Dob))
+				{
+					bool agreeToTerms = true;
+
+					if (agreeToTerms == true)
+					{
+						var gMail = IsEmailAccountValid("gmail-smtp-in.l.google.com", Obj.Email);
+
+						if (gMail == true)
+						{
+
+							try
+							{
+								string SelectedRoleId = Obj.RoleId;
+								Obj.RoleId = "Patient";
+								int agreeterms = Convert.ToInt32(Obj.agreeterm);
+								string fname = Obj.Firstname;
+								string lname = Obj.Lastname;
+								string password = Obj.Password;
+								string confirmpassword = Obj.Confirmpassword;
+								string username = Obj.Username;
+								string phoneno = Obj.Phonenumber;
+								string validemail = Obj.Email;
+								TempData["MyEmail"] = validemail;
+								DateTime Dob = Obj.Dob;
+								Obj.Status = 1;
+
+								if (!String.IsNullOrEmpty(validemail))
+								{
+
+									string generatedCode = Codegenerator();
+
+									_generatedOtp = Convert.ToInt32(generatedCode);
+
+
+								}
+
+								var mailsend = SendingEmail(Obj);
+
+								if (mailsend == "Success")
+								{
+
+
+									DataAccess Obj_DataAccess = new DataAccess();
+									DataSet ds = new DataSet();
+									ds = Obj_DataAccess.SaveRegister(Obj);
+
+									return RedirectToAction("VerifyOtp", "Account");
+
+								}
+								else
+								{
+									return View();
+								}
+
+
+							}
+
+
+							catch (Exception ex)
+							{
+								string msg = ex.Message.ToString();
+								ViewBag.Message = msg;
+							}
+						}
+						else
+						{
+							TempData["Email"] = "InvalidUser";
+							return View();
+
+						}
+
+					}
+					else
+					{
+						ModelState.AddModelError(nameof(Signup.agreeterm), "Pls  agree to terms of service and condition.");
+					}
+
+				}
+				else
+				{
+					ModelState.AddModelError(nameof(Signup.Dob), "User must be at least 18 years old.");
+				}
+			}
+
+			else
+			{
+				return RedirectToAction("Index", "Home");
+			}
+
+
+
+			return View();
+
+
+		}
+		private string SendingEmail(Signup Obj)
         {
             string FName = Obj.Firstname;
             SendMail sendMail = new SendMail();
@@ -692,10 +805,17 @@ namespace Zencareservice.Controllers
                         options.Expires = DateTime.Now.AddMinutes(5);
                         Response.Cookies.Append("UsrId", UsrId, options1);
 
-                        return RedirectToAction("Dashboard", "Report");
+                       
+                            return RedirectToAction("Dashboard", "Report");
+                        
+						//if (Role == "Doctor")
+						//{
+						//	return RedirectToAction("DashboardDoctor", "Report");
+						//}
 
 
-                    }
+
+					}
                 }
             }
             else

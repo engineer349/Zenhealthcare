@@ -61,6 +61,24 @@ namespace Zencareservice.Repository
 
         }
 
+
+        public DataSet FetchData()
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                string StrSPName = "AppointmentBooking_SP";
+
+                return ds;
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            
+            }
+
+        }
+
         public DataSet SaveAppointment(Appts Obj)
         {
 

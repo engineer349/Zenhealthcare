@@ -1,8 +1,11 @@
-﻿namespace Zencareservice.Models
+﻿using System.Data;
+
+namespace Zencareservice.Models
 {
     public class Appts
     {
 
+        public DataSet MyDataSet { get; set; }
         public string PatientFirstName { get; set; }
 
         public string PatientLastName { get; set; }
