@@ -1191,6 +1191,14 @@
         "Asset": null,
         "Patterns": null
       },
+      "cities.json": {
+        "Children": null,
+        "Asset": {
+          "ContentRootIndex": 0,
+          "SubPath": "cities.json"
+        },
+        "Patterns": null
+      },
       "code": {
         "Children": {
           "SubjectMail.html": {
@@ -1244,6 +1252,14 @@
             "Asset": {
               "ContentRootIndex": 0,
               "SubPath": "css/loginstyle.map"
+            },
+            "Patterns": null
+          },
+          "my-login.css": {
+            "Children": null,
+            "Asset": {
+              "ContentRootIndex": 0,
+              "SubPath": "css/my-login.css"
             },
             "Patterns": null
           },
@@ -1847,6 +1863,28 @@
         "Asset": null,
         "Patterns": null
       },
+      "img": {
+        "Children": {
+          "logo.jpg": {
+            "Children": null,
+            "Asset": {
+              "ContentRootIndex": 0,
+              "SubPath": "img/logo.jpg"
+            },
+            "Patterns": null
+          }
+        },
+        "Asset": null,
+        "Patterns": null
+      },
+      "IndianStates.json": {
+        "Children": null,
+        "Asset": {
+          "ContentRootIndex": 0,
+          "SubPath": "IndianStates.json"
+        },
+        "Patterns": null
+      },
       "js": {
         "Children": {
           "datatables-simple-demo.js": {
@@ -1862,6 +1900,14 @@
             "Asset": {
               "ContentRootIndex": 0,
               "SubPath": "js/dob.js"
+            },
+            "Patterns": null
+          },
+          "my-login.js": {
+            "Children": null,
+            "Asset": {
+              "ContentRootIndex": 0,
+              "SubPath": "js/my-login.js"
             },
             "Patterns": null
           },

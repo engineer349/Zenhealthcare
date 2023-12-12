@@ -1,14 +1,34 @@
 version: '3.8'
 
-services:
-  db:
+networks:
+    zenhealthcareapp: 
+
+services: 
+  zencareserviceappdb:
+    container_name: Zencareservice-app-db
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: sql_server_container
-    environment:
-      SA_PASSWORD: "Devops@22"  # Set a strong password for the 'sa' user
-      ACCEPT_EULA: "Y"
     ports:
-      - "1433:1433"
+       - 8002:1443
+    environment:
+      SA_PASSWORD: Devops@22  # Set a strong password for the 'sa' user
+      ACCEPT_EULA: Y
+    networks:
+      - zenhealthcareapp
+
+  zencareserviceserverapp:
+    container_name: Zencareservice-app
+    image: ${DOCKER_REGISTRY-}Zencareservice
+    build:
+         context: .
+         dockerfile: Zencareservice/Dockerfile
+    ports:
+      - 8001:80 
+    depends_on:
+       - DB_HOST=zencareserviceappdb
+       - DB_NAME=zencareservice
+       - DB_SA_PASSWORD=Devops@22
+    networks:
+      - zenhealthcareapp
     volumes:
       - ./data:/var/opt/mssql/data
       # Add a volume to mount your custom database files   

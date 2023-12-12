@@ -5,6 +5,14 @@
       "PackagePath": "staticwebassets\\Zencareservice.bundle.scp.css"
     },
     {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\IndianStates.json",
+      "PackagePath": "staticwebassets\\IndianStates.json"
+    },
+    {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\assets\\css\\site.css",
+      "PackagePath": "staticwebassets\\assets\\css\\site.css"
+    },
+    {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\assets\\css\\style.css",
       "PackagePath": "staticwebassets\\assets\\css\\style.css"
     },
@@ -513,12 +521,32 @@
       "PackagePath": "staticwebassets\\assets\\vendor\\swiper\\swiper-bundle.min.js.map"
     },
     {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\cities.json",
+      "PackagePath": "staticwebassets\\cities.json"
+    },
+    {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\code\\SubjectMail.html",
+      "PackagePath": "staticwebassets\\code\\SubjectMail.html"
+    },
+    {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\css\\Profile.css",
+      "PackagePath": "staticwebassets\\css\\Profile.css"
+    },
+    {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\css\\Verifyotp.css",
+      "PackagePath": "staticwebassets\\css\\Verifyotp.css"
+    },
+    {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\css\\calendarscheduler.css",
       "PackagePath": "staticwebassets\\css\\calendarscheduler.css"
     },
     {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\css\\dashboardstyles.css",
       "PackagePath": "staticwebassets\\css\\dashboardstyles.css"
+    },
+    {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\css\\demo.css",
+      "PackagePath": "staticwebassets\\css\\demo.css"
     },
     {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\css\\loginstyle.css",
@@ -529,8 +557,20 @@
       "PackagePath": "staticwebassets\\css\\loginstyle.map"
     },
     {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\css\\my-login.css",
+      "PackagePath": "staticwebassets\\css\\my-login.css"
+    },
+    {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\css\\style.css",
+      "PackagePath": "staticwebassets\\css\\style.css"
+    },
+    {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\css\\termsofservice.css",
+      "PackagePath": "staticwebassets\\css\\termsofservice.css"
     },
     {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\dist\\css\\adminlte.css",
@@ -749,6 +789,18 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\forms\\Contact.php",
+      "PackagePath": "staticwebassets\\forms\\Contact.php"
+    },
+    {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\forms\\mailsend.html",
+      "PackagePath": "staticwebassets\\forms\\mailsend.html"
+    },
+    {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\forms\\termsofservice.html",
+      "PackagePath": "staticwebassets\\forms\\termsofservice.html"
+    },
+    {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\icons\\daypilot.svg",
       "PackagePath": "staticwebassets\\icons\\daypilot.svg"
     },
@@ -769,8 +821,20 @@
       "PackagePath": "staticwebassets\\images\\zencare-logo1.png"
     },
     {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\img\\logo.jpg",
+      "PackagePath": "staticwebassets\\img\\logo.jpg"
+    },
+    {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\js\\datatables-simple-demo.js",
       "PackagePath": "staticwebassets\\js\\datatables-simple-demo.js"
+    },
+    {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\js\\dob.js",
+      "PackagePath": "staticwebassets\\js\\dob.js"
+    },
+    {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\js\\my-login.js",
+      "PackagePath": "staticwebassets\\js\\my-login.js"
     },
     {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\js\\qr.js",
@@ -783,6 +847,10 @@
     {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\js\\verifyotp.js",
+      "PackagePath": "staticwebassets\\js\\verifyotp.js"
     },
     {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\lib\\bootstrap\\LICENSE",

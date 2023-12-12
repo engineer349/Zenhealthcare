@@ -1,0 +1,39 @@
+﻿body {
+    font-family: sans-serif;
+    
+}
+
+.highlight {
+    background-color: yellow;
+}
+
+h1 {
+    font-size: 15px;
+    font-weight: bold;
+    scroll-padding-block-start: auto
+}
+h2 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+h5 {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+p {
+    font-size: 12px;
+    font-style:inherit;
+
+}
+
+ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 5px;
+}
