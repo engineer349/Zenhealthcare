@@ -28,7 +28,7 @@
 					<div class="card fat">
 						<div class="card-body">
 							<h4 class="card-title">Login</h4>
-							<form method="POST" class="my-login-validation" novalidate="" asp-action="PatientLogin" asp-controller="Account">
+							<form method="POST" class="my-login-validation" novalidate="" asp-action="Login" asp-controller="Account">
 								<div class="form-group">
 									<label asp-for="Username">UserName or Email Address</label>
 									<input id="username" type="text" class="form-control" asp-for="Username" name="username" value="" required autofocus/>
@@ -40,7 +40,7 @@
 								<div class="form-group">
 									<label asp-for="Password">
 										Password
-										<a asp-action="" asp-controller="" class="float-right">
+										<a asp-action="PatForgot" asp-controller="Account" class="float-right">
 											Forgot Password?
 										</a>
 									</label>

@@ -17,6 +17,7 @@ using System.Text.RegularExpressions;
 using System.Data.Entity.Infrastructure;
 using System.Globalization;
 using System.CodeDom.Compiler;
+using Newtonsoft.Json;
 
 namespace Zencareservice.Controllers
 {
@@ -42,7 +43,22 @@ namespace Zencareservice.Controllers
         
         public IActionResult Aptcrt()
         {
-           
+            
+			var jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "IndianStates.json");
+
+            
+			if (System.IO.File.Exists(jsonFilePath))
+			{
+				var jsonContent = System.IO.File.ReadAllText(jsonFilePath);
+				var citiesData = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonContent);
+
+				ViewBag.CitiesData = citiesData;
+			}
+            else
+            {
+                ViewBag.CitiesData = new Dictionary<string, string>();
+            }
+            
             string returnUrl = "/Appointments/Aptcrt";
             ViewData["ReturnUrl"] = returnUrl;
             return View();
@@ -66,6 +82,7 @@ namespace Zencareservice.Controllers
                     string patientemail = Obj.PatientEmail;
                     Obj.PatientEmail = "vdgopisrinivasan@gmail.com";
                     string Patientage = Obj.PatientAge;
+                    ViewBag.Selectedstate = Obj.PState; 
                     string State = Obj.PState;
                     string City = Obj.PCity;
                     string pcontact = Obj.Patientphoneno;
@@ -75,11 +92,11 @@ namespace Zencareservice.Controllers
                     DataSet ds = new DataSet();
                     ds = Obj_DataAccess.SaveAppointment(Obj);
 
-            }
+              }
                 catch (Exception ex)
-                {
+              {
                     throw ex;
-                }
+              }
                 return View();
            
 

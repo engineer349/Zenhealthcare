@@ -73,12 +73,22 @@
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="PState">State</label>
-                <input asp-for="PState" type="text" class="form-control" id="state">
-                <span asp-validation-for="PState" class="text-danger"></span>
+                <select class="form-control">
+                  @*   @foreach (var state in ViewBag.StatesData)
+                    {
+                        <option value="@state.Key" asp-for="PState">@state.Value</option>
+                    } *@
+                </select>
+                <span asp-validation-for="PCity" class="text-danger"></span>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="PCity">City</label>
-                <input asp-for="PCity" type="text" class="form-control" id="city">
+                <select class="form-control">
+                    @foreach (var city in ViewBag.CitiesData)
+                    {
+                        <option value="@city.Value" asp-for="PCity">@city.Key</option>
+                    }
+                </select>
                 <span asp-validation-for="PCity" class="text-danger"></span>
             </div>
         </div>

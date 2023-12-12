@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "qY5RCdjQDKxWFYOBSfIXLcBkTuHDIle+em4AHy0/BHc=",
+  "Hash": "rFm5TJxXSpMEkMnb5z4hBFPaeqYjJdAO36/fZUi1eB8=",
   "Source": "Zencareservice",
   "BasePath": "_content/Zencareservice",
   "Mode": "Default",
@@ -2227,6 +2227,23 @@
       "OriginalItemSpec": "wwwroot\\assets\\vendor\\swiper\\swiper-bundle.min.js.map"
     },
     {
+      "Identity": "D:\\Projects\\Zencareservice\\wwwroot\\cities.json",
+      "SourceId": "Zencareservice",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\Zencareservice\\wwwroot\\",
+      "BasePath": "_content/Zencareservice",
+      "RelativePath": "cities.json",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\cities.json"
+    },
+    {
       "Identity": "D:\\Projects\\Zencareservice\\wwwroot\\code\\SubjectMail.html",
       "SourceId": "Zencareservice",
       "SourceType": "Discovered",
@@ -3500,6 +3517,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\logo.jpg"
+    },
+    {
+      "Identity": "D:\\Projects\\Zencareservice\\wwwroot\\IndianStates.json",
+      "SourceId": "Zencareservice",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\Zencareservice\\wwwroot\\",
+      "BasePath": "_content/Zencareservice",
+      "RelativePath": "IndianStates.json",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\IndianStates.json"
     },
     {
       "Identity": "D:\\Projects\\Zencareservice\\wwwroot\\js\\datatables-simple-demo.js",

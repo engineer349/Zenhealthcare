@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\Zencareservice.bundle.scp.css"
     },
     {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\IndianStates.json",
+      "PackagePath": "staticwebassets\\IndianStates.json"
+    },
+    {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\assets\\css\\site.css",
       "PackagePath": "staticwebassets\\assets\\css\\site.css"
     },
@@ -515,6 +519,10 @@
     {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\assets\\vendor\\swiper\\swiper-bundle.min.js.map",
       "PackagePath": "staticwebassets\\assets\\vendor\\swiper\\swiper-bundle.min.js.map"
+    },
+    {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\cities.json",
+      "PackagePath": "staticwebassets\\cities.json"
     },
     {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\code\\SubjectMail.html",

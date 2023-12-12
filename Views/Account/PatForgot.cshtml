@@ -2,8 +2,10 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "PatForgot";
+	ViewData["Title"] = "PatForgot";
+	Layout = "";
 }
+@model Zencareservice.Models.Signup;
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,15 +22,15 @@
 			<div class="row justify-content-md-center align-items-center h-100">
 				<div class="card-wrapper">
 					<div class="brand">
-						<img src="~/img/logo.jpg" alt="bootstrap 4 login page">
+						<img src="~/images/signin-zencare.png" alt="zencareservice_logo">
 					</div>
 					<div class="card fat">
 						<div class="card-body">
 							<h4 class="card-title">Forgot Password</h4>
-							<form method="POST" class="my-login-validation" novalidate="">
+							<form method="POST" class="my-login-validation" novalidate="" asp-action="PatReset" asp-controller="Account">
 								<div class="form-group">
 									<label for="email">E-Mail Address</label>
-									<input id="email" type="email" class="form-control" name="email" value="" required autofocus>
+									<input id="email" type="email" class="form-control" name="email" value="" asp-for="Email" required autofocus>
 									<div class="invalid-feedback">
 										Email is invalid
 									</div>
