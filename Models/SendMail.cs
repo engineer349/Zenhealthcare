@@ -51,7 +51,8 @@ namespace Zencareservice.Models
             }
             catch (Exception ex)
             {
-                throw ex;
+				throw ex;
+                
             
 
             }

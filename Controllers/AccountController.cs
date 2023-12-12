@@ -146,6 +146,7 @@ namespace Zencareservice.Controllers
                 {
                     
                     ViewBag.Message = "SuccessfullyValidated";
+
                     
                     return RedirectToAction("PatientLogin","Account");
 
@@ -510,7 +511,7 @@ namespace Zencareservice.Controllers
                                     //Console.WriteLine($"Live account is valid - {live.ToString()}");
 
                                     string SelectedRoleId = Obj.RoleId;
-                                    Obj.RoleId = "Patient";
+                                  
                                     int agreeterms = Convert.ToInt32(Obj.agreeterm);
                                     string fname = Obj.Firstname;
                                     string lname = Obj.Lastname;
@@ -596,7 +597,7 @@ namespace Zencareservice.Controllers
         [HttpPost]
         public IActionResult AdminRegister(Signup Obj, string returnUrl)
         {
-            //ViewBag.Roles = new SelectList(roles, "RoleId", "RoleName");
+            ViewBag.Roles = new SelectList(roles, "RoleId", "RoleName");
 
             if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
             {
@@ -633,8 +634,8 @@ namespace Zencareservice.Controllers
                                     //Console.WriteLine($"Live account is valid - {live.ToString()}");
 
                                     string SelectedRoleId = Obj.RoleId;
-                                    Obj.RoleId = "Patient";
-                                    int agreeterms = Convert.ToInt32(Obj.agreeterm);
+                                    
+                                   int agreeterms = Convert.ToInt32(Obj.agreeterm);
                                     string fname = Obj.Firstname;
                                     string lname = Obj.Lastname;
                                     string password = Obj.Password;

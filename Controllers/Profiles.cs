@@ -49,31 +49,6 @@ namespace Zencareservice.Controllers
 
             return View(pers);
         }
-        protected void Page_Load(object sender, EventArgs e,Personaldetails Obj)
-        {
-           
-
-            try
-
-            {
-
-
-                string a = "ram";
-
-
-               
-
-            }
-
-            catch (Exception ex)
-
-            {
-
-                throw ex;
-
-            }
-
-            
-        }
+       
     }
 }

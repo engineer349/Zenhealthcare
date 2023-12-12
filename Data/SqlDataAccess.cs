@@ -7,23 +7,23 @@ namespace Zencareservice.Data
 {
     public class SqlDataAccess
     {
-        //string connectionString = @"Data Source=GOPI\SQLEXPRESS;Initial Catalog = zencareservice; User Id = sa; Password=Devops@22;";
+        string connectionString = @"Data Source=GOPI\SQLEXPRESS;Initial Catalog = zencareservice; User Id = sa; Password=Devops@22;";
 
 		public string DbConnectionString { get; set; }
 
 		public IConfiguration _configuration;
 
-		SqlConnection sqlcon;
+		//SqlConnection sqlcon;
         SqlCommand cmd = new SqlCommand();
         SqlDataAdapter da = new SqlDataAdapter();
 
         
 
 
-        public SqlDataAccess(IConfiguration configuration)
+        public SqlDataAccess()
         {
 
-            _configuration = configuration;
+            
             DbConnectionString = _configuration.GetConnectionString("DefaultConnection");
 
 
@@ -36,7 +36,7 @@ namespace Zencareservice.Data
             {
 
 
-                SqlConnection con = new SqlConnection(DbConnectionString);
+                SqlConnection con = new SqlConnection(connectionString);
                 SqlDataAdapter da = new SqlDataAdapter(StrSpName, con);
                 da.SelectCommand.CommandType = CommandType.StoredProcedure;
                 da.Fill(ds);
@@ -60,7 +60,7 @@ namespace Zencareservice.Data
             try
             {
 
-                SqlConnection con = new SqlConnection(DbConnectionString);
+                SqlConnection con = new SqlConnection(connectionString);
                 SqlDataAdapter da = new SqlDataAdapter();
                 //da.SelectCommand.CommandType = CommandType.StoredProcedure;
                 cmd = new SqlCommand(StrSpName, con);
