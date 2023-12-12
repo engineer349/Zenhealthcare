@@ -1,4 +1,5 @@
-﻿using System.CodeDom;
+﻿using Microsoft.AspNetCore.Identity;
+using System.CodeDom;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -6,16 +7,27 @@ namespace Zencareservice.Data
 {
     public class SqlDataAccess
     {
-        string connectionString = @"Data Source=GOPI\SQLEXPRESS;Initial Catalog = zencareservice; User Id = sa; Password=Devops@22;";
-        SqlConnection sqlcon;
+        //string connectionString = @"Data Source=GOPI\SQLEXPRESS;Initial Catalog = zencareservice; User Id = sa; Password=Devops@22;";
+
+		public string DbConnectionString { get; set; }
+
+		public IConfiguration _configuration;
+
+		SqlConnection sqlcon;
         SqlCommand cmd = new SqlCommand();
         SqlDataAdapter da = new SqlDataAdapter();
 
-        public SqlDataAccess()
+        
+
+
+        public SqlDataAccess(IConfiguration configuration)
         {
 
+            _configuration = configuration;
+            DbConnectionString = _configuration.GetConnectionString("DefaultConnection");
 
-        }
+
+		}
         public DataSet GetDataWithStoredprocedure(string StrSpName)
         {
             DataTable dt = new DataTable();
@@ -24,7 +36,7 @@ namespace Zencareservice.Data
             {
 
 
-                SqlConnection con = new SqlConnection(connectionString);
+                SqlConnection con = new SqlConnection(DbConnectionString);
                 SqlDataAdapter da = new SqlDataAdapter(StrSpName, con);
                 da.SelectCommand.CommandType = CommandType.StoredProcedure;
                 da.Fill(ds);
@@ -48,7 +60,7 @@ namespace Zencareservice.Data
             try
             {
 
-                SqlConnection con = new SqlConnection(connectionString);
+                SqlConnection con = new SqlConnection(DbConnectionString);
                 SqlDataAdapter da = new SqlDataAdapter();
                 //da.SelectCommand.CommandType = CommandType.StoredProcedure;
                 cmd = new SqlCommand(StrSpName, con);
