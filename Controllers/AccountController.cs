@@ -20,6 +20,8 @@ using System.CodeDom.Compiler;
 using System.Xml.Linq;
 using System.Net.Sockets;
 using Zencareservice.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Zencareservice.Controllers
 {
@@ -34,7 +36,15 @@ namespace Zencareservice.Controllers
 
         private string ? ResetEmail;
 
-       
+        private readonly DataAccess _dataaccess;
+
+        private readonly SqlDataAccess _sqldataaccess;
+
+        public AccountController(DataAccess dataaccess, SqlDataAccess sqldataaccess)
+        {
+            _dataaccess = dataaccess;
+            _sqldataaccess = sqldataaccess;
+        }
 
         public IActionResult Index()
         {
@@ -105,6 +115,7 @@ namespace Zencareservice.Controllers
 
 			return View();
 		}
+
 		public IActionResult VerifyOtp()
         {
 			string gotp = Request.Cookies["OTP"];
@@ -115,7 +126,11 @@ namespace Zencareservice.Controllers
 			{
 				return RedirectToAction("AccessDenied", "Account");
 			}
-			//HttpContext.Session.SetString("AccessDenied", DateTime.Now.AddMinutes(1).ToString());
+
+			HttpContext.Session.SetString("AccessDenied", DateTime.Now.AddMinutes(1).ToString());
+
+            var myemail = TempData["MyEmail"];
+
             return View();
         }
 
@@ -148,7 +163,7 @@ namespace Zencareservice.Controllers
                     ViewBag.Message = "SuccessfullyValidated";
 
                     
-                    return RedirectToAction("PatientLogin","Account");
+                    return RedirectToAction("Dashboard","Report");
 
                 }
                 else
@@ -372,7 +387,7 @@ namespace Zencareservice.Controllers
                             DataSet dse = new DataSet();
                             dse = Obj_DataAccess.CheckEmail(Obj);
 
-                            if (dse.Tables[0].Rows.Count == 0)
+                            if (dse.Tables[0].Rows.Count == 0 && dse.Tables[1].Rows.Count ==0)
                             {
 
                                 try
@@ -875,5 +890,18 @@ namespace Zencareservice.Controllers
             return View(); 
 
         }
-    }
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult Logout()
+		{
+			// Implement logout logic
+
+			// Clear authentication cookies
+			HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+			// Redirect to the home page or another appropriate page
+			return RedirectToAction("Index", "Home");
+		}
+	}
 }

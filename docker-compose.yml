@@ -4,14 +4,32 @@ networks:
     zenhealthcareapp: 
 
 services: 
-  zencareserviceappdb:
+  zencareservice:
     container_name: Zencareservice-app-db
     image: mcr.microsoft.com/mssql/server:2022-latest
     ports:
-       - 8002:1443
+       - 8002:1433
     environment:
       SA_PASSWORD: Devops@22  # Set a strong password for the 'sa' user
       ACCEPT_EULA: Y
+      # attach_dbs: >
+      #  [
+      #    {
+      #      "dbName": "zencareservice",
+      #      "dbFiles": [
+      #        {
+      #          "fileName": "/var/opt/mssql/data/zencareservice.mdf",
+      #          "size": 100
+      #         },
+      #         {
+      #           "fileName": "/var/opt/mssql/data/zencareservice.ldf",
+      #           "size": 10
+      #        }
+      #      ]
+      #    }
+      #   ]
+      volumes:
+      -./scripts: scripts
     networks:
       - zenhealthcareapp
 
@@ -24,12 +42,13 @@ services:
     ports:
       - 8001:80 
     depends_on:
-       - DB_HOST=zencareserviceappdb
-       - DB_NAME=zencareservice
-       - DB_SA_PASSWORD=Devops@22
+       -  GOPI\SQLEXPRESS
+       - DB_HOST=GOPI\SQLEXPRESS
+       - DB_NAME= zencareservice
+       - DB_SA_PASSWORD= Devops@22
     networks:
       - zenhealthcareapp
-   
+  
     healthcheck:
       test: [ "CMD", "/opt/mssql-tools/bin/sqlcmd", "-U", "sa", "-P", "Devops@22", "-Q", "SELECT 1" ]
       interval: 10s

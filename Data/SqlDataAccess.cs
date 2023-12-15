@@ -71,6 +71,9 @@ namespace Zencareservice.Data
                     da.SelectCommand.Parameters.Add(Param[i]);
                 }
                 // string ExecStmt=CommandAsSql_Text(cmd);
+                
+                
+                
                 da.Fill(ds);
 
 

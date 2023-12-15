@@ -80,6 +80,15 @@
                     </div>
                 </li>
                 <li class="nav-item">
+                  
+                        <form asp-controller="Account" asp-action="Logout" method="post">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-link nav-link">Logout</button>
+                        </form>
+                   
+
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                         <i class="fas fa-expand-arrows-alt"></i>
                     </a>
@@ -155,19 +164,19 @@
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a asp-action="Prescedit" asp-controller="Prescriptions" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
+                                    <i class='fas fa-prescription' style='font-size:24px'></i>
                                     <p>PrescriptionDetails</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a asp-action="Aptedit" asp-controller="Appointments" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
+                                    <i class="fa fa-book" style="font-size:24px"></i>
                                     <p>AppointmentDetails</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a asp-action="Bedregedit" asp-controller="BedRegistrations" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
+                                    <i class='fas fa-procedures' style='font-size:24px'></i>
                                     <p>BedRegistrationDetails</p>
                                 </a>
                             </li>
@@ -185,7 +194,7 @@
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a asp-action="Prescrt" asp-controller="Prescriptions" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
+                                    <i class='fas fa-prescription' style='font-size:24px'></i>
                                     <p>
                                         PrescriptionDetails
                                     </p>
@@ -195,7 +204,7 @@
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a asp-action="Bedregcrt" asp-controller="BedRegistrations" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
+                                    <i class='fas fa-procedures' style='font-size:24px'></i>
                                     <p>BedRegistrationDetails</p>
                                 </a>
                             </li>
@@ -223,19 +232,19 @@
                     <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a asp-action="Aptlist" asp-controller="Appointments" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
+                                    <i class="fa fa-book" style="font-size:24px"></i>
                                     <p>Appointments</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a asp-action="Presclist" asp-controller="Prescriptions" class="nav-link active">
-                                    <i class="far fa-circle nav-icon"></i>
+                                    <i class='fas fa-prescription' style='font-size:24px'></i>
                                     <p>Prescriptions</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a asp-action="Bedreglist" asp-controller="BedRegistrations" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
+                                    <i class='fas fa-procedures' style='font-size:24px'></i>
                                     <p>BedRegistrations</p>
                                 </a>
                             </li>

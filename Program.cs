@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Data.Common;
+using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using Zencareservice.Data;
 using Zencareservice.Repository;
 
@@ -23,6 +26,9 @@ var dbName = Environment.GetEnvironmentVariable("DB_NAME");
 var dbPassword = Environment.GetEnvironmentVariable("DB_SA_PASSWORD");
 
 var connectionString = $"Data Source{dbHost}; Inital Catalog ={dbName}; User ID=sa; Password={dbPassword}";
+builder.Services.AddScoped<DataAccess>();
+builder.Services.AddScoped<SqlDataAccess>();
+
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -30,7 +36,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LoginPath = "/Account/Login"; // Redirect to login page if not authenticated
         options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
         options.AccessDeniedPath = "/Account/AccessDenied"; // Redirect to access denied page if not authorized
-    });
+		options.LogoutPath = "/Account/Logout";
+	});
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(1); // Set the session timeout to 1 minute
