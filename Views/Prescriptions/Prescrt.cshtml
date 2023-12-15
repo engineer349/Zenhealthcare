@@ -48,7 +48,7 @@
                 <input asp-for="PatientPhoneno" type="tel" class="form-control" id="phoneno" placeholder="ContactNo">
                 <span asp-validation-for="PatientPhoneno" class="text-danger"></span>
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-3">
                 <label asp-for="PatientGender">Gender</label>
                 <select asp-for="PatientGender" name="BedType" id="gender" class="form-control">
                     <option value="Male">Male</option>
@@ -59,58 +59,110 @@
                 <span asp-validation-for="PatientGender" class="text-danger"></span>
                 
             </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label asp-for="PatientDiagnosis">PatientDiagnosis</label>
-                <input asp-for="PatientDiagnosis" type="text" class="form-control" id="patientdiagnosis">
-                <span asp-validation-for="PatientDiagnosis" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="patientdetails" class="form-label">PatientDetails</label>
-                <input class="form-control" type="file" id="patientdetails" multiple />
+            <div class="form-group col-md-3">
+                <label asp-for="PatientEmail">PatientEmail</label>
+                <input asp-for="PatientEmail" class="form-control" placeholder="PatientEmail" />
+                <span asp-validation-for="PatientGender" class="text-danger"></span>
+
             </div>
         </div>
         <div class="form-row">
+           
             <div class="form-group col-md-12">
                 <label asp-for="PrescriptionDetail">Prescription Details</label>
                 <input asp-for="PrescriptionDetail" type="text" class="form-control" id="prescriptiondetails">
                 <span asp-validation-for="PrescriptionDetail" class="text-danger"></span>
             </div>
         </div>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@@mdo">PatientDiagnosis</button>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@@fat">Patient Treatment</button>
-       
+        <div class="form-row">
+          <div class="form-group-col-md-6">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#patdiagnosisModal" data-whatever="@@mdo">PatientDiagnosis</button>
+          </div>
+          <div class="form-group-col-md-6">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pattreatmentModal" data-whatever="@@fat">PatientTreatment</button>
+        </div>
 
-        <div class="modal fade example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade patdiagnosisModal-modal-lg" id="patdiagnosisModal" tabindex="-1" role="dialog" aria-labelledby="patdiagnosisModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg " role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                        <h5 class="modal-title" id="patdiagnosisModalLabel">PatientDiagnosis</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <form>
-                            <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Recipient:</label>
-                                <input type="text" class="form-control" id="recipient-name">
+                           <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label asp-for="PatientFirstName">PatientFirstName</label>
+                                    <input type="text" asp-for="PatientFirstName" class="form-control" id="lastname" placeholder="PatientFirstName">
+                                    <span asp-validation-for="PatientFirstName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label asp-for="PatientLastName">PatientLastName</label>
+                                    <input type="text" asp-for="PatientLastName" class="form-control" id="lastname" placeholder="PatientLastName">
+                                    <span asp-validation-for="PatientLastName" class="text-danger"></span>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="message-text" class="col-form-label">Message:</label>
-                                <textarea class="form-control" id="message-text"></textarea>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="message-text" class="col-form-label">Patient Diagnosis Details</label>
+                                    <textarea class="form-control" id="message-text"></textarea>
+                                </div>
+                             </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="modal fade pattreatmentModal-modal-lg" id="pattreatmentModal" tabindex="-1" role="dialog" aria-labelledby="pattreatmentModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg " role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="pattreatmentModalLabel">Patient Treatment</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label asp-for="PatientFirstName">PatientFirstName</label>
+                                    <input type="text" asp-for="PatientFirstName" class="form-control" id="lastname" placeholder="PatientFirstName">
+                                    <span asp-validation-for="PatientFirstName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label asp-for="PatientLastName">PatientLastName</label>
+                                    <input type="text" asp-for="PatientLastName" class="form-control" id="lastname" placeholder="PatientLastName">
+                                    <span asp-validation-for="PatientLastName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="message-text" class="col-form-label">Patient Treatment Details</label>
+                                    <textarea class="form-control" id="message-text"></textarea>
+                                </div>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Send message</button>
+                        <button type="button" class="btn btn-primary">Save</button>
                     </div>
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <span></span>
+        </div>
+        <div class="form-row">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
     </form>
 </body>
 </html>

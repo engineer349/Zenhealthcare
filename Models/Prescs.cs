@@ -4,11 +4,15 @@
     {
         public string? DoctorFirstName { get; set; }
 
+        public string ? DoctorEmail { get; set; }
+
         public string? DoctorLastName { get; set; }
 
         public string? PatientFirstName { get; set; }
 
         public string? PatientLastName { get; set; }
+
+        public string? PatientEmail { get; set; }
 
         public string? PatientAge { get; set; }
 
