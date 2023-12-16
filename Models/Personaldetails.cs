@@ -31,6 +31,8 @@ namespace Zencareservice.Models
 
         public string ?Address2 { get; set; }
 
+        public string ? AltAddress { get; set; }
+
         public string ?State { get; set; }
 
         public string ?City { get; set; }
@@ -45,7 +47,9 @@ namespace Zencareservice.Models
 
         public string ?Role { get; set; }
 
+        public int ? GenderId { get; set; }
 
+        public string ? GenderName { get; set; }
         public string? SelectedState { get; set; }
         public string ?SelectedCity { get; set; }
         public List<string> ?States { get; set; }

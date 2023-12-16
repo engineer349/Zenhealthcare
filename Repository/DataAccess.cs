@@ -67,7 +67,15 @@ namespace Zencareservice.Repository
             try
             {
                 DataSet ds = new DataSet();
-                string StrSPName = "AppointmentBooking_SP";
+                
+                 
+                
+                string StrSPName = "GetAllPatientDetails";
+
+                //string StrSPName = "GetAllDoctorDetails";
+
+              
+
 
                 return ds;
             }
@@ -171,6 +179,26 @@ namespace Zencareservice.Repository
                 param[0].Value = UsrId;
 
                 ds = Obj_SqlDataAccess.GetDataWithParamStoredprocedure(StrSPName, param);
+
+                return ds;
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+
+        }
+
+        public DataSet GetStates()
+        {
+
+            try
+            {
+                DataSet ds = new DataSet();
+                string StrSPName = "GetAllStates";
+
+                ds = Obj_SqlDataAccess.GetDataWithStoredprocedure(StrSPName);
 
                 return ds;
             }

@@ -6,6 +6,8 @@
     ViewData["Title"] = "Profile";
 }
 @model Zencareservice.Models.Personaldetails;
+ List<Personaldetails>;
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -21,23 +23,28 @@
 
 </head>
 <body>
-
-    <form asp-action="Profile" asp-controller="Profiles">
-      
-          <div class="container rounded bg-white mt-5 mb-5">
+    <form asp-action="Profile" asp-controller="Profiles" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="container rounded bg-white mt-5 mb-5">
             <div class="row">
                 <div class="col-md-3 border-right">
-                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">Edogaru</span><span class="text-black-50">edogaru@mail.com.my</span><span> </span></div>
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">@TempData["FirstName"]</span><span class="text-black-50">@TempData["Email"]</span><span> </span></div>
+                    <div class="col-md-12">
+                        <label class="labels" asp-for="Uniqueid"> UniqueId</label>
+                        <input type="text" asp-for="Uniqueid" id="uniqueud" placeholder="UniqueId" class="form-control" maxlength="16" />
+                        <span asp-validation-for="Uniqueid" class="text-danger"></span>
+                    </div>
                 </div>        
                 <div class="col-md-5 border-right">
                     <div class="p-3 py-5">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                             <h4 class="text-right">Profile Settings</h4>
+                            <h5 style="color:red" class="form-title"> @ViewBag.Message</h5>
                         </div>
                             <div class="row mt-2">
                                         <div class="col-md-6">
                                                 <label class="labels" asp-for="Firstname"> FirstName </label>
-                                                <input type="text" asp-for="Firstname" id="firstname" placeholder="Your FirstName" class="form-control  minlength="4" maxlength="16" />
+                                                <input type="text" asp-for="Firstname" id="firstname" placeholder="Your FirstName" class="form-control" minlength="4" maxlength="16" />
                                                 <span asp-validation-for="Firstname" class="text-danger"></span>
                                         </div>
                                         <div class="col-md-6">
@@ -54,57 +61,72 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label class="labels" asp-for="Email"> Email </label>
-                                            <input type="text" asp-for="Email" class="form-control" placeholder="Email Address" >
+                                            <input type="text" asp-for="Email" id="email" class="form-control" placeholder="Email Address" >
                                             <span asp-validation-for="Email" class="text-danger"></span>
                                         </div>
                                         <div class="col-md-6">
                                             <label class="labels" asp-for="Phoneno"> Phone </label>
-                                            <input type="tel" asp-for="Phoneno" class="form-control" placeholder="Phone">
+                                            <input type="tel" asp-for="Phoneno" id="phoneno" class="form-control" placeholder="Phone">
                                             <span asp-validation-for="Phoneno" class="text-danger"></span>
                                         </div>
                                         <div class="col-md-6">
                                             <label class="labels" asp-for="AltPhoneno"> Alternate Phone </label>
-                                            <input type="tel" class="form-control" asp-for="AltPhoneno" value="" placeholder="Alt Contact">
+                                            <input type="tel" class="form-control" id="altphoneno" asp-for="AltPhoneno" value="" placeholder="Alt Contact"/>
                                             <span asp-validation-for="AltPhoneno" class="text-danger"></span>
                                         </div>
                             </div>
                             <div class="row mt-3">
                                     <div class="col-md-12">
                                         <label class="labels" asp-for="Address1"> Address Line 1 </label>
-                                        <input type="text" asp-for="Address1" class="form-control" placeholder="Address Line1" maxlength="255" value="">
+                                        <input type="text" asp-for="Address1" id="address1" class="form-control" placeholder="Address Line1" maxlength="255"/>
                                         <span asp-validation-for="Address1" class="text-danger"></span>
                                     </div>
                                     <div class="col-md-12">
                                         <label class="labels"  asp-for="Address2"> Address Line 2 </label>
-                                        <input type="text" asp-for="Address2" class="form-control" placeholder="Address line2" maxlength="255" value="">
+                                        <input type="text" asp-for="Address2" id="address2" class="form-control" placeholder="Address line2" maxlength="255" />
                                         <span asp-validation-for="Address2" class="text-danger"></span>
                                     </div>
+                            <div class="col-md-12">
+                                <label class="labels" asp-for="AltAddress"> Alt Address </label>
+                                <input type="text" asp-for="AltAddress" id="altaddress" class="form-control" placeholder="Alternate Address" maxlength="255"/>
+                                <span asp-validation-for="AltAddress" class="text-danger"></span>
+                            </div>
                             </div>
                             <div class="row mt-2">
                                     <div class="col-md-6">
                                         <label class="labels" asp-for="State"> State </label>
-                                        <select class="form-control">    <option value="">-- Please Select State --</option></select>
+                                        @* <select class="form-control" id="state" asp-for="State">   
+                                            <option value="">-- Please Select State --</option>
+                                        @foreach (var item in Model)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                            
+                                        </select> *@
+                                    @Html.DropDownList("State", new SelectList(Model, "Value", "Text"), "-- Select --", new { @class = "form-control" })
+
+
                                         <span asp-validation-for="State" class="text-danger"></span>
                                         </div>
                                     <div class="col-md-6">
                                         <label class="labels" asp-for="City">City</label>
-                                        <select class="form-control">    <option value="">--  Please Select City --</option></select>
+                                        <select class="form-control" id="city">    <option value="">--  Please Select City --</option></select>
                                         <span asp-validation-for="City" class="text-danger"></span>
                                     </div>
                             </div>
                             <div class="row mt-3">
                                     <div class="col-md-6">
                                         <label class="labels" asp-for="Country">Country</label>
-                                        <input type="text" class="form-control" placeholder="Country" >
+                                        <input type="text" class="form-control" placeholder="Country" id="country"/>
                                         <span asp-validation-for="Country" class="text-danger"></span>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="labels" asp-for="Zipcode">ZipCode</label>
-                                        <input type="text" class="form-control" placeholder="Zipcode" >
+                                        <input type="text" class="form-control" placeholder="Zipcode" id="zipcode"/>
                                         <span asp-validation-for="Zipcode" class="text-danger"></span>
                                     </div>
-                            </div>          
-                                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Save Profile</button></div>
+                            </div>
+                        <div class="mt-5 text-center"><button class="form-submit btn btn-primary" name="Save">Save Profile</button></div>
                             </div>
                 </div>
                  <div class="col-md-4 border-right">

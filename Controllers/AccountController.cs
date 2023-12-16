@@ -848,9 +848,22 @@ namespace Zencareservice.Controllers
                     {
                         
                         string UsrId= ds.Tables[0].Rows[0]["RId"].ToString();
+
                         string UserName = ds.Tables[0].Rows[0]["Username"].ToString();
+
+                        TempData["Username"] = Obj.Username;
+
+
                         string Email = ds.Tables[0].Rows[0]["Email"].ToString();
+
+                        TempData["Email"] = Email;
+
                         string Role = ds.Tables[0].Rows[0]["Role"].ToString();
+
+                        string Fname = ds.Tables[0].Rows[0]["Fname"].ToString();
+
+                        TempData["FirstName"] =  Fname;
+
                         var cookieOptions = new CookieOptions
                         {
                             Expires = DateTime.Now.AddDays(1), // Set the expiration date
@@ -867,9 +880,10 @@ namespace Zencareservice.Controllers
                         CookieOptions options2 = new CookieOptions();
                         options.Expires = DateTime.Now.AddMinutes(5);
                         Response.Cookies.Append("UsrId", UsrId, options1);
+                        HttpContext.Session.SetString("FirstName", Fname);
 
-                       
-                       return RedirectToAction("Dashboard", "Report");
+
+                        return RedirectToAction("Dashboard", "Report");
                         
 						//if (Role == "Doctor")
 						//{

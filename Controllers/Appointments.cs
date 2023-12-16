@@ -40,7 +40,11 @@ namespace Zencareservice.Controllers
 
             return View();
         }
-        
+        public IActionResult Aptedit()
+        {
+            return View();
+        }
+
         public IActionResult Aptcrt()
         {
             

@@ -15,10 +15,12 @@ namespace Zencareservice.Controllers
             return View();
         }
 
+
+       
       
-        public IActionResult Profile()
+        public IActionResult Profile(Personaldetails pers)
         {
-            Personaldetails pers = new Personaldetails();
+            
             string UsrId = Request.Cookies["UsrId"];
 
             string UsrName = Request.Cookies["UsrName"];
@@ -31,23 +33,53 @@ namespace Zencareservice.Controllers
 
                 DataAccess Obj_DataAccess = new DataAccess();
                 DataSet ds = new DataSet();
+                DataSet dse = new DataSet();
                 ds = Obj_DataAccess.GetProfile(UsrId);
+
+                List<Personaldetails> getStates = new List<Personaldetails>();
+
+              
+                string state = ds.Tables[1].Rows[1]["State"].ToString();
+                int value = ds.Tables[1].Rows[0]["SId"].GetHashCode();
+
+                getStates.Add(new Personaldetails { Value = value, Text = state });
+    
                 string fname = ds.Tables[0].Rows[0]["Fname"].ToString();
                 string lname = ds.Tables[0].Rows[0]["Lname"].ToString();
                 //DateTime dob = ds.Tables[0].Rows[2]["Dob"].ToDateTime();
                 string phoneno = ds.Tables[0].Rows[0]["Phoneno"].ToString();
                 string email = ds.Tables[0].Rows[0]["Email"].ToString();
-
+                
                 pers = new Personaldetails();
                 {
                     pers.Firstname = fname;
                     pers.Lastname = lname;
                     pers.Phoneno = phoneno;
                     pers.Email = email;
+                    
                 }
             }
 
             return View(pers);
+        }
+
+
+        [HttpPost]
+        public IActionResult Profile( Personaldetails Obj)
+        {
+            string Altcontact = Obj.AltPhoneno;
+            string Addressline1 = Obj.Address1;
+            string Addressline2 = Obj.Address2;
+            string Altaddress = Obj.AltAddress;
+            string State = Obj.State;
+            string City = Obj.City;
+            string Country = Obj.Country;
+
+
+
+            return View(Obj);
+
+
         }
        
     }
