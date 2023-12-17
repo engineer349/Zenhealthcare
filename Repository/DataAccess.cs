@@ -190,6 +190,27 @@ namespace Zencareservice.Repository
 
         }
 
+        public DataSet SetCity ( int stateId)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                string StrSPName = "GetAllCitites";
+
+                SqlParameter[] param = new SqlParameter[1];
+
+                param[0] = new SqlParameter("@StateId", SqlDbType.Int);
+                param[0].Value = stateId;
+
+                ds = Obj_SqlDataAccess.GetDataWithParamStoredprocedure(StrSPName, param);
+
+                return ds;
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
         public DataSet GetStates()
         {
 
@@ -235,7 +256,51 @@ namespace Zencareservice.Repository
                 throw ex;
             }
         }
+        public DataSet UpdateProfile(Personaldetails Obj, string UsrId)
+        {
 
+            try
+            {
+                DataSet ds = new DataSet();
+                string StrSPName = "UpdatePersonaldetails_SP";
+
+                SqlParameter[] param = new SqlParameter[12];
+                param[0] = new SqlParameter("@Gender", SqlDbType.NVarChar);
+                param[0].Value = Obj.Gender;
+                param[1] = new SqlParameter("@APhoneno", SqlDbType.NVarChar);
+                param[1].Value = Obj.AltPhoneno;
+                param[2] = new SqlParameter("@Addressline1", SqlDbType.NVarChar);
+                param[2].Value = Obj.Address1;
+                param[3] = new SqlParameter("@Addressline2", SqlDbType.NVarChar);
+                param[3].Value = Obj.Address2;
+                param[4] = new SqlParameter("@AltAddress", SqlDbType.NVarChar);
+                param[4].Value = Obj.AltAddress;
+                param[5] = new SqlParameter("@State", SqlDbType.NVarChar);
+                param[5].Value = Obj.State;
+                param[6] = new SqlParameter("@City", SqlDbType.NVarChar);
+                param[6].Value = Obj.City;
+                param[7] = new SqlParameter("@Country", SqlDbType.NVarChar);
+                param[7].Value = Obj.Country;
+                param[8] = new SqlParameter("@UniqueId", SqlDbType.NVarChar);
+                param[8].Value = Obj.Uniqueid;
+                param[9] = new SqlParameter("@UsrId", SqlDbType. NVarChar);
+                param[9].Value = Obj.UsrId;
+                param[10] = new SqlParameter("@Zipcode", SqlDbType.NVarChar);
+                param[10].Value = Obj.Zipcode;
+                param[11] = new SqlParameter("@Email", SqlDbType.NVarChar);
+                param[11].Value = Obj.Email;
+
+
+                ds = Obj_SqlDataAccess.GetDataWithParamStoredprocedure(StrSPName, param);
+
+                return ds;
+            }
+
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
         public DataSet ResetPassword(Signup Obj, String ResetMail)
         {
 

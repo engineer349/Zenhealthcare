@@ -1,18 +1,23 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@using System.Data
 @{
     Layout = "_AdminLayout";
     ViewData["Title"] = "Profile";
+    DataTable dataTable = ViewBag.DataSet;
+    var dataRows = dataTable.AsEnumerable();
+    var selectedValue = ViewBag.SelectedValue;
 }
 @model Zencareservice.Models.Personaldetails;
- List<Personaldetails>;
+
+
 
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="~/css/Profile.css"/>
+    <link rel="stylesheet" href="~/css/Profile.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -34,102 +39,102 @@
                         <input type="text" asp-for="Uniqueid" id="uniqueud" placeholder="UniqueId" class="form-control" maxlength="16" />
                         <span asp-validation-for="Uniqueid" class="text-danger"></span>
                     </div>
-                </div>        
+                </div>
                 <div class="col-md-5 border-right">
                     <div class="p-3 py-5">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
                             <h4 class="text-right">Profile Settings</h4>
                             <h5 style="color:red" class="form-title"> @ViewBag.Message</h5>
                         </div>
-                            <div class="row mt-2">
-                                        <div class="col-md-6">
-                                                <label class="labels" asp-for="Firstname"> FirstName </label>
-                                                <input type="text" asp-for="Firstname" id="firstname" placeholder="Your FirstName" class="form-control" minlength="4" maxlength="16" />
-                                                <span asp-validation-for="Firstname" class="text-danger"></span>
-                                        </div>
-                                        <div class="col-md-6">
-                                                <label class="labels" asp-for="Lastname"> LastName </label>
-                                                <input type="text" asp-for="Lastname" id="lastname" placeholder="Your LastName" class="form-control" minlength="4" maxlength="16" />
-                                                <span asp-validation-for="Lastname" class="text-danger"></span>
-                                        </div>                                                          
-                                        <div class="col-md-6">
-                                            <label class="labels" asp-for="Gender"> Gender </label>
-                                            <select class="form-control">    
-                                                <option value="">-- Please Select Gender --</option>
-                                            </select>
-                                            <span asp-validation-for="Gender" class="text-danger"></span>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="labels" asp-for="Email"> Email </label>
-                                            <input type="text" asp-for="Email" id="email" class="form-control" placeholder="Email Address" >
-                                            <span asp-validation-for="Email" class="text-danger"></span>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="labels" asp-for="Phoneno"> Phone </label>
-                                            <input type="tel" asp-for="Phoneno" id="phoneno" class="form-control" placeholder="Phone">
-                                            <span asp-validation-for="Phoneno" class="text-danger"></span>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="labels" asp-for="AltPhoneno"> Alternate Phone </label>
-                                            <input type="tel" class="form-control" id="altphoneno" asp-for="AltPhoneno" value="" placeholder="Alt Contact"/>
-                                            <span asp-validation-for="AltPhoneno" class="text-danger"></span>
-                                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label class="labels" asp-for="Firstname"> FirstName </label>
+                                <input type="text" asp-for="Firstname" id="firstname" placeholder="Your FirstName" class="form-control" minlength="4" maxlength="16" />
+                                <span asp-validation-for="Firstname" class="text-danger"></span>
                             </div>
-                            <div class="row mt-3">
-                                    <div class="col-md-12">
-                                        <label class="labels" asp-for="Address1"> Address Line 1 </label>
-                                        <input type="text" asp-for="Address1" id="address1" class="form-control" placeholder="Address Line1" maxlength="255"/>
-                                        <span asp-validation-for="Address1" class="text-danger"></span>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label class="labels"  asp-for="Address2"> Address Line 2 </label>
-                                        <input type="text" asp-for="Address2" id="address2" class="form-control" placeholder="Address line2" maxlength="255" />
-                                        <span asp-validation-for="Address2" class="text-danger"></span>
-                                    </div>
+                            <div class="col-md-6">
+                                <label class="labels" asp-for="Lastname"> LastName </label>
+                                <input type="text" asp-for="Lastname" id="lastname" placeholder="Your LastName" class="form-control" minlength="4" maxlength="16" />
+                                <span asp-validation-for="Lastname" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="labels" asp-for="Gender"> Gender </label>
+                                @*  <select class="form-control">
+                                <option value="">-- Please Select Gender --</option>
+                                </select> *@
+                                @Html.DropDownListFor(model => model.Gender, ViewBag.GenderList as List<SelectListItem>, new { @class = "form-control" })
+                                <span asp-validation-for="Gender" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="labels" asp-for="Email"> Email </label>
+                                <input type="text" asp-for="Email" id="email" class="form-control" placeholder="Email Address">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="labels" asp-for="Phoneno"> Phone </label>
+                                <input type="tel" asp-for="Phoneno" id="phoneno" class="form-control" placeholder="Phone">
+                                <span asp-validation-for="Phoneno" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="labels" asp-for="AltPhoneno"> Alternate Phone </label>
+                                <input type="tel" class="form-control" id="altphoneno" asp-for="AltPhoneno" value="" placeholder="Alt Contact" />
+                                <span asp-validation-for="AltPhoneno" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <label class="labels" asp-for="Address1"> Address Line 1 </label>
+                                <input type="text" asp-for="Address1" id="address1" class="form-control" placeholder="Address Line1" maxlength="255" />
+                                <span asp-validation-for="Address1" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="labels" asp-for="Address2"> Address Line 2 </label>
+                                <input type="text" asp-for="Address2" id="address2" class="form-control" placeholder="Address line2" maxlength="255" />
+                                <span asp-validation-for="Address2" class="text-danger"></span>
+                            </div>
                             <div class="col-md-12">
                                 <label class="labels" asp-for="AltAddress"> Alt Address </label>
-                                <input type="text" asp-for="AltAddress" id="altaddress" class="form-control" placeholder="Alternate Address" maxlength="255"/>
+                                <input type="text" asp-for="AltAddress" id="altaddress" class="form-control" placeholder="Alternate Address" maxlength="255" />
                                 <span asp-validation-for="AltAddress" class="text-danger"></span>
                             </div>
-                            </div>
-                            <div class="row mt-2">
-                                    <div class="col-md-6">
-                                        <label class="labels" asp-for="State"> State </label>
-                                        @* <select class="form-control" id="state" asp-for="State">   
-                                            <option value="">-- Please Select State --</option>
-                                        @foreach (var item in Model)
-                                        {
-                                            <option value="@item.Value">@item.Text</option>
-                                        }
-                                            
-                                        </select> *@
-                                    @Html.DropDownList("State", new SelectList(Model, "Value", "Text"), "-- Select --", new { @class = "form-control" })
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label class="labels" asp-for="State"> State </label>
+                                         
+                                @{
+                                    var mm = ViewBag.YourDataList;
+                                }
+
+                                @Html.DropDownListFor(model => model.State, ViewBag.State as List<SelectListItem>, "Please select", new { @class = "form-control",Id="DDlState" })
 
 
-                                        <span asp-validation-for="State" class="text-danger"></span>
-                                        </div>
-                                    <div class="col-md-6">
-                                        <label class="labels" asp-for="City">City</label>
-                                        <select class="form-control" id="city">    <option value="">--  Please Select City --</option></select>
-                                        <span asp-validation-for="City" class="text-danger"></span>
-                                    </div>
+                                <span asp-validation-for="State" class="text-danger"></span>
                             </div>
-                            <div class="row mt-3">
-                                    <div class="col-md-6">
-                                        <label class="labels" asp-for="Country">Country</label>
-                                        <input type="text" class="form-control" placeholder="Country" id="country"/>
-                                        <span asp-validation-for="Country" class="text-danger"></span>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="labels" asp-for="Zipcode">ZipCode</label>
-                                        <input type="text" class="form-control" placeholder="Zipcode" id="zipcode"/>
-                                        <span asp-validation-for="Zipcode" class="text-danger"></span>
-                                    </div>
+                            <div class="col-md-6">
+                                <label class="labels" asp-for="City">City</label>
+
+                                @Html.DropDownListFor(model => model.City, new SelectList(Enumerable.Empty<SelectListItem>(), "CId", "City"), "Please select a city", new {  @class="form-control",@id = "cities" })
+
+                                <span asp-validation-for="City" class="text-danger"></span>
                             </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label class="labels" asp-for="Country">Country</label>
+                                <input type="text" class="form-control" placeholder="Country" id="country" asp-for="Country" />
+                                <span asp-validation-for="Country" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="labels" asp-for="Zipcode">ZipCode</label>
+                                <input type="text" class="form-control" placeholder="Zipcode" id="zipcode"  asp-for="Zipcode"/>
+                                <span asp-validation-for="Zipcode" class="text-danger"></span>
+                            </div>
+                        </div>
                         <div class="mt-5 text-center"><button class="form-submit btn btn-primary" name="Save">Save Profile</button></div>
-                            </div>
+                    </div>
                 </div>
-                 <div class="col-md-4 border-right">
+                <div class="col-md-4 border-right">
                     <div class="p-3 py-5">
                         <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
                         <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text" class="form-control" placeholder="experience" value=""></div> <br>
@@ -138,10 +143,38 @@
                 </div>
             </div>
         </div>
-         
+
     </form>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+    <script type="text/javascript">
+        $("#DDlState").change(function () {
+            var stateId = $(this).val();
+            if (stateId !== "") {
+                $.post("/Profiles/GetCities", { stateId: stateId }, function (resposedata) {
+                    var data = JSON.parse(resposedata);
+                    $("#cities").empty();
+                    $("#cities").append('<option value="">Please select a city</option>');
 
+                    var items = '<option>Select City</option>';
+                    if (Array.isArray(data)) { // Check if data is an array
+                        $.each(data, function (i, city) {
+                            items += '<option value="' + city.CId + '">' + city.City + '</option>';
+                        });
+                    } else {
+                        // If data is not an array, handle it accordingly
+                        // You may need to adjust this part based on the actual structure of your data
+                        items += '<option value="' + data.CId + '">' + data.City + '</option>';
+                    }
+                    $('#cities').html(items);
+                });
+            } else {
+                // Clear cities dropdown if no state is selected
+                $("#cities").empty();
+                $("#cities").append('<option value="">Please select a city</option>');
+            }
+        });
+    </script>
 
 </body>
 
