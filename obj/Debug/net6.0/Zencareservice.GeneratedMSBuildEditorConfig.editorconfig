@@ -84,6 +84,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwb2ludG1lbnRzXEFwdGxpc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/Zencareservice/Views/Appointments/CreateAppointment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwb2ludG1lbnRzXENyZWF0ZUFwcG9pbnRtZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/Zencareservice/Views/Bedregistrations/Bedregcrt.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmVkcmVnaXN0cmF0aW9uc1xCZWRyZWdjcnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

@@ -28,7 +28,7 @@
 
 </head>
 <body>
-    <form asp-action="Profile" asp-controller="Profiles" method="post">
+    <form asp-action="UpdateProfile" asp-controller="Profiles" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="container rounded bg-white mt-5 mb-5">
             <div class="row">
@@ -49,35 +49,32 @@
                         <div class="row mt-2">
                             <div class="col-md-6">
                                 <label class="labels" asp-for="Firstname"> FirstName </label>
-                                <input type="text" asp-for="Firstname" id="firstname" placeholder="Your FirstName" class="form-control" minlength="4" maxlength="16" />
+                                <input type="text" asp-for="Firstname" id="firstname" placeholder="Your FirstName" class="form-control" minlength="4" maxlength="16" readonly />
                                 <span asp-validation-for="Firstname" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
                                 <label class="labels" asp-for="Lastname"> LastName </label>
-                                <input type="text" asp-for="Lastname" id="lastname" placeholder="Your LastName" class="form-control" minlength="4" maxlength="16" />
+                                <input type="text" asp-for="Lastname" id="lastname" placeholder="Your LastName" class="form-control" minlength="4" maxlength="16"readonly />
                                 <span asp-validation-for="Lastname" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
                                 <label class="labels" asp-for="Gender"> Gender </label>
-                                @*  <select class="form-control">
-                                <option value="">-- Please Select Gender --</option>
-                                </select> *@
                                 @Html.DropDownListFor(model => model.Gender, ViewBag.GenderList as List<SelectListItem>, new { @class = "form-control" })
                                 <span asp-validation-for="Gender" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
                                 <label class="labels" asp-for="Email"> Email </label>
-                                <input type="text" asp-for="Email" id="email" class="form-control" placeholder="Email Address">
+                                <input type="email" asp-for="Email" id="email" class="form-control" placeholder="Email Address" readonly/>
                                 <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
                                 <label class="labels" asp-for="Phoneno"> Phone </label>
-                                <input type="tel" asp-for="Phoneno" id="phoneno" class="form-control" placeholder="Phone">
+                                <input type="tel" asp-for="Phoneno" id="phoneno" class="form-control" placeholder="Phone" readonly>
                                 <span asp-validation-for="Phoneno" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
                                 <label class="labels" asp-for="AltPhoneno"> Alternate Phone </label>
-                                <input type="tel" class="form-control" id="altphoneno" asp-for="AltPhoneno" value="" placeholder="Alt Contact" />
+                                <input type="tel" class="form-control" id="altphoneno" asp-for="AltPhoneno" placeholder="Alt Contact" />
                                 <span asp-validation-for="AltPhoneno" class="text-danger"></span>
                             </div>
                         </div>
@@ -127,7 +124,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="labels" asp-for="Zipcode">ZipCode</label>
-                                <input type="text" class="form-control" placeholder="Zipcode" id="zipcode"  asp-for="Zipcode"/>
+                                <input type="number" class="form-control" placeholder="Zipcode" id="zipcode" maxlength="6"  asp-for="Zipcode"/>
                                 <span asp-validation-for="Zipcode" class="text-danger"></span>
                             </div>
                         </div>

@@ -1,9 +1,13 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@using System.Data;
 @{
     Layout = "_AdminLayout";
     ViewData["Title"] = "CreateAppointment";
+    DataTable dataTable = ViewBag.DataSet;
+    var dataRows = dataTable.AsEnumerable();
+    var selectedValue = ViewBag.SelectedValue;
 }
 
 @model Zencareservice.Models.Appts;
@@ -17,7 +21,7 @@
 <body>
     <h3>AppointmentDetails</h3>
     <form method="POST"  asp-action="Aptcrt" asp-controller="Appointments">
-       @* <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
+       <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-row">
             <div class="form-group col-md-3">
                 <label asp-for="DoctorFirstName">DoctorFirstName</label>
@@ -47,12 +51,8 @@
             </div>
             <div class="form-group col-md-2">
                 <label asp-for="PatientGender">Gender</label>
-                <select name="gender" asp-for="PatientGender" class="form-control">
-                    <option value="0">--Select--Gender--</option>    
-                    <option value="1">Male</option>
-                    <option value="2">Female</option>
-                </select>
-                @* <span asp-validation-for="GenderName" class="text-danger"></span> *@
+                @Html.DropDownListFor(model => model.PatientGender, ViewBag.GenderList as List<SelectListItem>, new { @class = "form-control" })
+                <span asp-validation-for="PatientGender" class="text-danger"></span>
             </div>
             <div class="form-group col-md-2">
                 <label asp-for="Patientphoneno">ContactNo</label>
@@ -74,20 +74,20 @@
             <div class="form-group col-md-3">
                 <label asp-for="PState">State</label>
                 <select class="form-control">
-                  @*   @foreach (var state in ViewBag.StatesData)
-                    {
-                        <option value="@state.Key" asp-for="PState">@state.Value</option>
-                    } *@
+                    @{
+                        var mm = ViewBag.YourDataList;
+                    }
+
+                    @Html.DropDownListFor(model => model.PState, ViewBag.State as List<SelectListItem>, "Please select", new { @class = "form-control",Id="DDlState" })
                 </select>
                 <span asp-validation-for="PCity" class="text-danger"></span>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="PCity">City</label>
                 <select class="form-control">
-                    @foreach (var city in ViewBag.CitiesData)
-                    {
-                        <option value="@city.Value" asp-for="PCity">@city.Key</option>
-                    }
+                    
+                  @Html.DropDownListFor(model => model.PCity, new SelectList(Enumerable.Empty<SelectListItem>(), "CId", "City"), "Please select a city", new {  @class="form-control",@id = "cities" })
+
                 </select>
                 <span asp-validation-for="PCity" class="text-danger"></span>
             </div>
@@ -124,6 +124,36 @@
         </script>
 
     </form>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script type="text/javascript">
+        $("#DDlState").change(function () {
+            var stateId = $(this).val();
+            if (stateId !== "") {
+                $.post("/Profiles/GetCities", { stateId: stateId }, function (resposedata) {
+                    var data = JSON.parse(resposedata);
+                    $("#cities").empty();
+                    $("#cities").append('<option value="">Please select a city</option>');
+
+                    var items = '<option>Select City</option>';
+                    if (Array.isArray(data)) { // Check if data is an array
+                        $.each(data, function (i, city) {
+                            items += '<option value="' + city.CId + '">' + city.City + '</option>';
+                        });
+                    } else {
+                        // If data is not an array, handle it accordingly
+                        // You may need to adjust this part based on the actual structure of your data
+                        items += '<option value="' + data.CId + '">' + data.City + '</option>';
+                    }
+                    $('#cities').html(items);
+                });
+            } else {
+                // Clear cities dropdown if no state is selected
+                $("#cities").empty();
+                $("#cities").append('<option value="">Please select a city</option>');
+            }
+        });
+    </script>
 </body>
 </html>
 

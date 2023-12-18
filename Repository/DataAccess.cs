@@ -45,6 +45,8 @@ namespace Zencareservice.Repository
                 param[9].Value = Obj.RoleId;
                 param[10] = new SqlParameter("@agreeterm", SqlDbType.VarChar);
                 param[10].Value = Convert.ToInt32(Obj.agreeterm);
+                param[11] = new SqlParameter("@Age", SqlDbType.Int);
+                param[11].Value = Convert.ToInt32(Obj.Age);
 
 
                 ds = Obj_SqlDataAccess.GetDataWithParamStoredprocedure(StrSPName, param);
@@ -189,6 +191,30 @@ namespace Zencareservice.Repository
 
 
         }
+        public DataSet GetAppointments(string UsrId)
+        {
+
+            try
+            {
+                DataSet ds = new DataSet();
+                string StrSPName = "GetAllAppoinments";
+
+                SqlParameter[] param = new SqlParameter[1];
+
+                param[0] = new SqlParameter("@UsrId", SqlDbType.Int);
+                param[0].Value = UsrId;
+
+                ds = Obj_SqlDataAccess.GetDataWithParamStoredprocedure(StrSPName, param);
+
+                return ds;
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+
+        }
 
         public DataSet SetCity ( int stateId)
         {
@@ -256,7 +282,7 @@ namespace Zencareservice.Repository
                 throw ex;
             }
         }
-        public DataSet UpdateProfile(Personaldetails Obj, string UsrId)
+        public DataSet UpdateProfile(Personaldetails Obj)
         {
 
             try
@@ -283,7 +309,7 @@ namespace Zencareservice.Repository
                 param[7].Value = Obj.Country;
                 param[8] = new SqlParameter("@UniqueId", SqlDbType.NVarChar);
                 param[8].Value = Obj.Uniqueid;
-                param[9] = new SqlParameter("@UsrId", SqlDbType. NVarChar);
+                param[9] = new SqlParameter("@UsrId", SqlDbType. Int);
                 param[9].Value = Obj.UsrId;
                 param[10] = new SqlParameter("@Zipcode", SqlDbType.NVarChar);
                 param[10].Value = Obj.Zipcode;

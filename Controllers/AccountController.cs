@@ -22,6 +22,11 @@ using System.Net.Sockets;
 using Zencareservice.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography;
+using System.Security.Cryptography.Xml;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace Zencareservice.Controllers
 {
@@ -264,6 +269,19 @@ namespace Zencareservice.Controllers
             return dob.AddYears(18) <= DateTime.Now && dob > DateTime.Now.AddYears(-100); // Assuming a reasonable upper limit for age
         }
 
+        private string  Calculateage(DateTime dob)
+        {
+          DateTime currentdate = DateTime.Now;
+
+            int age = currentdate.Year - dob.Year;
+
+            TempData["Age"] = age;
+
+            return age.ToString();
+
+            
+        }
+
         public static bool IsValidEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
@@ -386,6 +404,8 @@ namespace Zencareservice.Controllers
                             DataAccess Obj_DataAccess = new DataAccess();
                             DataSet dse = new DataSet();
                             dse = Obj_DataAccess.CheckEmail(Obj);
+                            
+                            
 
                             if (dse.Tables[0].Rows.Count == 0 && dse.Tables[1].Rows.Count ==0)
                             {
@@ -395,7 +415,7 @@ namespace Zencareservice.Controllers
                                     string validemail = Obj.Email;
                                     TempData["MyEmail"] = validemail;
 
-
+                                    
 
                                     //Console.WriteLine($"Gmail account is valid - {gMail.ToString()}");
 
@@ -404,6 +424,7 @@ namespace Zencareservice.Controllers
 
                                     string SelectedRoleId = Obj.RoleId;
                                     Obj.RoleId = "Patient";
+                                    Obj.Age = Convert.ToInt32(TempData["Age"]);
                                     int agreeterms = Convert.ToInt32(Obj.agreeterm);
                                     string fname = Obj.Firstname;
                                     string lname = Obj.Lastname;
@@ -526,7 +547,7 @@ namespace Zencareservice.Controllers
                                     //Console.WriteLine($"Live account is valid - {live.ToString()}");
 
                                     string SelectedRoleId = Obj.RoleId;
-                                  
+                                    Obj.Age = Convert.ToInt32(TempData["Age"]);
                                     int agreeterms = Convert.ToInt32(Obj.agreeterm);
                                     string fname = Obj.Firstname;
                                     string lname = Obj.Lastname;
@@ -649,8 +670,8 @@ namespace Zencareservice.Controllers
                                     //Console.WriteLine($"Live account is valid - {live.ToString()}");
 
                                     string SelectedRoleId = Obj.RoleId;
-                                    
-                                   int agreeterms = Convert.ToInt32(Obj.agreeterm);
+                                    Obj.Age = Convert.ToInt32(TempData["Age"]);
+                                    int agreeterms = Convert.ToInt32(Obj.agreeterm);
                                     string fname = Obj.Firstname;
                                     string lname = Obj.Lastname;
                                     string password = Obj.Password;
@@ -882,14 +903,19 @@ namespace Zencareservice.Controllers
                         Response.Cookies.Append("UsrId", UsrId, options1);
                         HttpContext.Session.SetString("FirstName", Fname);
 
+                        string jsonString = JsonConvert.SerializeObject(ds.Tables[1]);
+
+
+                        HttpContext.Session.SetString("MenuList", jsonString);
+
 
                         return RedirectToAction("Dashboard", "Report");
                         
 						//if (Role == "Doctor")
 						//{
+
 						//	return RedirectToAction("DashboardDoctor", "Report");
 						//}
-
 
 
 					}

@@ -8,6 +8,10 @@ namespace Zencareservice.Models
         public DataSet MyDataSet { get; set; }
         public string ?PatientFirstName { get; set; }
 
+        public string? PState { get; set; }
+
+        public string ?PCity { get; set; }
+
         public string ?PatientLastName { get; set; }
 
         public string? DoctorFirstName { get; set; }
@@ -20,9 +24,7 @@ namespace Zencareservice.Models
 
         public string? Patientphoneno { get; set; }
 
-        public string? PState { get; set; }
-
-        public string?  PCity { get; set; }
+       
 
         public string? PatientEmail { get; set; }
 
@@ -40,5 +42,14 @@ namespace Zencareservice.Models
         public DateOnly? ReschduleAppointmentDate { get; set; }
 
         public TimeOnly? ReschdeuleAppointmentTime { get; set; }
+
+        public string? SelectedState { get; set; }
+        public string? SelectedCity { get; set; }
+        public List<string>? States { get; set; }
+        public List<string>? Cities { get; set; }
+    }
+    public class states
+    {
+        public int selectedvalue { get; set; }
     }
 }
