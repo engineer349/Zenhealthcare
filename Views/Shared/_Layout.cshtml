@@ -58,11 +58,16 @@
 
             </div>
             <div class="d-flex align-items-right">
+                @{
+                    
+                        <a class="nav-link text-dark" id="register" asp-action="Logout" asp-controller="Account"><i class="fas fa-user-plus"></i>Logout</a>
+                   
+                        <a class="nav-link text-dark" id="register" asp-action="AdminRegister" asp-controller="Account"><i class="fas fa-user-plus"></i> Sign Up</a>
 
-                <a class="nav-link text-dark" id="register"  asp-action="PatientRegister" asp-controller="Account"><i class="fas fa-user-plus"></i> Sign Up</a>
-
-                <a class="nav-link text-dark" id="login" asp-action="PatientLogin" asp-controller="Account"><i class="fas fa-sign-in-alt"></i> Login</a>
-  
+                        <a class="nav-link text-dark" id="login" asp-action="PatientLogin" asp-controller="Account"><i class="fas fa-sign-in-alt"></i> Login</a>
+                   
+                }
+                
             </div>
         </div>
     </div>
@@ -206,6 +211,14 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script type="text/javascript">
+        $(window).on('beforeunload', function () {
+            // Make an asynchronous request to the server to end the session
+            $.post('/Session/End'); // Replace with your server endpoint
+        });
+    </script>
+
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

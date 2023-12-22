@@ -27,6 +27,7 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.Xml;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace Zencareservice.Controllers
 {
@@ -35,8 +36,9 @@ namespace Zencareservice.Controllers
     {
 
         //private readonly TwilioService _twilioService;
+        private readonly IDataProtector _dataProtector;
 
-
+  
         private int _generatedOtp;
 
         private string ? ResetEmail;
@@ -45,10 +47,11 @@ namespace Zencareservice.Controllers
 
         private readonly SqlDataAccess _sqldataaccess;
 
-        public AccountController(DataAccess dataaccess, SqlDataAccess sqldataaccess)
+        public AccountController(DataAccess dataaccess, SqlDataAccess sqldataaccess, IDataProtectionProvider dataProtectionProvider)
         {
             _dataaccess = dataaccess;
             _sqldataaccess = sqldataaccess;
+            _dataProtector = dataProtectionProvider.CreateProtector("YourPurpose");
         }
 
         public IActionResult Index()
@@ -265,21 +268,25 @@ namespace Zencareservice.Controllers
 
         private bool IsDateOfBirthValid(DateTime dob)
         {
+            
+
             // Ensure the user is at least 18 years old
             return dob.AddYears(18) <= DateTime.Now && dob > DateTime.Now.AddYears(-100); // Assuming a reasonable upper limit for age
+
         }
 
-        private string  Calculateage(DateTime dob)
+        private int CalculateAge(DateTime dob)
         {
-          DateTime currentdate = DateTime.Now;
+            // Calculate age based on the difference between the current date and the date of birth
+            int age = DateTime.Now.Year - dob.Year;
 
-            int age = currentdate.Year - dob.Year;
+            // Adjust age if the birthday hasn't occurred yet this year
+            //if (dob > DateTime.Now.AddYears(-age))
+            //{
+                //age--
+            //}
 
-            TempData["Age"] = age;
-
-            return age.ToString();
-
-            
+            return age;
         }
 
         public static bool IsValidEmail(string email)
@@ -392,7 +399,12 @@ namespace Zencareservice.Controllers
                 // Perform additional validation
                 if (IsDateOfBirthValid(Obj.Dob))
                 {
+
+                    int userAge = CalculateAge(Obj.Dob);
+
+
                     bool agreeToTerms = true;
+
 
                     if (agreeToTerms == true)
                     {
@@ -424,7 +436,7 @@ namespace Zencareservice.Controllers
 
                                     string SelectedRoleId = Obj.RoleId;
                                     Obj.RoleId = "Patient";
-                                    Obj.Age = Convert.ToInt32(TempData["Age"]);
+                                    Obj.Age = userAge;
                                     int agreeterms = Convert.ToInt32(Obj.agreeterm);
                                     string fname = Obj.Firstname;
                                     string lname = Obj.Lastname;
@@ -508,7 +520,7 @@ namespace Zencareservice.Controllers
 
         }
         [HttpPost]
-        public IActionResult Register(Signup Obj, string returnUrl)
+        public IActionResult Register(Signup Obj, string returnUrl, DateTime userDob)
         {
             //ViewBag.Roles = new SelectList(roles, "RoleId", "RoleName");
 
@@ -518,10 +530,12 @@ namespace Zencareservice.Controllers
                 // Perform additional validation
                 if (IsDateOfBirthValid(Obj.Dob))
                 {
+                    int userAge = CalculateAge(Obj.Dob);
                     bool agreeToTerms = true;
 
                     if (agreeToTerms == true)
                     {
+                        
 
                         var gMail = IsEmailAccountValid("gmail-smtp-in.l.google.com", Obj.Email);
 
@@ -533,7 +547,7 @@ namespace Zencareservice.Controllers
 
                             if (dse.Tables[0].Rows.Count == 0)
                             {
-
+                               
                                 try
                                 {
                                     string validemail = Obj.Email;
@@ -546,8 +560,9 @@ namespace Zencareservice.Controllers
                                     // var live = IsEmailAccountValid("live-com.olc.protection.outlook.com", "aa.aa@live.com");
                                     //Console.WriteLine($"Live account is valid - {live.ToString()}");
 
+                                    
                                     string SelectedRoleId = Obj.RoleId;
-                                    Obj.Age = Convert.ToInt32(TempData["Age"]);
+                                    Obj.Age = userAge;
                                     int agreeterms = Convert.ToInt32(Obj.agreeterm);
                                     string fname = Obj.Firstname;
                                     string lname = Obj.Lastname;
@@ -641,6 +656,9 @@ namespace Zencareservice.Controllers
                 // Perform additional validation
                 if (IsDateOfBirthValid(Obj.Dob))
                 {
+
+                    int userAge = CalculateAge(Obj.Dob);
+
                     bool agreeToTerms = true;
 
                     if (agreeToTerms == true)
@@ -663,14 +681,14 @@ namespace Zencareservice.Controllers
                                     TempData["MyEmail"] = validemail;
 
 
-
+                                   
                                     //Console.WriteLine($"Gmail account is valid - {gMail.ToString()}");
 
                                     // var live = IsEmailAccountValid("live-com.olc.protection.outlook.com", "aa.aa@live.com");
                                     //Console.WriteLine($"Live account is valid - {live.ToString()}");
 
                                     string SelectedRoleId = Obj.RoleId;
-                                    Obj.Age = Convert.ToInt32(TempData["Age"]);
+                                    Obj.Age = userAge;
                                     int agreeterms = Convert.ToInt32(Obj.agreeterm);
                                     string fname = Obj.Firstname;
                                     string lname = Obj.Lastname;
@@ -702,8 +720,6 @@ namespace Zencareservice.Controllers
                                     ds = Obj_DataAccess2.SaveRegister(Obj);
 
                                     return RedirectToAction("VerifyOtp", "Account");
-
-
 
 
                                 }
@@ -844,7 +860,21 @@ namespace Zencareservice.Controllers
             return View();
         }
 
-      
+        public IActionResult GetDecryptedCookie()
+        {
+            var encryptedData = Request.Cookies["YourCookieName"];
+            var userDataJson = _dataProtector.Unprotect(encryptedData);
+
+            // Deserialize UserData from the JSON string
+            var userData = JsonConvert.DeserializeObject<Signup>(userDataJson);
+
+            // Use the userData.UserId, userData.UserName, userData.Role, userData.RCode as needed
+
+            return View();
+        }
+
+
+
         [HttpPost]
         public IActionResult Login(Login Obj)
         {
@@ -881,26 +911,65 @@ namespace Zencareservice.Controllers
 
                         string Role = ds.Tables[0].Rows[0]["Role"].ToString();
 
+                        TempData["Role"] = Role;
+
                         string Fname = ds.Tables[0].Rows[0]["Fname"].ToString();
 
                         TempData["FirstName"] =  Fname;
+
+                        string RCode = ds.Tables[0].Rows[0]["RCode"].ToString();
+
+                        TempData["RCode"] = RCode;
+
+
+                        var userData = new Signup
+                        {
+                            UserId = UsrId,
+                            Rcode = RCode, // Replace with actual user data
+                            Email = Email,
+                            RoleName = Role,// Replace with actual user data
+                            Firstname = Fname
+                        };
+
+                        var userDataJson = JsonConvert.SerializeObject(userData);
+
+                        var protectedData = _dataProtector.Protect(userDataJson);
+
 
                         var cookieOptions = new CookieOptions
                         {
                             Expires = DateTime.Now.AddDays(1), // Set the expiration date
                             HttpOnly = true, // Makes the cookie accessible only to the server-side code
                         };
+
+                        Response.Cookies.Append("EncryptCookie", protectedData, new CookieOptions
+                        {
+                            HttpOnly = true,
+                            Secure = true,
+                            SameSite = SameSiteMode.None,
+                            Expires = DateTimeOffset.Now.AddDays(1)
+
+                        });
                         Response.Cookies.Append("MyCookie", "CookieValue", cookieOptions);
+
                         Response.Cookies.Append("UserId", UsrId);
                         CookieOptions options = new CookieOptions();
                         options.Expires = DateTime.Now.AddMinutes(5);
+
                         Response.Cookies.Append("UsrName", UserName, options);
                         CookieOptions options1 = new CookieOptions();
                         options.Expires = DateTime.Now.AddMinutes(5);
-                        Response.Cookies.Append("Role", UserName, options);
+
+                        Response.Cookies.Append("Role", Role, options);
                         CookieOptions options2 = new CookieOptions();
                         options.Expires = DateTime.Now.AddMinutes(5);
+
+                        Response.Cookies.Append("RCode", RCode, options);
+                        CookieOptions options3 = new CookieOptions();
+                        options.Expires = DateTime.Now.AddMinutes(5);
+
                         Response.Cookies.Append("UsrId", UsrId, options1);
+
                         HttpContext.Session.SetString("FirstName", Fname);
 
                         string jsonString = JsonConvert.SerializeObject(ds.Tables[1]);
@@ -931,8 +1000,10 @@ namespace Zencareservice.Controllers
 
         }
 
-		[HttpPost]
-		[ValidateAntiForgeryToken]
+       
+
+
+        [ValidateAntiForgeryToken]
 		public IActionResult Logout()
 		{
 			// Implement logout logic

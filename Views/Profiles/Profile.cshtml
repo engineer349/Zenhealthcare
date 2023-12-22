@@ -25,7 +25,12 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-LzQ2BKWz2BDL8Gn1EQ0VG+CTAvCqLT9D/CQDt/cVVhjrNSZ7a/z26duPHmkcQ3Xz" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-Jj1T+AJr2P+N3Jqj2BT2vD/Fk5lQ9ACsC8DScC3vN92K3ww5KS72GGsTtxnkrE+L" crossorigin="anonymous"></script>
-
+    <style>
+        #profile-img {
+            max-width: 200px;
+            max-height: 200px;
+        }
+    </style>
 </head>
 <body>
     <form asp-action="UpdateProfile" asp-controller="Profiles" method="post">
@@ -33,7 +38,12 @@
         <div class="container rounded bg-white mt-5 mb-5">
             <div class="row">
                 <div class="col-md-3 border-right">
-                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">@TempData["FirstName"]</span><span class="text-black-50">@TempData["Email"]</span><span> </span></div>
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                        <img class="rounded-circle mt-5" width="150px" id="profile-img" alt="https: //st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                        <span class="font-weight-bold">@TempData["FirstName"]</span><span class="text-black-50">@TempData["Email"]</span><span> </span></div>
+                   
+                    <!-- Input for Uploading Image -->
+                    <input type="file" id="upload-input" accept="image/*" onchange="loadProfileImage(event)">
                     <div class="col-md-12">
                         <label class="labels" asp-for="Uniqueid"> UniqueId</label>
                         <input type="text" asp-for="Uniqueid" id="uniqueud" placeholder="UniqueId" class="form-control" maxlength="16" />
@@ -134,8 +144,14 @@
                 <div class="col-md-4 border-right">
                     <div class="p-3 py-5">
                         <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
-                        <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text" class="form-control" placeholder="experience" value=""></div> <br>
-                        <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></div>
+                        <div class="col-md-12"><label class="labels">Experience in Years</label><input type="range" class="form-control" asp-for="DExp" placeholder="experience"></div> <br>
+                    
+                        <div class="col-md-12"><label class="labels">Doctor Qualification</label><input type="text" class="form-control" asp-for="DQualification" placeholder="additional details"></div>
+
+                        <div class="col-md-12">
+                            <label class="labels">Doctor Proof</label><input type="file" name="File" />
+                            <input type="submit" value="Upload" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -172,7 +188,21 @@
             }
         });
     </script>
+    <script>
+        // Function to load and display the selected profile image
+        function loadProfileImage(event) {
+            const input = event.target;
+            const reader = new FileReader();
 
+            reader.onload = function () {
+                const profileImg = document.getElementById('profile-img');
+                profileImg.src = reader.result;
+            };
+
+            // Read the selected file as a data URL
+            reader.readAsDataURL(input.files[0]);
+        }
+    </script>
 </body>
 
 </html>

@@ -16,7 +16,7 @@
 
         public string? PatientAge { get; set; }
 
-        public string? PatientPhoneno { get; set; }
+        public string? Patientphoneno { get; set; }
 
         public string? PatientGender { get; set; }
 

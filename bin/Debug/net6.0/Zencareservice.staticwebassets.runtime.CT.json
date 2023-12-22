@@ -1799,6 +1799,22 @@
             },
             "Patterns": null
           },
+          "script.js": {
+            "Children": null,
+            "Asset": {
+              "ContentRootIndex": 0,
+              "SubPath": "forms/script.js"
+            },
+            "Patterns": null
+          },
+          "style.css": {
+            "Children": null,
+            "Asset": {
+              "ContentRootIndex": 0,
+              "SubPath": "forms/style.css"
+            },
+            "Patterns": null
+          },
           "termsofservice.html": {
             "Children": null,
             "Asset": {

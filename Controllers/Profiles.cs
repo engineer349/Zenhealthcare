@@ -77,8 +77,6 @@ namespace Zencareservice.Controllers
                 ViewBag.DataSet = ds.Tables[1];
                 ViewBag.SelectedValue = "Tamil Nadu";
 
-            
-
                 string fname = ds.Tables[0].Rows[0]["Fname"].ToString();
                 string lname = ds.Tables[0].Rows[0]["Lname"].ToString();              
                 string phoneno = ds.Tables[0].Rows[0]["Phoneno"].ToString();
@@ -93,6 +91,8 @@ namespace Zencareservice.Controllers
                 string state = ds.Tables[0].Rows[0]["State"].ToString();
                 string city = ds.Tables[0].Rows[0]["City"].ToString();
                 string country = ds.Tables[0].Rows[0]["Country"].ToString();
+                string Role = ds.Tables[0].Rows[0]["Role"].ToString();
+                TempData["Role"] = Role;
                
 
 
@@ -138,7 +138,8 @@ namespace Zencareservice.Controllers
 
 
 
-                    Obj.UsrId = Convert.ToInt32(TempData["UserId"]);                    
+                    Obj.UsrId = Convert.ToInt32(TempData["UserId"]);
+                    Obj.Role = Convert.ToString( TempData["Role"]);
                     string Gender = Obj.Gender;
                     string Altcontact = Obj.AltPhoneno;
                     string Addressline1 = Obj.Address1;

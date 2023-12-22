@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.CookiePolicy;
+using Microsoft.AspNetCore.DataProtection;
 using System.Data.Common;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
@@ -28,15 +30,23 @@ var dbPassword = Environment.GetEnvironmentVariable("DB_SA_PASSWORD");
 var connectionString = $"Data Source{dbHost}; Inital Catalog ={dbName}; User ID=sa; Password={dbPassword}";
 builder.Services.AddScoped<DataAccess>();
 builder.Services.AddScoped<SqlDataAccess>();
-
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+    options.HttpOnly = HttpOnlyPolicy.Always;
+    options.Secure = CookieSecurePolicy.Always;
+});
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
+        //options.Cookie.Name = "YourCookieName";
+        //options.DataProtectionProvider = DataProtectionProvider.Create(new DirectoryInfo(@"path-to-keys-directory"));
         options.LoginPath = "/Account/Login"; // Redirect to login page if not authenticated
         options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
         options.AccessDeniedPath = "/Account/AccessDenied"; // Redirect to access denied page if not authorized
 		options.LogoutPath = "/Account/Logout";
+
 	});
 builder.Services.AddSession(options =>
 {
@@ -62,7 +72,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
         name: "default",
-       pattern: "{controller=Account}/{action=Login}/{id?}");
+       pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
 });

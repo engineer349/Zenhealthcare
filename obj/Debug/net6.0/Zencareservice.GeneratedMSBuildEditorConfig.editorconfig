@@ -112,8 +112,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Projects/Zencareservice/Views/Prescriptions/Prescedit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJlc2NyaXB0aW9uc1xQcmVzY2VkaXQuY3NodG1s
+[D:/Projects/Zencareservice/Views/Prescriptions/CreatePrescription.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJlc2NyaXB0aW9uc1xDcmVhdGVQcmVzY3JpcHRpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/Zencareservice/Views/Prescriptions/Presclist.cshtml]

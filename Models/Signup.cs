@@ -10,7 +10,7 @@ namespace Zencareservice.Models
         public string ?RoleId { get; set; }
         public string ?RoleName { get; set; }
 
-
+        public string UserId { get; set; }
         public int Age { get; set; }
         public string ?numeric1 { get; set; }
 

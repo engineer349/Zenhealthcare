@@ -6,6 +6,9 @@ namespace Zencareservice.Models
     {
 
         public DataSet MyDataSet { get; set; }
+
+        public string ?RCode { get; set; }
+
         public string ?PatientFirstName { get; set; }
 
         public string? PState { get; set; }

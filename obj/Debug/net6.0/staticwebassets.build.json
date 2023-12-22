@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "rFm5TJxXSpMEkMnb5z4hBFPaeqYjJdAO36/fZUi1eB8=",
+  "Hash": "RTZ25/m8H8FNEfEDRqwAeS9t54U6wu9zIkA5+IP15Zo=",
   "Source": "Zencareservice",
   "BasePath": "_content/Zencareservice",
   "Mode": "Default",
@@ -3398,6 +3398,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\forms\\mailsend.html"
+    },
+    {
+      "Identity": "D:\\Projects\\Zencareservice\\wwwroot\\forms\\script.js",
+      "SourceId": "Zencareservice",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\Zencareservice\\wwwroot\\",
+      "BasePath": "_content/Zencareservice",
+      "RelativePath": "forms/script.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\forms\\script.js"
+    },
+    {
+      "Identity": "D:\\Projects\\Zencareservice\\wwwroot\\forms\\style.css",
+      "SourceId": "Zencareservice",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\Zencareservice\\wwwroot\\",
+      "BasePath": "_content/Zencareservice",
+      "RelativePath": "forms/style.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\forms\\style.css"
     },
     {
       "Identity": "D:\\Projects\\Zencareservice\\wwwroot\\forms\\termsofservice.html",

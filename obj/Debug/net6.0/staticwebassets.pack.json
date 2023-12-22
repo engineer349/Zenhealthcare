@@ -797,6 +797,14 @@
       "PackagePath": "staticwebassets\\forms\\mailsend.html"
     },
     {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\forms\\script.js",
+      "PackagePath": "staticwebassets\\forms\\script.js"
+    },
+    {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\forms\\style.css",
+      "PackagePath": "staticwebassets\\forms\\style.css"
+    },
+    {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\forms\\termsofservice.html",
       "PackagePath": "staticwebassets\\forms\\termsofservice.html"
     },

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Components;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Zencareservice.Models
 {
@@ -9,7 +11,18 @@ namespace Zencareservice.Models
        
         public int UsrId {  get; set; }
 
-        public string? Pcode { get; set; }
+      
+        public int DExp { get; set; }
+
+       
+   
+        public string DQualification { get; set; }
+
+    
+        public IFormFile DPFile { get; set; }
+
+        public string? RCode { get; set; }
+
 
         public string? Firstname { get; set; }
 
