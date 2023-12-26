@@ -38,10 +38,10 @@ namespace Zencareservice.Controllers
         //private readonly TwilioService _twilioService;
         private readonly IDataProtector _dataProtector;
 
-  
+
         private int _generatedOtp;
 
-        private string ? ResetEmail;
+        private string? ResetEmail;
 
         private readonly DataAccess _dataaccess;
 
@@ -56,96 +56,103 @@ namespace Zencareservice.Controllers
 
         public IActionResult Index()
         {
-       
+
             ViewBag.Message = "Your Details are successfully saved!";
 
             return View("RegistrationSuccess", "Account");
         }
 
-      
+        public IActionResult AdminRegister()
+        {
+            return View();
+        }
+
+        public IActionResult URegister()
+        {
+            string returnUrl = "/Account/URegister";
+            ViewData["ReturnUrl"] = returnUrl;
+
+            ViewBag.Roles = new SelectList(roles, "RoleId", "RoleName");
+
+            return View();
+        }
+
         public IActionResult AccessDenied()
         {
             return View();
         }
         public IActionResult Register()
         {
-			string returnUrl = "/Account/Register";
-			ViewData["ReturnUrl"] = returnUrl;
-			return View();
+            string returnUrl = "/Account/Register";
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
         }
         public IActionResult PatientRegister()
         {
-			string returnUrl = "/Account/PatientRegister";
-			ViewData["ReturnUrl"] = returnUrl;
-			return View();
+            string returnUrl = "/Account/PatientRegister";
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
         }
-		public IActionResult AdminRegister()
-		{
-			string returnUrl = "/Account/AdminRegister";
-			ViewBag.Roles = new SelectList(roles, "RoleId", "RoleName");
-			// Set your desired return URL
-			ViewData["ReturnUrl"] = returnUrl;
-			return View();
-		}
-		public IActionResult Login()
-		{
-			ViewBag.Message = "Your LoginPage is loaded";
-			return View();
-		}
-		public IActionResult PatientLogin()
+
+        public IActionResult Login()
         {
-			string returnUrl = "/Account/PatientLogin";
-			ViewData["ReturnUrl"] = returnUrl;
-			return View();
+            ViewBag.Message = "Your LoginPage is loaded";
+            return View();
+        }
+        public IActionResult PatientLogin()
+        {
+            string returnUrl = "/Account/PatientLogin";
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
         }
 
 
-		public IActionResult PatForgot()
-		{
-			string returnUrl = "/Account/PatForgot";
-			ViewData["ReturnUrl"] = returnUrl;
-			return View();
-		}
-
-		public IActionResult PatReset()
-		{
-			string returnUrl = "/Account/PatReset";
-			ViewData["ReturnUrl"] = returnUrl;
-			return View();
-		}
-		public IActionResult ResetPassword()
-		{
-			return View();
-		}
-
-		public IActionResult ForgotPassword()
-		{
-
-			return View();
-		}
-
-		public IActionResult VerifyOtp()
+        public IActionResult PatForgot()
         {
-			string gotp = Request.Cookies["OTP"];
+            string returnUrl = "/Account/PatForgot";
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
 
-		   
+        public IActionResult PatReset()
+        {
+            string returnUrl = "/Account/PatReset";
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+        public IActionResult ResetPassword()
+        {
+            return View();
+        }
 
-			if (string.IsNullOrEmpty(gotp) )
-			{
-				return RedirectToAction("AccessDenied", "Account");
-			}
+        public IActionResult ForgotPassword()
+        {
 
-			HttpContext.Session.SetString("AccessDenied", DateTime.Now.AddMinutes(1).ToString());
+            return View();
+        }
+
+        public IActionResult VerifyOtp()
+        {
+            string gotp = Request.Cookies["OTP"];
+
+
+
+            if (string.IsNullOrEmpty(gotp))
+            {
+                return RedirectToAction("AccessDenied", "Account");
+            }
+
+            HttpContext.Session.SetString("AccessDenied", DateTime.Now.AddMinutes(1).ToString());
 
             var myemail = TempData["MyEmail"];
 
             return View();
         }
 
-     
+
         public IActionResult ValidateOtp(Signup model)
         {
-           
+
 
             StringBuilder stringBuilder = new StringBuilder();
 
@@ -154,46 +161,46 @@ namespace Zencareservice.Controllers
             stringBuilder.Append(model.numeric3);
             stringBuilder.Append(model.numeric4);
             stringBuilder.Append(model.numeric5);
-          
+
 
             string enteredOtp = stringBuilder.ToString();
 
             if (TempData.TryGetValue("GOTP", out var gotp))
             {
-              
+
                 ViewBag.Message = gotp;
 
                 string _genotp = Convert.ToString(ViewBag.Message);
 
                 if (Convert.ToInt64(enteredOtp) == Convert.ToInt64(_genotp))
                 {
-                    
+
                     ViewBag.Message = "SuccessfullyValidated";
 
-                    
-                    return RedirectToAction("Dashboard","Report");
+
+                    return RedirectToAction("Dashboard", "Report");
 
                 }
                 else
                 {
-                    ViewBag.Message = "You entered Wrong PIN";    
-                    
-                    return RedirectToAction("Index","Home");
+                    ViewBag.Message = "You entered Wrong PIN";
+
+                    return RedirectToAction("Index", "Home");
                 }
-              
+
             }
 
             return View("Login");
-           
+
         }
 
 
-        
+
         private List<Signup> roles = new List<Signup>
         {
-            new Signup { RoleId = "Patient", RoleName = "patient" },
-            new Signup { RoleId = "Doctor", RoleName = "doctor" },
-            new Signup {RoleId = "Staff", RoleName = "staff"},
+            new Signup { RoleId = "Patient", RoleName = "Patient" },
+            new Signup { RoleId = "Doctor", RoleName = "Doctor" },
+            new Signup {RoleId = "Staff", RoleName = "Staff"},
         };
 
 
@@ -202,15 +209,15 @@ namespace Zencareservice.Controllers
         {
             string ResetPassword = Obj.RPassword;
             string ConfirmResetPassword = Obj.CRPassword;
-           
+
             if (TempData.TryGetValue("ResetData", out var myresetData))
             {
                 ViewBag.Message = myresetData;
-                
+
                 string ResetEmail = Convert.ToString(ViewBag.Message);
-            
+
                 string AllData = Convert.ToString(ViewBag.AllData);
-                
+
                 if (!string.IsNullOrEmpty(ResetPassword) && !string.IsNullOrEmpty(ConfirmResetPassword))
                 {
                     DataAccess Obj_DataAccess = new DataAccess();
@@ -226,7 +233,7 @@ namespace Zencareservice.Controllers
         {
             string ResetEmail = obj.Email;
 
-            if(ResetEmail!=null)
+            if (ResetEmail != null)
             {
                 TempData["ResetData"] = ResetEmail;
                 string generatedCode = Codegenerator();
@@ -236,8 +243,8 @@ namespace Zencareservice.Controllers
             }
 
             return View();
-         
-            
+
+
         }
 
 
@@ -268,7 +275,7 @@ namespace Zencareservice.Controllers
 
         private bool IsDateOfBirthValid(DateTime dob)
         {
-            
+
 
             // Ensure the user is at least 18 years old
             return dob.AddYears(18) <= DateTime.Now && dob > DateTime.Now.AddYears(-100); // Assuming a reasonable upper limit for age
@@ -283,7 +290,7 @@ namespace Zencareservice.Controllers
             // Adjust age if the birthday hasn't occurred yet this year
             //if (dob > DateTime.Now.AddYears(-age))
             //{
-                //age--
+            //age--
             //}
 
             return age;
@@ -338,7 +345,7 @@ namespace Zencareservice.Controllers
             int randomCode = random.Next(10000, 100000);
             _generatedOtp = randomCode;
             TempData["GOTP"] = _generatedOtp;
-          
+
             return _generatedOtp.ToString();
 
         }
@@ -395,7 +402,7 @@ namespace Zencareservice.Controllers
 
             if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
             {
-               
+
                 // Perform additional validation
                 if (IsDateOfBirthValid(Obj.Dob))
                 {
@@ -411,15 +418,15 @@ namespace Zencareservice.Controllers
 
                         var gMail = IsEmailAccountValid("gmail-smtp-in.l.google.com", Obj.Email);
 
-                        if (gMail==true)
+                        if (gMail == true)
                         {
                             DataAccess Obj_DataAccess = new DataAccess();
                             DataSet dse = new DataSet();
                             dse = Obj_DataAccess.CheckEmail(Obj);
-                            
-                            
 
-                            if (dse.Tables[0].Rows.Count == 0 && dse.Tables[1].Rows.Count ==0)
+
+
+                            if (dse.Tables[0].Rows.Count == 0 && dse.Tables[1].Rows.Count == 0)
                             {
 
                                 try
@@ -427,7 +434,7 @@ namespace Zencareservice.Controllers
                                     string validemail = Obj.Email;
                                     TempData["MyEmail"] = validemail;
 
-                                    
+
 
                                     //Console.WriteLine($"Gmail account is valid - {gMail.ToString()}");
 
@@ -485,132 +492,6 @@ namespace Zencareservice.Controllers
                             {
                                 ViewBag.Message = "UserAlready Exsits";
                             }
-                         }
-                        else
-                        {
-                            TempData["Email"] = "InvalidUser";
-                            ViewBag.Message = "Invalid Emailaddress UserAccount can't create.Pls Enter a valid email address!";
-                            return View();
-
-                        }
-
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(nameof(Signup.agreeterm), "Pls  agree to terms of service and condition.");
-                    }
-
-                }
-                else
-                {
-                    ModelState.AddModelError(nameof(Signup.Dob), "User must be at least 18 years old.");
-                }
-            }
-
-            else
-            {
-                ViewBag.Message = "Pls tryagain!";
-                return RedirectToAction("Index", "Home");
-            }
-
-
-      
-            return View();
-              
-
-        }
-        [HttpPost]
-        public IActionResult Register(Signup Obj, string returnUrl, DateTime userDob)
-        {
-            //ViewBag.Roles = new SelectList(roles, "RoleId", "RoleName");
-
-            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-            {
-
-                // Perform additional validation
-                if (IsDateOfBirthValid(Obj.Dob))
-                {
-                    int userAge = CalculateAge(Obj.Dob);
-                    bool agreeToTerms = true;
-
-                    if (agreeToTerms == true)
-                    {
-                        
-
-                        var gMail = IsEmailAccountValid("gmail-smtp-in.l.google.com", Obj.Email);
-
-                        if (gMail == true)
-                        {
-                            DataAccess Obj_DataAccess = new DataAccess();
-                            DataSet dse = new DataSet();
-                            dse = Obj_DataAccess.CheckEmail(Obj);
-
-                            if (dse.Tables[0].Rows.Count == 0)
-                            {
-                               
-                                try
-                                {
-                                    string validemail = Obj.Email;
-                                    TempData["MyEmail"] = validemail;
-
-
-
-                                    //Console.WriteLine($"Gmail account is valid - {gMail.ToString()}");
-
-                                    // var live = IsEmailAccountValid("live-com.olc.protection.outlook.com", "aa.aa@live.com");
-                                    //Console.WriteLine($"Live account is valid - {live.ToString()}");
-
-                                    
-                                    string SelectedRoleId = Obj.RoleId;
-                                    Obj.Age = userAge;
-                                    int agreeterms = Convert.ToInt32(Obj.agreeterm);
-                                    string fname = Obj.Firstname;
-                                    string lname = Obj.Lastname;
-                                    string password = Obj.Password;
-                                    string confirmpassword = Obj.Confirmpassword;
-                                    string username = Obj.Username;
-                                    string phoneno = Obj.Phonenumber;
-
-                                    DateTime Dob = Obj.Dob;
-                                    Obj.Status = 1;
-
-                                    if (!String.IsNullOrEmpty(validemail))
-                                    {
-
-                                        string generatedCode = Codegenerator();
-
-                                        _generatedOtp = Convert.ToInt32(generatedCode);
-                                        CookieOptions options = new CookieOptions();
-                                        options.Expires = DateTime.Now.AddMinutes(2);
-                                        Response.Cookies.Append("OTP", generatedCode, options);
-
-                                    }
-
-                                    SendingEmail(Obj);
-
-
-                                    DataAccess Obj_DataAccess2 = new DataAccess();
-                                    DataSet ds = new DataSet();
-                                    ds = Obj_DataAccess2.SaveRegister(Obj);
-
-                                    return RedirectToAction("VerifyOtp", "Account");
-
-
-
-
-                                }
-
-
-                                catch (Exception ex)
-                                {
-                                    string msg = ex.Message.ToString();
-                                    ViewBag.Message = msg;
-                                }
-                            }
-                            else
-                            {
-                                ViewBag.Message = "UserAlready Exsits";
-                            }
                         }
                         else
                         {
@@ -646,13 +527,130 @@ namespace Zencareservice.Controllers
 
         }
         [HttpPost]
-        public IActionResult AdminRegister(Signup Obj, string returnUrl)
+        public IActionResult URegister(Signup Obj, string returnUrl, DateTime userDob)
         {
+           
+            
             ViewBag.Roles = new SelectList(roles, "RoleId", "RoleName");
 
-            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-            {
 
+
+            // Perform additional validation
+            if (IsDateOfBirthValid(Obj.Dob))
+            {
+                int userAge = CalculateAge(Obj.Dob);
+                bool agreeToTerms = true;
+
+                if (agreeToTerms == true)
+                {
+
+
+                    var gMail = IsEmailAccountValid("gmail-smtp-in.l.google.com", Obj.Email);
+
+                    if (gMail == true)
+                    {
+                        DataAccess Obj_DataAccess = new DataAccess();
+                        DataSet dse = new DataSet();
+                        dse = Obj_DataAccess.CheckEmail(Obj);
+
+                        if (dse.Tables[0].Rows.Count == 0)
+                        {
+
+                            try
+                            {
+                                string validemail = Obj.Email;
+                                TempData["MyEmail"] = validemail;
+
+
+
+                                //Console.WriteLine($"Gmail account is valid - {gMail.ToString()}");
+
+                                // var live = IsEmailAccountValid("live-com.olc.protection.outlook.com", "aa.aa@live.com");
+                                //Console.WriteLine($"Live account is valid - {live.ToString()}");
+
+
+                                string SelectedRoleId = Obj.RoleId;
+                                Obj.Age = userAge;
+                                int agreeterms = Convert.ToInt32(Obj.agreeterm);
+                                string fname = Obj.Firstname;
+                                string lname = Obj.Lastname;
+                                string password = Obj.Password;
+                                string confirmpassword = Obj.Confirmpassword;
+                                //string username = "";
+                                string phoneno = Obj.Phonenumber;
+
+                                DateTime Dob = Obj.Dob;
+                                Obj.Status = 1;
+
+                                if (!String.IsNullOrEmpty(validemail))
+                                {
+
+                                    string generatedCode = Codegenerator();
+
+                                    _generatedOtp = Convert.ToInt32(generatedCode);
+                                    CookieOptions options = new CookieOptions();
+                                    options.Expires = DateTime.Now.AddMinutes(2);
+                                    Response.Cookies.Append("OTP", generatedCode, options);
+
+                                }
+
+                                SendingEmail(Obj);
+
+
+                                DataAccess Obj_DataAccess2 = new DataAccess();
+                                DataSet ds = new DataSet();
+                                ds = Obj_DataAccess2.SaveRegister(Obj);
+
+                                return RedirectToAction("VerifyOtp", "Account");
+
+
+
+
+                            }
+
+
+                            catch (Exception ex)
+                            {
+                                string msg = ex.Message.ToString();
+                                ViewBag.Message = msg;
+                            }
+                        }
+                        else
+                        {
+                            ViewBag.Message = "UserAlready Exsits";
+                        }
+                    }
+                    else
+                    {
+                        TempData["Email"] = "InvalidUser";
+                        ViewBag.Message = "Invalid Emailaddress UserAccount can't create.Pls Enter a valid email address!";
+                        return View();
+
+                    }
+
+                }
+                else
+                {
+                    ModelState.AddModelError(nameof(Signup.agreeterm), "Pls  agree to terms of service and condition.");
+                }
+
+            }
+            else
+            {
+                ModelState.AddModelError(nameof(Signup.Dob), "User must be at least 18 years old.");
+            }
+        
+
+     
+            return View();
+
+    }
+    
+        [HttpPost]
+        public IActionResult AdminRegister(Signup Obj)
+        {
+
+          
                 // Perform additional validation
                 if (IsDateOfBirthValid(Obj.Dob))
                 {
@@ -679,15 +677,7 @@ namespace Zencareservice.Controllers
                                 {
                                     string validemail = Obj.Email;
                                     TempData["MyEmail"] = validemail;
-
-
-                                   
-                                    //Console.WriteLine($"Gmail account is valid - {gMail.ToString()}");
-
-                                    // var live = IsEmailAccountValid("live-com.olc.protection.outlook.com", "aa.aa@live.com");
-                                    //Console.WriteLine($"Live account is valid - {live.ToString()}");
-
-                                    string SelectedRoleId = Obj.RoleId;
+                                    string SelectedRoleId = "Admin";
                                     Obj.Age = userAge;
                                     int agreeterms = Convert.ToInt32(Obj.agreeterm);
                                     string fname = Obj.Firstname;
@@ -751,18 +741,9 @@ namespace Zencareservice.Controllers
                     }
 
                 }
-                else
-                {
-                    ModelState.AddModelError(nameof(Signup.Dob), "User must be at least 18 years old.");
-                }
-            }
-
-            else
-            {
-                ViewBag.Message = "Pls tryagain!";
-                return RedirectToAction("Index", "Home");
-            }
-
+              
+ 
+      
 
 
             return View();
@@ -860,6 +841,7 @@ namespace Zencareservice.Controllers
             return View();
         }
 
+
         public IActionResult GetDecryptedCookie()
         {
             var encryptedData = Request.Cookies["YourCookieName"];
@@ -922,18 +904,19 @@ namespace Zencareservice.Controllers
                         TempData["RCode"] = RCode;
 
 
-                        var userData = new Signup
-                        {
-                            UserId = UsrId,
-                            Rcode = RCode, // Replace with actual user data
-                            Email = Email,
-                            RoleName = Role,// Replace with actual user data
-                            Firstname = Fname
-                        };
 
-                        var userDataJson = JsonConvert.SerializeObject(userData);
+                        //var userData = new Signup
+                        //{
+                        //    UserId = UsrId,
+                        //    Rcode = RCode, // Replace with actual user data
+                        //    Email = Email,
+                        //    RoleName = Role,// Replace with actual user data
+                        //    Firstname = Fname
+                        //};
 
-                        var protectedData = _dataProtector.Protect(userDataJson);
+                        //var userDataJson = JsonConvert.SerializeObject(userData);
+
+                        //var protectedData = _dataProtector.Protect(userDataJson);
 
 
                         var cookieOptions = new CookieOptions
@@ -942,14 +925,14 @@ namespace Zencareservice.Controllers
                             HttpOnly = true, // Makes the cookie accessible only to the server-side code
                         };
 
-                        Response.Cookies.Append("EncryptCookie", protectedData, new CookieOptions
-                        {
-                            HttpOnly = true,
-                            Secure = true,
-                            SameSite = SameSiteMode.None,
-                            Expires = DateTimeOffset.Now.AddDays(1)
+                        //Response.Cookies.Append("EncryptCookie", protectedData, new CookieOptions
+                        //{
+                        //    HttpOnly = true,
+                        //    Secure = true,
+                        //    SameSite = SameSiteMode.None,
+                        //    Expires = DateTimeOffset.Now.AddDays(1)
 
-                        });
+                        //});
                         Response.Cookies.Append("MyCookie", "CookieValue", cookieOptions);
 
                         Response.Cookies.Append("UserId", UsrId);

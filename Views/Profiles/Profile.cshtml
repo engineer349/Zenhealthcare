@@ -25,12 +25,40 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-LzQ2BKWz2BDL8Gn1EQ0VG+CTAvCqLT9D/CQDt/cVVhjrNSZ7a/z26duPHmkcQ3Xz" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-Jj1T+AJr2P+N3Jqj2BT2vD/Fk5lQ9ACsC8DScC3vN92K3ww5KS72GGsTtxnkrE+L" crossorigin="anonymous"></script>
+    <script src="~/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+    <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.css" />
+
     <style>
-        #profile-img {
-            max-width: 200px;
-            max-height: 200px;
+        
+        .upload-container {
+            width: 200px; /* Set the width of the outer box */
+            height: 200px; /* Set the height of the outer box */
+            border: 2px solid #ccc; /* Border style */
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-    </style>
+
+        .upload-container input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upload-preview {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensure the image covers the entire space without stretching */
+            display: block;
+        }
+        </style>
+
 </head>
 <body>
     <form asp-action="UpdateProfile" asp-controller="Profiles" method="post">
@@ -38,9 +66,14 @@
         <div class="container rounded bg-white mt-5 mb-5">
             <div class="row">
                 <div class="col-md-3 border-right">
-                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                        <img class="rounded-circle mt-5" width="150px" id="profile-img" alt="https: //st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
-                        <span class="font-weight-bold">@TempData["FirstName"]</span><span class="text-black-50">@TempData["Email"]</span><span> </span></div>
+                    <div class="upload-container">
+                        <input type="file" id="uploadInput" accept="image/*">
+                        <img id="previewImage" class="upload-preview" src="#" alt="Image Preview">
+                        <span class="font-weight-bold">@TempData["FirstName"]</span><span class="text-black-50">@TempData["Email"]</span><span> </span>
+                    </div>
+                    </div>
+                        
+                        
                    
                     <!-- Input for Uploading Image -->
                     <input type="file" id="upload-input" accept="image/*" onchange="loadProfileImage(event)">
@@ -120,16 +153,21 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="labels" asp-for="City">City</label>
-
-                                @Html.DropDownListFor(model => model.City, new SelectList(Enumerable.Empty<SelectListItem>(), "CId", "City"), "Please select a city", new {  @class="form-control",@id = "cities" })
-
+                                @if (ViewBag.Citymsg !=null)
+                                {
+                                    @Html.DropDownListFor(model => model.City, ViewBag.City as List<SelectListItem>, "Please select", new { @class = "form-control",Id="cities" })
+                                }
+                                else
+                                {
+                                    @Html.DropDownListFor(model => model.City, new SelectList(Enumerable.Empty<SelectListItem>(), "CId", "City"), "Please select a city", new {  @class="form-control",@id = "cities" })
+                                }
                                 <span asp-validation-for="City" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-6">
                                 <label class="labels" asp-for="Country">Country</label>
-                                <input type="text" class="form-control" placeholder="Country" id="country" asp-for="Country" />
+                                <input type="text" class="form-control" placeholder="Country"  asp-for="Country" />
                                 <span asp-validation-for="Country" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
@@ -144,13 +182,31 @@
                 <div class="col-md-4 border-right">
                     <div class="p-3 py-5">
                         <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
-                        <div class="col-md-12"><label class="labels">Experience in Years</label><input type="range" class="form-control" asp-for="DExp" placeholder="experience"></div> <br>
-                    
+                        <div class="col-md-12"><label class="labels">Experience in Years</label><input type="text" class="form-control" asp-for="DExp" placeholder="experience"></div> <br>                 
                         <div class="col-md-12"><label class="labels">Doctor Qualification</label><input type="text" class="form-control" asp-for="DQualification" placeholder="additional details"></div>
-
                         <div class="col-md-12">
-                            <label class="labels">Doctor Proof</label><input type="file" name="File" />
-                            <input type="submit" value="Upload" />
+                            <label class="labels" asp-for="specialistname">Doctor Specialist</label> 
+                            @{
+                                var ds = ViewBag.YourDataList;
+                            }
+
+                            @Html.DropDownListFor(model => model.specialistname, ViewBag.specialistname as List<SelectListItem>, "-Please select--", new { @class = "form-control",Id="DDlspecialistname" })
+                        </div>
+                        <div class="col-md-12">
+                            @* <label class="labels">Doctor Proof</label><input type="file" name="File" />
+                            <input type="submit" value="Upload" /> *@
+
+                            <label for="exampleInputFile" class="labels">Doctor Proof</label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="exampleInputFile">
+                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                </div>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">Upload</span>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -189,19 +245,45 @@
         });
     </script>
     <script>
-        // Function to load and display the selected profile image
-        function loadProfileImage(event) {
-            const input = event.target;
-            const reader = new FileReader();
+        // JavaScript to display selected image preview
+        const uploadInput = document.getElementById('uploadInput');
+        const previewImage = document.getElementById('previewImage');
 
-            reader.onload = function () {
-                const profileImg = document.getElementById('profile-img');
-                profileImg.src = reader.result;
-            };
+        uploadInput.addEventListener('change', function () {
+            const file = this.files[0];
 
-            // Read the selected file as a data URL
-            reader.readAsDataURL(input.files[0]);
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    previewImage.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                previewImage.src = '#';
+            }
+        });
+
+        // JavaScript functions for buttons
+        function browseImage() {
+            // Trigger the file input
+            uploadInput.click();
         }
+
+        function uploadImage() {
+            // Implement your upload logic here
+            alert('Image uploaded!');
+        }
+
+        function clearImage() {
+            // Clear the image preview and input value
+            previewImage.src = '#';
+            uploadInput.value = '';
+        }
+    </script>
+    <script>
+        $(function () {
+            bsCustomFileInput.init();
+        });
     </script>
 </body>
 

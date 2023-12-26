@@ -19,16 +19,129 @@ using System.Globalization;
 using System.CodeDom.Compiler;
 using Newtonsoft.Json;
 using System.Drawing;
+using System.Xml.Linq;
 
 namespace Zencareservice.Controllers
 {
     public class Appointments : Controller
     {
         
-        public IActionResult Aptlist()
+        public IActionResult Aptlist(Appts apt)
         {
-            return View();
+            string UsrId = Request.Cookies["UsrId"];
+
+            TempData["UserId"] = UsrId;
+
+            string UsrName = Request.Cookies["UsrName"];
+
+            if (string.IsNullOrEmpty(UsrId) || string.IsNullOrEmpty(UsrName))
+            {
+                return RedirectToAction("PatientLogin", "Account");
+            }
+
+            else
+            {
+                DataAccess Obj_DataAccess = new DataAccess();
+                DataSet ds = new DataSet();
+                ds = Obj_DataAccess.GetAppointmentList(UsrId);
+
+                
+               
+                List<Appts> AptList  = new List<Appts>();
+  
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                   
+                    string pfname = ds.Tables[0].Rows[0]["PFname"].ToString();
+                    string plname = ds.Tables[0].Rows[0]["PLname"].ToString();
+                    string patphoneno = ds.Tables[0].Rows[0]["Patphone"].ToString();
+                    string pemail = ds.Tables[0].Rows[0]["PatientEmail"].ToString();
+                    string aptdate = ds.Tables[0].Rows[0]["AptBookingdate"].ToString();
+                    //string apttime = ds.Tables[0].Rows[0]["AptTime"].ToString();
+                    string PRCode = ds.Tables[0].Rows[0]["Rcode"].ToString();
+
+
+
+                    Appts apts = new Appts();
+                    {
+                        apts.RCode = PRCode;
+                        apts.PatientFirstName = pfname;
+                        apts.PatientLastName = plname;
+                        apts.Patientphoneno = patphoneno;
+                        apts.PatientEmail = pemail;
+                        apts.AptBookingDate = Convert.ToDateTime(aptdate);
+                        //apt.AptBookingTime = Convert.ToBase64String(apttime)  
+
+                    };
+                    AptList.Add(apts);  
+                }
+                apt.showlist = AptList;
+
+            }
+            
+
+            return View(apt);
+
         }
+
+        public IActionResult PAptlist(Appts apt)
+        {
+            string UsrId = Request.Cookies["UsrId"];
+
+            TempData["UserId"] = UsrId;
+
+            string UsrName = Request.Cookies["UsrName"];
+
+            if (string.IsNullOrEmpty(UsrId) || string.IsNullOrEmpty(UsrName))
+            {
+                return RedirectToAction("PatientLogin", "Account");
+            }
+
+            else
+            {
+                DataAccess Obj_DataAccess = new DataAccess();
+                DataSet ds = new DataSet();
+                ds = Obj_DataAccess.GetAppointmentList(UsrId);
+
+
+
+                List<Appts> AptList = new List<Appts>();
+
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+
+                    string pfname = ds.Tables[0].Rows[0]["PFname"].ToString();
+                    string plname = ds.Tables[0].Rows[0]["PLname"].ToString();
+                    string patphoneno = ds.Tables[0].Rows[0]["Patphone"].ToString();
+                    string pemail = ds.Tables[0].Rows[0]["PatientEmail"].ToString();
+                    string aptdate = ds.Tables[0].Rows[0]["AptBookingdate"].ToString();
+                    //string apttime = ds.Tables[0].Rows[0]["AptTime"].ToString();
+                    string PRCode = ds.Tables[0].Rows[0]["Rcode"].ToString();
+
+
+
+                    Appts apts = new Appts();
+                    {
+                        apts.RCode = PRCode;
+                        apts.PatientFirstName = pfname;
+                        apts.PatientLastName = plname;
+                        apts.Patientphoneno = patphoneno;
+                        apts.PatientEmail = pemail;
+                        apts.AptBookingDate = Convert.ToDateTime(aptdate);
+                        //apt.AptBookingTime = Convert.ToBase64String(apttime)  
+
+                    };
+                    AptList.Add(apts);
+                }
+                apt.showlist = AptList;
+
+            }
+
+
+            return View(apt);
+
+        }
+
 
         public string GetUserId()
         {
@@ -50,9 +163,9 @@ namespace Zencareservice.Controllers
 
             TempData["UserId"] = UsrId;
 
-            string UsrName = Request.Cookies["UsrName"];
+            string RCode = Request.Cookies["RCode"];
 
-            if (string.IsNullOrEmpty(UsrId) || string.IsNullOrEmpty(UsrName))
+            if (string.IsNullOrEmpty(UsrId) || string.IsNullOrEmpty(RCode))
             {
                 return RedirectToAction("PatientLogin", "Account");
             }
@@ -108,8 +221,7 @@ namespace Zencareservice.Controllers
                 string email = ds.Tables[1].Rows[0]["Email"].ToString();
                 string gender = ds.Tables[1].Rows[0]["Gender"].ToString();
                 string address1 = ds.Tables[1].Rows[0]["Addressline1"].ToString();
-                string RCode = ds.Tables[1].Rows[0]["Rcode"].ToString();
-                TempData["RCode"] = RCode;
+               
                 string patage = ds.Tables[1].Rows[0]["Age"].ToString();
 
 
@@ -131,8 +243,68 @@ namespace Zencareservice.Controllers
             return View(apt);
         }
 
-        
+        [HttpPost]
 
+        public IActionResult Aptedit(string a)
+        {
+            string ap = "apple";
+
+            return View();
+        }
+
+        public IActionResult Aptedit(Appts apt)
+        {
+            string UsrId = Request.Cookies["UsrId"];
+
+            TempData["UserId"] = UsrId;
+
+            string RCode = Request.Cookies["RCode"];
+
+            if (string.IsNullOrEmpty(UsrId) || string.IsNullOrEmpty(RCode))
+            {
+                return RedirectToAction("PatientLogin", "Account");
+            }
+
+
+            else
+            {
+                DataAccess Obj_DataAccess = new DataAccess();
+                DataSet ds = new DataSet();
+                ds = Obj_DataAccess.GetAppointments(UsrId);
+
+                if (ds != null)
+                {
+                    foreach (DataRow row in ds.Tables[4].Rows)
+                    {
+                        string pfname = ds.Tables[1].Rows[0]["PFname"].ToString();
+                        string plname = ds.Tables[1].Rows[0]["PLname"].ToString();
+                        string dfname = ds.Tables[1].Rows[0]["DFname"].ToString();
+                        string dlname = ds.Tables[1].Rows[0]["DLname"].ToString();
+                        string reasontype = ds.Tables[1].Rows[0]["Reasontype"].ToString();
+                        string aptbookingdate = ds.Tables[1].Rows[0]["AptBookingdate"].ToString();
+                        string aptbookingtime = ds.Tables[1].Rows[0]["AptTime"].ToString();
+
+
+                        apt = new Appts();
+                        {
+                            apt.PatientFirstName = pfname;
+                            apt.PatientLastName = plname;
+                            apt.DoctorFirstName = dfname;
+                            apt.DoctorLastName = dlname;
+                            apt.ReasonType = reasontype;
+
+
+                        }
+
+
+                    }
+
+
+                }
+                return View(apt);
+            }
+
+        }
         [HttpPost]
         public IActionResult GetCities(int stateId)
         {
@@ -174,5 +346,9 @@ namespace Zencareservice.Controllers
            
 
         }
+
+
+       
     }
+
 }

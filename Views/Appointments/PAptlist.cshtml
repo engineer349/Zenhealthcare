@@ -1,0 +1,72 @@
+﻿@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "APPOINTMENTS";
+}
+@model Zencareservice.Models.Appts
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>@ViewBag.Title</h1>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm">
+                    <li class="breadcrumb-item"><a asp-action="CreateAppointment" asp-controller="Appointments">New Apppointment</a></li>
+                    <li class="breadcrumb-item active">Appointment List</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">AppointmentList</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Registration Code</th>
+            <th>Patient FirstName</th>
+            <th>Patient LastName</th>
+            <th>Reason</th>
+            <th>PatientContactNo</th>
+            <th>Appointment Date</th>
+            <th>Appointment Time</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        @if (Model != null)
+        {
+            @foreach (var appointment in Model.showlist)
+            {
+                <tr>
+                    <td>@appointment.RCode</td>
+                    <td>@appointment.PatientFirstName</td>
+                    <td>@appointment.PatientLastName</td>
+                    <td>@appointment.ReasonType</td>
+                    <td>@appointment.Patientphoneno</td>
+                    <td>@appointment.AptBookingDate</td>
+                    <td>@appointment.AptBookingTime</td>
+                    <td></td>
+
+                </tr>
+            }
+        }
+        else
+        {
+
+        }
+
+    </tbody>
+</table>
+    </div>
+</div>

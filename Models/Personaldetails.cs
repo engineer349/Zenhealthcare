@@ -15,11 +15,13 @@ namespace Zencareservice.Models
         public int DExp { get; set; }
 
        
+        public string specialistname { get; set; }
    
         public string DQualification { get; set; }
 
-    
-        public IFormFile DPFile { get; set; }
+
+        public string Description { get; set; }
+        public IFormFile File { get; set; }
 
         public string? RCode { get; set; }
 

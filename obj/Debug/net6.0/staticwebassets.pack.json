@@ -573,6 +573,10 @@
       "PackagePath": "staticwebassets\\css\\termsofservice.css"
     },
     {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\css\\uregister.css",
+      "PackagePath": "staticwebassets\\css\\uregister.css"
+    },
+    {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\dist\\css\\adminlte.css",
       "PackagePath": "staticwebassets\\dist\\css\\adminlte.css"
     },

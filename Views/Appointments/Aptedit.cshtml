@@ -6,127 +6,112 @@
     Layout = "_AdminLayout";
 }
 @model Zencareservice.Models.Appts;
+
 <html>
 <head>
-    <meta lang="en" />
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+
 </head>
+<body> 
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Appointment</h1>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-left">
+                        <li class="breadcrumb-item"><a asp-action="Aptlist" asp-controller="Appointments">Appointment List</a></li>
+                        <li class="breadcrumb-item active">EditAppointment</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <div class="container-fluid">
+        <!-- SELECT2 EXAMPLE -->
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">@ViewData["Title"]</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
 
-<body>
-    <h3>Edit AppointmentDetails</h3>
-    <form method="POST" asp-action="Aptedit" asp-controller="Appointments">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-row">
-            <div class="form-group col-md-3">
-                <label asp-for="DoctorFirstName">DoctorFirstName</label>
-                <input asp-for="DoctorFirstName" type="text" class="form-control" placeholder="DoctorName">
-                <span asp-validation-for="DoctorFirstName" class="text-danger"></span>
+           <div class="card-body">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label asp-for="DoctorFirstName">DoctorFirstName</label>
+                        <input asp-for="DoctorFirstName" type="text" class="form-control" placeholder="DoctorName">
+                        <span asp-validation-for="DoctorFirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label asp-for="DoctorLastName">DoctorLastName</label>
+                        <input asp-for="DoctorLastName" type="text" class="form-control" placeholder="DoctorName">
+                        <span asp-validation-for="DoctorLastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label asp-for="PatientFirstName">PatientName</label>
+                        <input asp-for="PatientFirstName" type="text" class="form-control" id="patientname" placeholder="PatientName">
+                        <span asp-validation-for="PatientFirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label asp-for="PatientLastName">Patient LastName</label>
+                        <input asp-for="PatientLastName" type="text" class="form-control" id="patientname" placeholder="PatientName">
+                        <span asp-validation-for="PatientLastName" class="text-danger"></span>
+                    </div>
+                </div>
+    
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="ReasonType">ReasonType</label>
+                        <input asp-for="ReasonType" type="text" class="form-control" id="reasontype">
+                        <span asp-validation-for="ReasonType" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label asp-for="AptBookingDate">AppointmentDate</label>
+                        <input asp-for="AptBookingDate" type="date" class="form-control" id="appointmentdate">
+                        <span asp-validation-for="AptBookingDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label asp-for="AptBookingTime">AppointmentTime</label>
+                        <input asp-for="AptBookingTime" type="time" class="form-control" id="appointmenttime">
+                        <span asp-validation-for="AptBookingTime" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="Reschedule">Reschedule</label>
+                        <input for="Reschedule" type="checkbox" id="showInputs" class="form-control">
+                    </div>             
+                    <div class="form-group col-md-3">
+                        <label asp-for="RescheduleAppointmentDate">Reschedule AppointmentDate:</label>
+                        <input asp-for="RescheduleAppointmentDate" type="date" id="dateInput" class="form-control">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label asp-for="RescheduleAppointmentTime">Reschedule AppointmentTime:</label>
+                        <input asp-for="RescheduleAppointmentTime" type="time" id="timeInput" class="form-control">
+                    </div>
+                </div>
             </div>
-            <div class="form-group col-md-3">
-                <label asp-for="DoctorLastName">DoctorLastName</label>
-                <input asp-for="DoctorLastName" type="text" class="form-control" placeholder="DoctorName">
-                <span asp-validation-for="DoctorLastName" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-3">
-                <label asp-for="PatientFirstName">PatientName</label>
-                <input asp-for="PatientFirstName" type="text" class="form-control" id="patientname" placeholder="PatientName">
-                <span asp-validation-for="PatientFirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-3">
-                <label asp-for="PatientLastName">Patient LastName</label>
-                <input asp-for="PatientLastName" type="text" class="form-control" id="patientname" placeholder="PatientName">
-                <span asp-validation-for="PatientLastName" class="text-danger"></span>
-            </div>
+
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-2">
-                <label asp-for="PatientAge">Age</label>
-                <input asp-for="PatientAge" type="text" class="form-control" id="Age" placeholder="Age">
-            </div>
-            <div class="form-group col-md-2">
-                <label asp-for="PatientGender">Gender</label>
-                <select name="gender" asp-for="PatientGender" class="form-control">
-                    <option value="0">--Select--Gender--</option>
-                    <option value="1">Male</option>
-                    <option value="2">Female</option>
-                </select>
-                @* <span asp-validation-for="GenderName" class="text-danger"></span> *@
-            </div>
-            <div class="form-group col-md-2">
-                <label asp-for="Patientphoneno">ContactNo</label>
-                <input asp-for="Patientphoneno" type="tel" class="form-control" id="ContactNo" placeholder="PatientContactNo">
-                <span asp-validation-for="Patientphoneno" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="PatientAddress1">PatientAddress1</label>
-                <input asp-for="PatientAddress1" type="text" class="form-control" id="patientaddress1">
-                <span asp-validation-for="PatientAddress1" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label asp-for="PatientAddress2">PatientAddress2</label>
-                <input asp-for="PatientAddress2" type="text" class="form-control" id="patientaddress2">
-                <span asp-validation-for="PatientAddress2" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-3">
-                <label asp-for="PState">State</label>
-                <select class="form-control">
-                    @*   @foreach (var state in ViewBag.StatesData)
-                    {
-                    <option value="@state.Key" asp-for="PState">@state.Value</option>
-                    } *@
-                </select>
-                <span asp-validation-for="PCity" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-3">
-                <label asp-for="PCity">City</label>
-                <select class="form-control">
-                    @foreach (var city in ViewBag.CitiesData)
-                    {
-                        <option value="@city.Value" asp-for="PCity">@city.Key</option>
-                    }
-                </select>
-                <span asp-validation-for="PCity" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label asp-for="ReasonType">ReasonType</label>
-                <input asp-for="ReasonType" type="text" class="form-control" id="reasontype">
-                <span asp-validation-for="ReasonType" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-3">
-                <label asp-for="AptBookingDate">AppointmentDate</label>
-                <input asp-for="AptBookingDate" type="date" class="form-control" id="appointmentdate">
-                <span asp-validation-for="AptBookingDate" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-3">
-                <label asp-for="AptBookingTime">AppointmentTime</label>
-                <input asp-for="AptBookingTime" type="time" class="form-control" id="appointmenttime">
-                <span asp-validation-for="AptBookingTime" class="text-danger"></span>
-            </div>
+  
+        <button type="submit" class="form-submit btn btn-primary" onclick="validateForm()" name="Register">Appointment</button>
 
-        </div>
+    </div>
+    </body>
 
-        <button type="submit" class="form-submit btn btn-primary" onclick="validateForm()" name="Register">Update Appointment</button>
-
-        <script type="text/javascript">
-
-            function validateForm() {
-
-                alert("Your AppointmentDetails are saving");
-
-            }
-        </script>
-
-    </form>
-</body>
 </html>
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}

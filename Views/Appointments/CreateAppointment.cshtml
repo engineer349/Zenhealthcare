@@ -16,10 +16,12 @@
                     <div class="col-sm-6">
                         <h1>Appointment</h1>
                     </div>
+                </div>
+            <div class="row mb-2">
                     <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Appointment</li>
+                        <ol class="breadcrumb float-sm-left">
+                        <li class="breadcrumb-item"><a asp-action="Aptlist" asp-controller="Appointments">Appointment List</a></li>
+                            <li class="breadcrumb-item active">Create Appointment</li>
                         </ol>
                     </div>
                 </div>
@@ -27,7 +29,7 @@
         </section>
         <div class="container-fluid">
             <!-- SELECT2 EXAMPLE -->
-            <div class="card card-default">
+            <div class="card card-info">
                     <div class="card-header">
                         <h3 class="card-title">@ViewData["Title"]</h3>
                         <div class="card-tools">
@@ -46,7 +48,7 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-row">
                             <div class="form-group col-md-3">
-                                    <label>Doctor Name</label>
+                                    <label asp-for="DoctorFirstName">Doctor FirstName</label>
                                     @{
                                         var mm = ViewBag.YourDataList;
                                     }
@@ -112,13 +114,14 @@
                     
                 </div>
 
-            <button type="submit" class="form-submit btn btn-primary" name="Appointment">Save Appointment</button>
+           
                  </div>
            
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    Visit <a href="https://www.google.com">Google</a>
-                  
+
+                <button type="submit" class="form-submit  btn-primary" name="Appointment">Save Appointment</button>
+                <button type="submit" class="btn btn-default float-right">Cancel</button>
                 </div>
             </div>
        

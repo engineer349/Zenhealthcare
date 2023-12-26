@@ -19,8 +19,6 @@ namespace Zencareservice.Controllers
         }
 
 
-
-
         public IActionResult Profile(Personaldetails pers)
         {
 
@@ -28,9 +26,9 @@ namespace Zencareservice.Controllers
 
             TempData["UserId"] = UsrId;
 
-            string UsrName = Request.Cookies["UsrName"];
+            string RCode = Request.Cookies["RCode"];
 
-            if (string.IsNullOrEmpty(UsrId) || string.IsNullOrEmpty(UsrName))
+            if (string.IsNullOrEmpty(UsrId) || string.IsNullOrEmpty(RCode))
             {
                 return RedirectToAction("Login", "Account");
             }
@@ -43,9 +41,11 @@ namespace Zencareservice.Controllers
 
                 var dataRows = (ds.Tables.Count > 1) ? ds.Tables[1].AsEnumerable() : Enumerable.Empty<DataRow>();
                 ViewBag.YourDataList = new SelectList(dataRows, "Id", "State");
-             
+                ViewBag.YourDataList = new SelectList(dataRows, "specialistid", "specialistname");
+				
 
-                var genderList = new List<SelectListItem>
+
+				var genderList = new List<SelectListItem>
                 {
                     new SelectListItem { Text = "Male", Value = "Male" },
                     new SelectListItem { Text = "Female", Value = "Female" },
@@ -55,7 +55,6 @@ namespace Zencareservice.Controllers
 
                 var StateList = new List<SelectListItem>();
 
-               
 
                 foreach (DataRow row in ds.Tables[1].Rows)
                 {
@@ -68,10 +67,25 @@ namespace Zencareservice.Controllers
                     StateList.Add(StateItem);
                 }
 
-            
+                var doctorspecialist = new List<SelectListItem>();
+
+
+                foreach (DataRow row in ds.Tables[2].Rows)
+                {
+                    var specialistitem = new SelectListItem
+                    {
+                        Text = row["specialistname"].ToString(),
+                        Value = row["specialistid"].ToString()
+                    };
+
+                    doctorspecialist.Add(specialistitem);
+                }
+
+
+
                 foreach (DataRow row in ds.Tables[1].Rows)
                
-
+                ViewBag.specialistname = doctorspecialist;
                 ViewBag.State = StateList;
                 ViewBag.GenderList = genderList;              
                 ViewBag.DataSet = ds.Tables[1];
@@ -89,14 +103,38 @@ namespace Zencareservice.Controllers
                 string uniqueid = ds.Tables[0].Rows[0]["UniqueId"].ToString();
                 string zipcode = ds.Tables[0].Rows[0]["Zipcode"].ToString();
                 string state = ds.Tables[0].Rows[0]["State"].ToString();
+                int sid = Convert.ToInt32( ds.Tables[0].Rows[0]["SId"]);
                 string city = ds.Tables[0].Rows[0]["City"].ToString();
                 string country = ds.Tables[0].Rows[0]["Country"].ToString();
                 string Role = ds.Tables[0].Rows[0]["Role"].ToString();
                 TempData["Role"] = Role;
-               
+
+				if(!String.IsNullOrEmpty(city))
+                {
+                    ViewBag.Citymsg = city;
+					DataAccess Obj_DataAccess2 = new DataAccess();
+					DataSet ddd = new DataSet();
+					ddd = Obj_DataAccess2.SetCity(sid);
+
+					ViewBag.YourDataList = new SelectList(dataRows, "CId", "City");
+					var CityList = new List<SelectListItem>();
 
 
-                pers = new Personaldetails();
+					foreach (DataRow row in ddd.Tables[0].Rows)
+					{
+						var CityItem = new SelectListItem
+						{
+							Text = row["City"].ToString(),
+							Value = row["CId"].ToString()
+						};
+
+						CityList.Add(CityItem);
+					}
+					ViewBag.City = CityList;
+				}
+
+
+				pers = new Personaldetails();
                 {
                     pers.Firstname = fname;
                     pers.Lastname = lname;
@@ -118,13 +156,14 @@ namespace Zencareservice.Controllers
 
             return View(pers);
         }
+
         [HttpPost]
         public IActionResult GetCities(int stateId)
         {
             DataAccess Obj_DataAccess = new DataAccess();
             DataSet ddd=new DataSet();
             ddd= Obj_DataAccess.SetCity(stateId);
-
+            ViewBag.Citymsg = null;
             string cities = JsonConvert.SerializeObject(ddd.Tables[0]);
             return Json(cities);
         }
@@ -135,9 +174,19 @@ namespace Zencareservice.Controllers
                       
             try
             {
-
-
-
+                if (Obj.File != null && Obj.File.Length > 0)
+                {
+                    // Read the file content into a byte array
+                    byte[] fileContent;
+                    using (var stream = Obj.File.OpenReadStream())
+                    {
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            stream.CopyTo(memoryStream);
+                            fileContent = memoryStream.ToArray();
+                        }
+                    }
+                }
                     Obj.UsrId = Convert.ToInt32(TempData["UserId"]);
                     Obj.Role = Convert.ToString( TempData["Role"]);
                     string Gender = Obj.Gender;
@@ -162,10 +211,64 @@ namespace Zencareservice.Controllers
                 throw ex;
             }
 
+            return RedirectToAction("Userlist","Profiles");
 
-            return View("Profile", "Profiles");
 
 
+        }
+
+
+        public IActionResult Userlist(Signup user)
+        {
+            string UsrId = Request.Cookies["UsrId"];
+
+            TempData["UserId"] = UsrId;
+
+            string Role = Request.Cookies["Role"];
+
+            if (string.IsNullOrEmpty(UsrId) || string.IsNullOrEmpty(Role))
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            else
+            {
+                DataAccess Obj_DataAccess = new DataAccess();
+                DataSet ds = new DataSet();
+                ds = Obj_DataAccess.GetUserList(Role);
+
+
+
+                List<Signup> UserList = new List<Signup>();
+
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    string Employeecode  = ds.Tables[0].Rows[0]["RCode"].ToString();
+                    string RegFirstname = ds.Tables[0].Rows[0]["Fname"].ToString();
+                    string RegLastname = ds.Tables[0].Rows[0]["Lname"].ToString();                    
+                    string RegEmail = ds.Tables[0].Rows[0]["Email"].ToString();
+                    string RegPhoneno = ds.Tables[0].Rows[0]["Phoneno"].ToString();                   
+
+
+
+                    Signup reg = new Signup();
+                    {
+                        reg.Rcode = Employeecode ;
+                        reg.Firstname = RegFirstname;
+                        reg.Lastname = RegLastname;
+                        reg.Email = RegEmail;
+                        reg.Phonenumber = RegPhoneno;
+                        
+
+                    };
+                    UserList.Add(reg);
+                }
+                user.showlist = UserList;
+
+            }
+
+
+            return View(user);
 
         }
 

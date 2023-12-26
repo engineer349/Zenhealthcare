@@ -1295,6 +1295,14 @@
             },
             "Patterns": null
           },
+          "uregister.css": {
+            "Children": null,
+            "Asset": {
+              "ContentRootIndex": 0,
+              "SubPath": "css/uregister.css"
+            },
+            "Patterns": null
+          },
           "Verifyotp.css": {
             "Children": null,
             "Asset": {

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Zencareservice.Models
@@ -9,6 +10,8 @@ namespace Zencareservice.Models
 
         public string ?RoleId { get; set; }
         public string ?RoleName { get; set; }
+
+        public List<Signup> showlist { get; set; }
 
         public string UserId { get; set; }
         public int Age { get; set; }
