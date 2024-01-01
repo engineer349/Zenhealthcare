@@ -2,171 +2,289 @@
 @using System.Data;
 @{
     Layout = "_AdminLayout";
-    ViewData["Title"] = "CreateAppointment";
+    ViewData["Title"] = "APPOINTMENT CREATION";
     DataTable dataTable = ViewBag.DataSet;
     var dataRows = dataTable.AsEnumerable();
     var selectedValue = ViewBag.SelectedValue;
 }
 @model Zencareservice.Models.Appts;
-
-    <form method="POST" asp-action="Aptcrt" asp-controller="Appointments">
-        <section class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Appointment</h1>
-                    </div>
-                </div>
-            <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-left">
-                        <li class="breadcrumb-item"><a asp-action="Aptlist" asp-controller="Appointments">Appointment List</a></li>
-                            <li class="breadcrumb-item active">Create Appointment</li>
-                        </ol>
-                    </div>
-                </div>
-            </div><!-- /.container-fluid -->
-        </section>
-        <div class="container-fluid">
-            <!-- SELECT2 EXAMPLE -->
-            <div class="card card-info">
-                    <div class="card-header">
-                        <h3 class="card-title">@ViewData["Title"]</h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                <!-- /.card-header -->
-      
-                <div class="card-body" >
+<html>
+    <head>
+                
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
             
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-row">
-                            <div class="form-group col-md-3">
-                                    <label asp-for="DoctorFirstName">Doctor FirstName</label>
-                                    @{
-                                        var mm = ViewBag.YourDataList;
-                                    }
+    </head>
+<body> 
 
-                                    @Html.DropDownListFor(model => model.DoctorFirstName, ViewBag.DFname as List<SelectListItem>, "Please select", new { @class = "form-control",Id="DDLDFname" })
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label asp-for="DoctorLastName">DoctorLastName</label>
-                                <input asp-for="DoctorLastName" type="text" class="form-control" placeholder="DoctorName">
-                                <span asp-validation-for="DoctorLastName" class="text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label asp-for="PatientFirstName">PatientName</label>
-                                <input asp-for="PatientFirstName" type="text" class="form-control" id="patientname" placeholder="PatientName" readonly/>
-                                <span asp-validation-for="PatientFirstName" class="text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label asp-for="PatientLastName">Patient LastName</label>
-                                <input asp-for="PatientLastName" type="text" class="form-control" id="patientname" placeholder="PatientName" readonly/>
-                                <span asp-validation-for="PatientLastName" class="text-danger"></span>
-                            </div>                   
-                    </div>
-                        <div class="form-row">
-                                <div class="form-group col-md-3">
-                                    <label asp-for="PatientAge">Age</label>
-                                    <input asp-for="PatientAge" type="text" class="form-control" id="Age" placeholder="Age">
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label asp-for="PatientGender">Gender</label>
-                                     @Html.DropDownListFor(model => model.PatientGender, ViewBag.GenderList as List<SelectListItem>, new { @class = "form-control" })
-                                    <span asp-validation-for="PatientGender" class="text-danger"></span>
-                                </div>
+    <section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Appointment</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-action="Aptlist" asp-controller="Appointments">Appointment List</a></li>
+                    <li class="breadcrumb-item active"><b style="color:black">Create Appointment</b></li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
 
-                                <div class="form-group col-md-3">
-                                    <label asp-for="Patientphoneno">ContactNo</label>
-                                    <input asp-for="Patientphoneno" type="tel" class="form-control" id="ContactNo" placeholder="PatientContactNo">
-                                    <span asp-validation-for="Patientphoneno" class="text-danger"></span>
+
+    <div id="selfDataContainer">
+        <form method="post" asp-action="Aptcrt" asp-controller="Appointments" id="appointments">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="container-fluid">
+                <!-- SELECT2 EXAMPLE -->
+                <div class="card card-info">
+
+                        <div class="card-header">
+                                <h3 class="card-title">@ViewData["Title"]</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times"></i>
+                                    </button>
                                 </div>
-                            <div class="form-group col-md-3">
-                                <label asp-for="PatientEmail">Patient Email</label>
-                                <input asp-for="PatientEmail" type="text" class="form-control" id="patientemail" readonly/>
-                                <span asp-validation-for="PatientEmail" class="text-danger"></span>
                             </div>
-                        <div class="form-row">
-                        
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label asp-for="ReasonType">ReasonType</label>
-                                <input asp-for="ReasonType" type="text" class="form-control" id="reasontype">
-                                <span asp-validation-for="ReasonType" class="text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label asp-for="AptBookingDate">AppointmentDate</label>
-                                <input asp-for="AptBookingDate" type="date" class="form-control" id="appointmentdate">
-                                <span asp-validation-for="AptBookingDate" class="text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label asp-for="AptBookingTime">AppointmentTime</label>
-                                <input asp-for="AptBookingTime" type="time" class="form-control" id="appointmenttime">
-                                <span asp-validation-for="AptBookingTime" class="text-danger"></span>
-                            </div>
+                        <!-- /.card-header -->
+
+      
+                        <div class="card-body" >
+
+
+                               <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <label asp-for="AptCategory">Booking For</label>
+                                    <select class="form-control select2" id ="DDLAptCategory"
+                                        asp-for="AptCategory" asp-items='new SelectList(new List<SelectListItem>
+                                        {
+                                            new SelectListItem { Value = "select", Text = "--Pls--Select--" },
+                                            new SelectListItem { Value = "self", Text = "Self" },
+                                            new SelectListItem { Value = "others", Text = "Others" }
+                                         }, "Value", "Text")'></select>
+                                    <span asp-validation-for="AptCategory" class="text-danger"></span>
+                                </div>
+                                    <div class="form-group col-md-3">
+                                            <label asp-for="DoctorFirstName">Doctor FirstName</label>
+                                            @{
+                                                var mm = ViewBag.YourDataList;
+                                            }
+
+                                            @Html.DropDownListFor(model => model.DoctorFirstName, ViewBag.DFname as List<SelectListItem>, "Please select", new { @class = "form-control",Id="DDLDFname" })
+                                            <span asp-validation-for="DoctorFirstName" class="text-danger"/>
+                                    </div>
+
+                                    <div class="form-group col-md-3">
+                                        <label asp-for="PatientFirstName">PatientName</label>
+                                        <input asp-for="PatientFirstName" type="text" class="form-control" id="firstname" placeholder="Patient FirstName" />
+                                        <span asp-validation-for="PatientFirstName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label asp-for="PatientLastName">Patient LastName</label>
+                                        <input asp-for="PatientLastName" type="text" class="form-control" id="lastname" placeholder="Patient LastName" />
+                                        <span asp-validation-for="PatientLastName" class="text-danger"></span>
+                                    </div>                   
+                                </div>
+                                <div class="form-row">
+                                        <div class="form-group col-md-3">
+                                            <label asp-for="PatientAge">Age</label>
+                                            <input asp-for="PatientAge" type="text" class="form-control" id="age" placeholder="Age">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label asp-for="PatientGender">Gender</label>
+                                             @Html.DropDownListFor(model => model.PatientGender, ViewBag.GenderList as List<SelectListItem>, new { @class = "form-control" })
+                                            <span asp-validation-for="PatientGender" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group col-md-3">
+                                            <label asp-for="Patientphoneno">ContactNo</label>
+                                            <input asp-for="Patientphoneno" type="tel" class="form-control" id="contactno" placeholder="PatientContactNo">
+                                            <span asp-validation-for="Patientphoneno" class="text-danger"></span>
+                                        </div>
+                                    <div class="form-group col-md-3">
+                                        <label asp-for="PatientEmail">Patient Email</label>
+                                        <input asp-for="PatientEmail" type="text" class="form-control" id="email"/>
+                                        <span asp-validation-for="PatientEmail" class="text-danger"></span>
+                                    </div>
+                                <div class="form-row">                       
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label asp-for="ReasonType">ReasonType</label>
+                                        <input asp-for="ReasonType" type="text" class="form-control" id="reasontype">
+                                        <span asp-validation-for="ReasonType" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label asp-for="AptBookingDate">AppointmentDate</label>                              
+                                        <input asp-for="AptBookingDate" type="date" class="form-control" id="aptbookingdate" />
+                                        <span asp-validation-for="AptBookingDate" class="text-danger"></span>
+                                    </div>                    
+                                    <div class="form-group col-md-3">
+                                        <label asp-for="AptBookingTime">AppointmentTime</label>
+                                        <input asp-for="AptBookingTime" type="time" class="form-control" id="aptbookingtime"/>
+                                        <span asp-validation-for="AptBookingTime" class="text-danger"></span>
+                                </div>
+            
                         </div>
-                    
-                </div>
 
            
-                 </div>
+                         </div>
            
-                <!-- /.card-body -->
-                <div class="card-footer">
+                        <!-- /.card-body -->
 
-                <button type="submit" class="form-submit  btn-primary" name="Appointment">Save Appointment</button>
-                <button type="submit" class="btn btn-default float-right">Cancel</button>
+                        <div class="card-footer">
+                        <button type="submit" class="form-submit  btn-info hold-transition sidebar-mini pace-primary" name="Appointment" id="appointment">Save Appointment</button>
+                            @* <button type="submit" id="signup" class="form-submit btn btn-primary" onclick="validateForm()" name="Register">Register</button> *@
+                            <button type="submit" class="btn btn-default float-right" asp-controller="Appointments" asp-action="CreateAppointment">Cancel</button>
+                        </div>
+
                 </div>
             </div>
+
+       </form>
+   </div>
+  
+    
        
+ </body>
+ </html>
+    
+
+@section Scripts
+    {
+    <script type="text/javascript">
+        function ShowMessage(user) {
+            alert("Name: " + user);
+            // Swal.fire({
+            //     title: "HI!" + user,
+            //     text: "You clicked the button!",
+            //     icon: "success"
+            // });
+
+        };
+    </script>
+    @if (ViewBag.Message != null)
+    {
         <script type="text/javascript">
-
-            function validateForm() {
-
-                alert("Your AppointmentDetails are saving");
-
-            }
+            @Html.Raw(ViewBag.Message)
         </script>
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    }
+    <script>
+        $(document).ready(function () {
+            // Set tomorrow's date to the next available working day
+            var tomorrow = new Date();
+            var oneYearFromNow = new Date();
+            oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
 
-        <script type="text/javascript">
-            $("#DDlState").change(function () {
-                var stateId = $(this).val();
-                if (stateId !== "") {
-                    $.post("/Profiles/GetCities", { stateId: stateId }, function (resposedata) {
-                        var data = JSON.parse(resposedata);
-                        $("#cities").empty();
-                        $("#cities").append('<option value="">Please select a city</option>');
+            while (tomorrow.getDay() === 0 || tomorrow.getDay() === 6) {
+                tomorrow.setDate(tomorrow.getDate() + 1);
+            }
 
-                        var items = '<option>Select City</option>';
-                        if (Array.isArray(data)) { // Check if data is an array
-                            $.each(data, function (i, city) {
-                                items += '<option value="' + city.CId + '">' + city.City + '</option>';
-                            });
-                        } else {
-                            // If data is not an array, handle it accordingly
-                            // You may need to adjust this part based on the actual structure of your data
-                            items += '<option value="' + data.CId + '">' + data.City + '</option>';
-                        }
-                        $('#cities').html(items);
+            // Ensure that the date is within the next year
+            if (tomorrow > oneYearFromNow) {
+                tomorrow = oneYearFromNow;
+            }
+
+            var tomorrowISOString = tomorrow.toISOString().split('T')[0];
+            $("#aptbookingdate").val(tomorrowISOString);
+
+            // Disable past dates
+            $("#aptbookingdate").attr('min', tomorrowISOString);
+
+            // Set max date to one year from today
+            var oneYearFromToday = new Date();
+            oneYearFromToday.setFullYear(oneYearFromToday.getFullYear() + 1);
+            var oneYearFromTodayISOString = oneYearFromToday.toISOString().split('T')[0];
+            $("#aptbookingdate").attr('max', oneYearFromTodayISOString);
+
+            // Define holidays and vacation periods (format: 'YYYY-MM-DD')
+            var disabledDates = ['2023-01-01', '2023-07-04', '2023-12-25'];
+            var vacationStart = '2023-08-01';
+            var vacationEnd = '2023-08-15';
+
+            // Set up the datepicker with customizations
+            $("#aptbookingdate").change(function () {
+                var dateText = $(this).val();
+                var selectedDate = new Date(dateText);
+                var dayOfWeek = selectedDate.getDay();
+
+                // Sunday is 0, Saturday is 6
+                if (dayOfWeek === 0) {
+                    // Display SweetAlert popup for weekends
+                    Swal.fire({
+                        title: 'Warning!',
+                        text: 'Pls Contact Admin to book on this date',
+                        icon: 'warning',
+                        confirmButtonText: 'OK'
                     });
+
+                    // Clear the input
+                    $(this).val('');
                 } else {
-                    // Clear cities dropdown if no state is selected
-                    $("#cities").empty();
-                    $("#cities").append('<option value="">Please select a city</option>');
+                    // Check if the selected date is a holiday or within the vacation period
+                    var dateString = selectedDate.toISOString().split('T')[0];
+
+                    if ($.inArray(dateString, disabledDates) !== -1 || (dateString >= vacationStart && dateString <= vacationEnd)) {
+                        // Display SweetAlert popup for disabled dates or vacation days
+                        Swal.fire({
+                            title: 'Warning!',
+                            text: 'This date is not available for booking.',
+                            icon: 'warning',
+                            confirmButtonText: 'OK'
+                        });
+
+                        // Clear the input
+                        $(this).val('');
+                    }
                 }
             });
-        </script>
-    </form>
+        });
+    </script>
+    <script type="text/javascript">
+        $("#DDLAptCategory").change(function () {
+            var stateId = $(this).val();
+            if (stateId == "self") {
+                $.get("/Appointments/GetAppointment", { type: stateId }, function (resposedata) {
+                    var data = JSON.parse(resposedata);
+                    $('#firstname').val(data[0].Fname)
+                    $('#lastname').val(data[0].Lname)
+                    $('#age').val(data[0].Age)
+                    $('#contactno').val(data[0].Phoneno)
+                    $('#email').val(data[0].Email)                                  
+                });
+            } else {
+                $('#firstname').val('');
+                $('#lastname').val('');
+                $('#age').val('');
+                $('#contactno').val('');
+                $('#email').val('');
+              
+            }
+        });
+    </script>
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    <!-- Add this script at the end of your view (e.g., CreateAppointment.cshtml or Aptlist.cshtml) -->
+    <script>
+        $(document).ready(function () {
+            var swalMessage = '@TempData["SwalMessage"]';
+            var swalType = '@TempData["SwalType"]';
+
+            if (swalMessage !== '') {
+                Swal.fire({
+                    icon: swalType,
+                    title: swalMessage,
+                    showConfirmButton: false,
+                    timer: 1500 // Adjust the timer as needed
+                });
+            }
+        });
+    </script>
+
+    
+
 }

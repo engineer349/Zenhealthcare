@@ -456,5 +456,16 @@
 </div>
 @section Scripts
 {
-    alert(@ViewBag.Message);
+    <script type="text/javascript">
+        function ShowGreetings(user)
+        {
+            alert("Name: " + user);
+        };
+    </script>
+    @if (ViewBag.JavaScriptFunction != null)
+    {
+        <script type="text/javascript">
+            @Html.Raw(ViewBag.JavaScriptFunction)
+        </script>
+    }
 }

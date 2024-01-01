@@ -3,23 +3,17 @@
     Layout = "_AdminLayout";
     ViewData["Title"] = "USER CREATION";
 }
-<html>
-    <head>
 
-    </head>
-<body>
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>@ViewBag.Title</h1>
+                <h1>User Creation</h1>
             </div>
-        </div>
-        <div class="row mb-2">
             <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-left">
+                <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a asp-action="Userlist" asp-controller="Profiles">User List</a></li>
-                    <li class="breadcrumb-item active">Create User</li>
+                    <li class="breadcrumb-item active"><b style="color:black">Create User</b></li>
                 </ol>
             </div>
         </div>
@@ -30,86 +24,80 @@
             <div class="col-md-12">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">UserCreation</h3>
+                        <h3 class="card-title">@ViewData["Title"]</h3>
+                    <h5 style="color:red" class="form-title"> @ViewBag.Message</h5>
                     </div>
                  <form class="form-horizontal" id="register-form" asp-action="URegister" asp-controller="Account" method="post">
+                    <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="card-body">
-                  <div class="form-group row">
-                    <label asp-for="Firstname" class="col-sm-2 col-form-label">FirstName</label>
-                    <div class="col-sm-10">
-                      <input asp-for="Firstname" type="text" class="form-control" id="inputEmail3" placeholder="FirstName">
-                      <span asp-validation-for="Firstname" class="text-danger"></span>
-                    </div>
-                            
-                  </div>
-                        <div class="form-group row">
-                            <label asp-for="Lastname" class="col-sm-2 col-form-label">LastName</label>
-                            <div class="col-sm-10">
-                                <input asp-for="Lastname" type="text" class="form-control" id="lastname" placeholder="LastName">
-                                <span asp-validation-for="Lastname" class="text-danger"></span>
-                            </div>
-                            
+                        <div class="card-body">
+                            <div class="form-group row">
+                        <label asp-for="Firstname" class="col-sm-2 col-form-label">FirstName</label>
+                        <div class="col-sm-10">
+                          <input asp-for="Firstname" type="text" class="form-control" id="inputEmail3" placeholder="FirstName">
+                          <span asp-validation-for="Firstname" class="text-danger"></span>
                         </div>
-                   <div class="form-group row">
-                    <label asp-for="Email" class="col-sm-2 col-form-label">Email</label>
-                    <div class="col-sm-10">
-                      <input asp-for="Email" type="email" class="form-control" id="email" placeholder="Email">
-                       <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
                             
-                  </div>
-                  <div class="form-group row">
-                    <label asp-for="Password" class="col-sm-2 col-form-label">Password</label>
-                    <div class="col-sm-10">
-                      <input asp-for="Password" type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                      <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-                            
-                  </div>
-                   <div class="form-group row">
-                    <label asp-for="Confirmpassword" class="col-sm-2 col-form-label">Confirm Password</label>
-                    <div class="col-sm-10">
-                      <input asp-for="Confirmpassword" type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                      <span asp-validation-for="Confirmpassword" class="text-danger"></span>
-                    </div>
-                            
-                  </div>
-                        <div class="form-group row">
-                            <label asp-for="Phonenumber" class="col-sm-2 col-form-label">Phone</label>
-                            <div class="col-sm-10">
-                                <input asp-for="Phonenumber"  class="form-control" id="dob" type="tel" placeholder="Phoneno">
-                                <span asp-validation-for="Phonenumber" class="text-danger"></span>
-                            </div>
-                            
-                        </div>
-                  <div class="form-group row">
-                    <label asp-for="Dob" class="col-sm-2 col-form-label">Dob</label>
-                    <div class="col-sm-10">
-                      <input asp-for="Dob" type="date" class="form-control" id="dob" placeholder="DOb">
-                      <span asp-validation-for="Dob" class="text-danger"></span>
-
-                    </div>
-                  </div>
-                  <div class="form-group">
-                     <label asp-for="RoleName" class="col-sm-2 col-form-label">Role</label>
-                       <div class="col-sm-10">
-                               <select id="roleDropdown" name="RoleId" asp-items="ViewBag.Roles" class="form-control">
-                                    <option value="">-- Select Role --</option>
-                                </select>  
-                        </div>
-                  </div>
-
-                  <div class="form-group row">
-                    <div class="offset-sm-2 col-sm-10">
-                      <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck2">
-                        <label class="form-check-label" for="exampleCheck2">Remember me</label>
                       </div>
-                    </div>
-                  </div>
-                </div>
-                    <div class="card-footer">
+                            <div class="form-group row">
+                                <label asp-for="Lastname" class="col-sm-2 col-form-label">LastName</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Lastname" type="text" class="form-control" id="lastname" placeholder="LastName">
+                                    <span asp-validation-for="Lastname" class="text-danger"></span>
+                                </div>
+                            
+                            </div>
+                            <div class="form-group row">
+                        <label asp-for="Email" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-10">
+                          <input asp-for="Email" type="email" class="form-control" id="email" placeholder="Email">
+                           <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                            
+                      </div>
+                            <div class="form-group row">
+                        <label asp-for="Password" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                          <input asp-for="Password" type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                          <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                            
+                      </div>
+                            <div class="form-group row">
+                        <label asp-for="Confirmpassword" class="col-sm-2 col-form-label">Confirm Password</label>
+                        <div class="col-sm-10">
+                          <input asp-for="Confirmpassword" type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                          <span asp-validation-for="Confirmpassword" class="text-danger"></span>
+                        </div>
+                            
+                      </div>
+                            <div class="form-group row">
+                                <label asp-for="Phonenumber" class="col-sm-2 col-form-label">Phone</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Phonenumber"  class="form-control" id="dob" type="tel" placeholder="Phoneno">
+                                    <span asp-validation-for="Phonenumber" class="text-danger"></span>
+                                </div>
+                            
+                            </div>
+                            <div class="form-group row">
+                        <label asp-for="Dob" class="col-sm-2 col-form-label">Dob</label>
+                        <div class="col-sm-10">
+                          <input asp-for="Dob" type="date" class="form-control" id="dob" placeholder="DOb">
+                          <span asp-validation-for="Dob" class="text-danger"></span>
+
+                        </div>
+                      </div>
+                            <div class="form-group row">
+                         <label asp-for="RoleName" class="col-sm-2 col-form-label">Role</label>
+                           <div class="col-sm-10">
+                                    <select id="roleDropdown" name="RoleId" asp-items="ViewBag.Roles" class="form-control">
+                                        <option value="">-- Select Role --</option>
+                                    </select>
+                           </div>
+                      </div>
+                        </div>
+                 
+                        <div class="card-footer">
                         
                         <button type="submit" class="btn btn-default ">Cancel</button>
                         <button type="submit" class="btn btn-info float-right">Next</button>
@@ -119,6 +107,3 @@
                  </div>  
              </div>
 </div>
-</body>
-</html>
-  

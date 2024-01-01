@@ -861,6 +861,10 @@
       "PackagePath": "staticwebassets\\js\\site.js"
     },
     {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\js\\toast.js",
+      "PackagePath": "staticwebassets\\js\\toast.js"
+    },
+    {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\js\\verifyotp.js",
       "PackagePath": "staticwebassets\\js\\verifyotp.js"
     },

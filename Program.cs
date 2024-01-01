@@ -50,7 +50,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 	});
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(1); // Set the session timeout to 1 minute
+    options.IdleTimeout = TimeSpan.FromMinutes(10); // Set the session timeout to 1 minute
 });
 var app = builder.Build();
 

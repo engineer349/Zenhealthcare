@@ -19,7 +19,7 @@ namespace Zencareservice.Controllers
         }
 
 
-        public IActionResult Profile(Personaldetails pers)
+        public IActionResult Profile(Personaldetails pers, int Id)
         {
 
             string UsrId = Request.Cookies["UsrId"];
@@ -27,6 +27,7 @@ namespace Zencareservice.Controllers
             TempData["UserId"] = UsrId;
 
             string RCode = Request.Cookies["RCode"];
+        
 
             if (string.IsNullOrEmpty(UsrId) || string.IsNullOrEmpty(RCode))
             {
@@ -37,7 +38,7 @@ namespace Zencareservice.Controllers
 
                 DataAccess Obj_DataAccess = new DataAccess();
                 DataSet ds = new DataSet();           
-                ds = Obj_DataAccess.GetProfile(UsrId);
+                ds = Obj_DataAccess.GetProfile(Id);
 
                 var dataRows = (ds.Tables.Count > 1) ? ds.Tables[1].AsEnumerable() : Enumerable.Empty<DataRow>();
                 ViewBag.YourDataList = new SelectList(dataRows, "Id", "State");
@@ -104,6 +105,7 @@ namespace Zencareservice.Controllers
                 string zipcode = ds.Tables[0].Rows[0]["Zipcode"].ToString();
                 string state = ds.Tables[0].Rows[0]["State"].ToString();
                 int sid = Convert.ToInt32( ds.Tables[0].Rows[0]["SId"]);
+                //int sid = 0;
                 string city = ds.Tables[0].Rows[0]["City"].ToString();
                 string country = ds.Tables[0].Rows[0]["Country"].ToString();
                 string Role = ds.Tables[0].Rows[0]["Role"].ToString();
@@ -243,22 +245,16 @@ namespace Zencareservice.Controllers
 
                 foreach (DataRow row in ds.Tables[0].Rows)
                 {
-                    string Employeecode  = ds.Tables[0].Rows[0]["RCode"].ToString();
-                    string RegFirstname = ds.Tables[0].Rows[0]["Fname"].ToString();
-                    string RegLastname = ds.Tables[0].Rows[0]["Lname"].ToString();                    
-                    string RegEmail = ds.Tables[0].Rows[0]["Email"].ToString();
-                    string RegPhoneno = ds.Tables[0].Rows[0]["Phoneno"].ToString();                   
-
-
+                                    
 
                     Signup reg = new Signup();
                     {
-                        reg.Rcode = Employeecode ;
-                        reg.Firstname = RegFirstname;
-                        reg.Lastname = RegLastname;
-                        reg.Email = RegEmail;
-                        reg.Phonenumber = RegPhoneno;
-                        
+                        reg.Rcode = row["RCode"].ToString(); 
+                        reg.Firstname = row["Fname"].ToString();
+                        reg.Lastname = row["Lname"].ToString();
+                        reg.Email = row["Email"].ToString();
+                        reg.Phonenumber = row["Phoneno"].ToString();
+                        reg.RId = Convert.ToInt32(row["RId"]);
 
                     };
                     UserList.Add(reg);

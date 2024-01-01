@@ -11,6 +11,7 @@ namespace Zencareservice.Models
        
         public int UsrId {  get; set; }
 
+        public int RId { get ; set; }
       
         public int DExp { get; set; }
 

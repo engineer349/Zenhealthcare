@@ -1959,6 +1959,14 @@
             },
             "Patterns": null
           },
+          "toast.js": {
+            "Children": null,
+            "Asset": {
+              "ContentRootIndex": 0,
+              "SubPath": "js/toast.js"
+            },
+            "Patterns": null
+          },
           "verifyotp.js": {
             "Children": null,
             "Asset": {

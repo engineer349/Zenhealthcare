@@ -1,6 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿
 @using System.Data
 @{
     Layout = "_AdminLayout";
@@ -12,81 +10,51 @@
 @model Zencareservice.Models.Personaldetails;
 
 
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Users</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-action="Userlist" asp-controller="Profiles">Userlist</a></li>
+                    <li class="breadcrumb-item active"><b style="color:black">Profile</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
 
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="~/css/Profile.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-LzQ2BKWz2BDL8Gn1EQ0VG+CTAvCqLT9D/CQDt/cVVhjrNSZ7a/z26duPHmkcQ3Xz" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-Jj1T+AJr2P+N3Jqj2BT2vD/Fk5lQ9ACsC8DScC3vN92K3ww5KS72GGsTtxnkrE+L" crossorigin="anonymous"></script>
-    <script src="~/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
-    <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.css" />
-
-    <style>
-        
-        .upload-container {
-            width: 200px; /* Set the width of the outer box */
-            height: 200px; /* Set the height of the outer box */
-            border: 2px solid #ccc; /* Border style */
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .upload-container input[type="file"] {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .upload-preview {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Ensure the image covers the entire space without stretching */
-            display: block;
-        }
-        </style>
-
-</head>
-<body>
-    <form asp-action="UpdateProfile" asp-controller="Profiles" method="post">
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">@ViewData["Title"]</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <form asp-action="UpdateProfile" asp-controller="Profiles" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="container rounded bg-white mt-5 mb-5">
+        <div class="container mt-5">
             <div class="row">
-                <div class="col-md-3 border-right">
-                    <div class="upload-container">
-                        <input type="file" id="uploadInput" accept="image/*">
-                        <img id="previewImage" class="upload-preview" src="#" alt="Image Preview">
-                        <span class="font-weight-bold">@TempData["FirstName"]</span><span class="text-black-50">@TempData["Email"]</span><span> </span>
-                    </div>
-                    </div>
-                        
-                        
-                   
-                    <!-- Input for Uploading Image -->
-                    <input type="file" id="upload-input" accept="image/*" onchange="loadProfileImage(event)">
-                    <div class="col-md-12">
-                        <label class="labels" asp-for="Uniqueid"> UniqueId</label>
-                        <input type="text" asp-for="Uniqueid" id="uniqueud" placeholder="UniqueId" class="form-control" maxlength="16" />
-                        <span asp-validation-for="Uniqueid" class="text-danger"></span>
+                <div class="col-md-3 border-right"> 
+                    <div class="p-3 py-5">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="text-right">Bio Details</h4>
+                                <h5 style="color:red" class="form-title"> @ViewBag.Message</h5>
+                            </div>
+                        <div class="row-mt-2"> 
+                            <div class="col-md-6">                                             
+                                <label class="labels" asp-for="Uniqueid"> UniqueId</label>
+                                <input type="text" asp-for="Uniqueid" id="uniqueid" placeholder="UniqueId" class="form-control" maxlength="16" />
+                                <span asp-validation-for="Uniqueid" class="text-danger"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-5 border-right">
+                <div class="col-md-6 border-right">
                     <div class="p-3 py-5">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4 class="text-right">Profile Settings</h4>
+                            <h4 class="text-right">Profile Details</h4>
                             <h5 style="color:red" class="form-title"> @ViewBag.Message</h5>
                         </div>
                         <div class="row mt-2">
@@ -107,18 +75,33 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="labels" asp-for="Email"> Email </label>
-                                <input type="email" asp-for="Email" id="email" class="form-control" placeholder="Email Address" readonly/>
-                                <span asp-validation-for="Email" class="text-danger"></span>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                        </div>
+                                    <input type="email" asp-for="Email" id="email" class="form-control" placeholder="Email Address" readonly/>
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
                             </div>
                             <div class="col-md-6">
-                                <label class="labels" asp-for="Phoneno"> Phone </label>
-                                <input type="tel" asp-for="Phoneno" id="phoneno" class="form-control" placeholder="Phone" readonly>
-                                <span asp-validation-for="Phoneno" class="text-danger"></span>
+                                <label class="labels" asp-for="Phoneno"> Phoneno </label>
+                                <div class="input-group">                                  
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                    </div>
+                                    <input type="tel" asp-for="Phoneno" id="phoneno" class="form-control" placeholder="Phone" readonly>
+                                    <span asp-validation-for="Phoneno" class="text-danger"></span>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <label class="labels" asp-for="AltPhoneno"> Alternate Phone </label>
-                                <input type="tel" class="form-control" id="altphoneno" asp-for="AltPhoneno" placeholder="Alt Contact" />
-                                <span asp-validation-for="AltPhoneno" class="text-danger"></span>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                        </div>
+                                    <input type="tel" class="form-control" id="altphoneno" asp-for="AltPhoneno" placeholder="Alt Contact" />
+                                    <span asp-validation-for="AltPhoneno" class="text-danger"></span>
+                                </div>
                             </div>
                         </div>
                         <div class="row mt-3">
@@ -179,32 +162,43 @@
                         <div class="mt-5 text-center"><button class="form-submit btn btn-primary" name="Save">Save Profile</button></div>
                     </div>
                 </div>
-                <div class="col-md-4 border-right">
+                <div class="col-md-3 border-left">
                     <div class="p-3 py-5">
-                        <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
-                        <div class="col-md-12"><label class="labels">Experience in Years</label><input type="text" class="form-control" asp-for="DExp" placeholder="experience"></div> <br>                 
-                        <div class="col-md-12"><label class="labels">Doctor Qualification</label><input type="text" class="form-control" asp-for="DQualification" placeholder="additional details"></div>
-                        <div class="col-md-12">
-                            <label class="labels" asp-for="specialistname">Doctor Specialist</label> 
-                            @{
-                                var ds = ViewBag.YourDataList;
-                            }
 
-                            @Html.DropDownListFor(model => model.specialistname, ViewBag.specialistname as List<SelectListItem>, "-Please select--", new { @class = "form-control",Id="DDlspecialistname" })
+                        <div class="d-flex justify-content-between align-items-center experience">
+                            <h4 class="text-right">Experience Details</h4>
+                        </div><br>
+                        <div class="row-mt-3"> 
+                            <div class="col-md-6">
+                                <label class="labels">Experience in Years</label>
+                                <input type="number" class="form-control" asp-for="DExp" placeholder="experience">
+                            </div> <br>                 
+                            <div class="col-md-12">
+                                <label class="labels">Doctor Qualification</label>
+                                <input type="text" class="form-control" asp-for="DQualification" placeholder="additional details">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="labels" asp-for="specialistname">Doctor Specialist</label> 
+                                @{
+                                    var ds = ViewBag.YourDataList;
+                                }
+
+                                @Html.DropDownListFor(model => model.specialistname, ViewBag.specialistname as List<SelectListItem>, "-Please select--", new { @class = "form-control",Id="DDlspecialistname" })
+                            </div>
                         </div>
-                        <div class="col-md-12">
-                            @* <label class="labels">Doctor Proof</label><input type="file" name="File" />
-                            <input type="submit" value="Upload" /> *@
+                        <div class="row-mt-3">
+                            <div class="col-md-12">                         
 
-                            <label for="exampleInputFile" class="labels">Doctor Proof</label>
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="exampleInputFile">
-                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                </div>
-                                <div class="input-group-append">
-                                    <span class="input-group-text">Upload</span>
+                                <label for="exampleInputFile" class="labels">Doctor Proof</label>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="exampleInputFile">
+                                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">Upload</span>
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -214,8 +208,11 @@
         </div>
 
     </form>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    </div>
+</div>
 
+@section Scripts
+{
     <script type="text/javascript">
         $("#DDlState").change(function () {
             var stateId = $(this).val();
@@ -244,47 +241,5 @@
             }
         });
     </script>
-    <script>
-        // JavaScript to display selected image preview
-        const uploadInput = document.getElementById('uploadInput');
-        const previewImage = document.getElementById('previewImage');
-
-        uploadInput.addEventListener('change', function () {
-            const file = this.files[0];
-
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    previewImage.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            } else {
-                previewImage.src = '#';
-            }
-        });
-
-        // JavaScript functions for buttons
-        function browseImage() {
-            // Trigger the file input
-            uploadInput.click();
-        }
-
-        function uploadImage() {
-            // Implement your upload logic here
-            alert('Image uploaded!');
-        }
-
-        function clearImage() {
-            // Clear the image preview and input value
-            previewImage.src = '#';
-            uploadInput.value = '';
-        }
-    </script>
-    <script>
-        $(function () {
-            bsCustomFileInput.init();
-        });
-    </script>
-</body>
-
-</html>
+ }   
+   

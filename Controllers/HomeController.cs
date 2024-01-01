@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Xml.Linq;
 using Zencareservice.Models;
 
 namespace Zencareservice.Controllers
@@ -21,9 +22,16 @@ namespace Zencareservice.Controllers
         {
             return View();
         }
-        public IActionResult Index()
+        public IActionResult Index(string user)
         {
+            user = "Hi ZencareUser!";
+
+            if (!string.IsNullOrEmpty(user))
+            {
+                ViewBag.JavaScriptFunction = string.Format("ShowGreetings('{0}');", user);
+            }
             return View();
+
         }
 
         public IActionResult Privacy()

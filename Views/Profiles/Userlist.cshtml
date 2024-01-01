@@ -11,82 +11,78 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>@ViewBag.Title</h1>
+                <h1>Users</h1>
             </div>
-        </div>
-        <div class="row mb-2">
             <div class="col-sm-6">
-                <ol class="breadcrumb float-sm">
-                    <li class="breadcrumb-item"><a asp-action="URegister" asp-controller="Account">Create New User</a></li>
-                    <li class="breadcrumb-item active">User List</li>
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-action="URegister" asp-controller="Account">Create NewUser</a></li>
+                    <li class="breadcrumb-item active"><b style="color:black">Userlist</b></li>
                 </ol>
             </div>
         </div>
     </div><!-- /.container-fluid -->
 </section>
 
-<div class="card">
+<div class="card card-primary">
     <div class="card-header">
-        <h3 class="card-title">User List</h3>
+        <h3 class="card-title">@ViewData["Title"]</h3>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
     
-     <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>Employee Code/UserName</th>
             <th>FirstName</th>
             <th>LastName</th>
-          
+            <th>Email</th>
+            <th>ContactNo</th>
+            <th>Action</th>
         </tr>
     </thead>
-    <tbody>
+            <tbody>
 
 
-        @if (Model != null)
-        {
-            @foreach (var userdetail in Model.showlist)
+            @if (Model != null)
             {
-                <tr>
-                    <td>@userdetail.Rcode</td>
-                    <td>@userdetail.Firstname</td>
-                    <td>@userdetail.Lastname</td>
-                     <td> 
-                       @Html.ActionLink("Edit","Profile",new{Id =userdetail.Rcode})
+                @foreach (var userdetail in Model.showlist)
+                {
+                    <tr>
+                        <td>@userdetail.Rcode</td>
+                        <td>@userdetail.Firstname</td>
+                        <td>@userdetail.Lastname</td>
+                        <td>@userdetail.Email</td>
+                        <td>@userdetail.Phonenumber</td>
+                         <td> 
+                          @* <a class="btn btn-info btn-sm" asp-action="Profile" asp-controller="Profiles" asp-route-id="userdetail.RId" >
+                             <i class="fas fa-pencil-alt">
+                             </i>
+                              Edit
+                           </a>  *@
 
-                    </td>
 
-                </tr>
+                                <a href="@Url.Action("Profile", new { id = userdetail.RId })" class="btn btn-info btn-sm">
+                                    <i class="fas fa-pencil-alt"></i> Edit
+                                </a>
+
+
+                        </td>
+
+                    </tr>
+                }
             }
-        }
-        else
-        {
+            else
+            {
 
-        }
+            }
 
     </tbody>
-</table>
+    </table>
 
    </div>
+
+
 </div>
 
-@section scripts{
-    <script>
-        $(function () {
-            $("#example1").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
-        });
-    </script>
-}
+

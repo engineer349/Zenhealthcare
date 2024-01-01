@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "y84Z/nNXxGfx62MhE6/6NMqTpn1ejFk7FqAkR5jrT0c=",
+  "Hash": "cpCIVp3PQgSMK6YVdwGB5vZoZ9MAWA3JShNFwZ4necE=",
   "Source": "Zencareservice",
   "BasePath": "_content/Zencareservice",
   "Mode": "Default",
@@ -3687,6 +3687,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
+    },
+    {
+      "Identity": "D:\\Projects\\Zencareservice\\wwwroot\\js\\toast.js",
+      "SourceId": "Zencareservice",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\Zencareservice\\wwwroot\\",
+      "BasePath": "_content/Zencareservice",
+      "RelativePath": "js/toast.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\toast.js"
     },
     {
       "Identity": "D:\\Projects\\Zencareservice\\wwwroot\\js\\verifyotp.js",

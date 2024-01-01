@@ -6,6 +6,7 @@
     ViewData["Title"] = "Login";
     Layout = "";
 }
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -20,6 +21,8 @@
 
     <!-- Main css -->
     <link rel="stylesheet" href="~/css/loginstyle.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="~/js/toast.js"></script>
 </head>
 <body>
     <div class="main">
@@ -51,7 +54,7 @@
                                 <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
                             </div>
                             <div class="form-group form-button">
-                                <input type="submit" name="signin" id="signin" class="form-submit" value="Log in" />
+                                <button type="submit" name="signin" id="signin" class="form-submit" value="Log in" onclick="alert()" > Signin</button>
                             </div>
                             <div class="social-login">
                                 <span class="social-label">Or login with</span>
@@ -83,9 +86,70 @@
             });
         }
     </script>
-    <script>
+    @* <script>
         var message = '@ViewBag.Message';
-        alert(messge);
+        alert(message);
+
+        var toastMixin = Swal.mixin({
+            toast: true,
+            icon: "success",
+            title: "General Title",
+            animation: false,
+            position: "top-right",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+            }
+        });
+
+        document.querySelector(".first").addEventListener("click", function () {
+            Swal.fire({
+                toast: true,
+                icon: "success",
+                title: "Posted successfully",
+                animation: false,
+                position: "bottom",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener("mouseenter", Swal.stopTimer);
+                    toast.addEventListener("mouseleave", Swal.resumeTimer);
+                }
+            });
+        });
+
+        document.querySelector(".form-submit").addEventListener("click", function () {
+            toastMixin.fire({
+                animation: true,
+                title: "Signed in Successfully"
+            });
+        });
+
+        document.querySelector(".third").addEventListener("click", function () {
+            toastMixin.fire({
+                title: "Wrong Password",
+                icon: "error"
+            });
+        });
+
+
+    </script> *@
+    <script>
+        function alert()
+        {
+            Swal.fire({
+                title: "Good job!",
+                text: "You clicked the button!",
+                icon: "success"
+            });
+        }
+
     </script>
+   
+
 </body>
 </html>

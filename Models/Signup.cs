@@ -24,7 +24,11 @@ namespace Zencareservice.Models
         public string ?numeric4 { get; set; }
 
         public string ? numeric5 { get; set; }
+
+        public int RId { get;set; }
         public string ?Rcode { get; set; }
+
+        public string ? RCategory { get; set; }
 
         [Required(ErrorMessage = "Firstname required!")]
         [DataType(DataType.Text)]

@@ -6,6 +6,8 @@ using System.Xml.Linq;
 using Zencareservice.Models;
 using Zencareservice.Controllers;
 using System;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using System.CodeDom;
 
 namespace Zencareservice.Repository
 {
@@ -19,35 +21,72 @@ namespace Zencareservice.Repository
             try
             {
                 DataSet ds=new DataSet();
-                string StrSPName = "SaveRegister_SP";                
-                SqlParameter[] param = new SqlParameter[11];
-                param[0] = new SqlParameter("@Firstname", SqlDbType.NVarChar);
-                param[0].Value = Obj.Firstname;
-                param[1] = new SqlParameter("@Lastname", SqlDbType.NVarChar);
-                param[1].Value = Obj.Lastname;
-                param[2] = new SqlParameter("@Email", SqlDbType.NVarChar);
-                param[2].Value = Obj.Email;
-                param[3] = new SqlParameter("@Password", SqlDbType.NVarChar);
-                param[3].Value = Obj.Password;
-                param[4] = new SqlParameter("@Confirmpassword", SqlDbType.NVarChar);
-                param[4].Value = Obj.Confirmpassword;                      
-                param[5] = new SqlParameter("@Dob", SqlDbType.DateTime);
-                param[5].Value = Obj.Dob;
-                param[6] = new SqlParameter("@Phone", SqlDbType.VarChar);
-                param[6].Value = Obj.Phonenumber;
-                param[7] = new SqlParameter("@Status", SqlDbType.VarChar);
-                param[7].Value = Obj.Status;
-                param[8] = new SqlParameter("@Role", SqlDbType.VarChar);
-                param[8].Value = Obj.RoleId;
-                param[9] = new SqlParameter("@agreeterm", SqlDbType.VarChar);
-                param[9].Value = Convert.ToInt32(Obj.agreeterm);
-                param[10] = new SqlParameter("@Age", SqlDbType.Int);
-                param[10].Value = Convert.ToInt32(Obj.Age);
-                //param[5] = new SqlParameter("@Username",SqlDbType.NVarChar);
-                //param[5].Value = Obj.Username;
+                string StrSPName = "SaveRegister_SP";
 
-                ds = Obj_SqlDataAccess.GetDataWithParamStoredprocedure(StrSPName, param);
-                
+                if (Obj.RCategory == "Employee")
+                {
+                    SqlParameter[] param = new SqlParameter[12];
+                    param[0] = new SqlParameter("@Firstname", SqlDbType.NVarChar);
+                    param[0].Value = Obj.Firstname;
+                    param[1] = new SqlParameter("@Lastname", SqlDbType.NVarChar);
+                    param[1].Value = Obj.Lastname;
+                    param[2] = new SqlParameter("@Email", SqlDbType.NVarChar);
+                    param[2].Value = Obj.Email;
+                    param[3] = new SqlParameter("@Password", SqlDbType.NVarChar);
+                    param[3].Value = Obj.Password;
+                    param[4] = new SqlParameter("@Confirmpassword", SqlDbType.NVarChar);
+                    param[4].Value = Obj.Confirmpassword;
+                    param[5] = new SqlParameter("@Dob", SqlDbType.DateTime);
+                    param[5].Value = Obj.Dob;
+                    param[6] = new SqlParameter("@Phone", SqlDbType.VarChar);
+                    param[6].Value = Obj.Phonenumber;
+                    param[7] = new SqlParameter("@Status", SqlDbType.VarChar);
+                    param[7].Value = Obj.Status;
+                    param[8] = new SqlParameter("@Role", SqlDbType.VarChar);
+                    param[8].Value = Obj.RoleId;
+                    param[9] = new SqlParameter("@agreeterm", SqlDbType.VarChar);
+                    param[9].Value = Convert.ToInt32(Obj.agreeterm);
+                    param[10] = new SqlParameter("@Age", SqlDbType.Int);
+                    param[10].Value = Convert.ToInt32(Obj.Age);
+                    param[11] = new SqlParameter("@RCategory", SqlDbType.VarChar);
+                    param[11].Value = Obj.RCategory;
+                    ds = Obj_SqlDataAccess.GetDataWithParamStoredprocedure(StrSPName, param);
+
+                }
+                else
+                {
+                    SqlParameter[] param = new SqlParameter[12];
+                    param[0] = new SqlParameter("@Firstname", SqlDbType.NVarChar);
+                    param[0].Value = Obj.Firstname;
+                    param[1] = new SqlParameter("@Lastname", SqlDbType.NVarChar);
+                    param[1].Value = Obj.Lastname;
+                    param[2] = new SqlParameter("@Email", SqlDbType.NVarChar);
+                    param[2].Value = Obj.Email;
+                    param[3] = new SqlParameter("@Password", SqlDbType.NVarChar);
+                    param[3].Value = Obj.Password;
+                    param[4] = new SqlParameter("@Confirmpassword", SqlDbType.NVarChar);
+                    param[4].Value = Obj.Confirmpassword;
+                    param[5] = new SqlParameter("@Dob", SqlDbType.DateTime);
+                    param[5].Value = Obj.Dob;
+                    param[6] = new SqlParameter("@Phone", SqlDbType.VarChar);
+                    param[6].Value = Obj.Phonenumber;
+                    param[7] = new SqlParameter("@Status", SqlDbType.VarChar);
+                    param[7].Value = Obj.Status;
+                    param[8] = new SqlParameter("@Role", SqlDbType.VarChar);
+                    param[8].Value = Obj.RoleId;
+                    param[9] = new SqlParameter("@agreeterm", SqlDbType.VarChar);
+                    param[9].Value = Convert.ToInt32(Obj.agreeterm);
+                    param[10] = new SqlParameter("@Age", SqlDbType.Int);
+                    param[10].Value = Convert.ToInt32(Obj.Age);
+                    param[11] = new SqlParameter("@RCategory", SqlDbType.VarChar);
+                    param[11].Value = Obj.RCategory;
+                    param[12] = new SqlParameter("@Username",SqlDbType.NVarChar);
+                    param[12].Value = Obj.Username;
+                    ds = Obj_SqlDataAccess.GetDataWithParamStoredprocedure(StrSPName, param);
+                }
+
+
+   
                 return ds;
             }
 
@@ -86,6 +125,62 @@ namespace Zencareservice.Repository
 
         }
 
+        public DataSet GetDashboardvalues(Dashboard Obj)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                string StrSPName = "DashboardValues_SP";
+
+                SqlParameter[] param = new SqlParameter[2];
+
+                param[0] = new SqlParameter("@UsrId", SqlDbType.Int);
+                param[0].Value = Obj.UsrId;
+                param[1] = new SqlParameter("@Role", SqlDbType.NVarChar);
+                param[1].Value = Obj.Role;
+
+                ds = Obj_SqlDataAccess.GetDataWithParamStoredprocedure(StrSPName,param);
+
+                return ds;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public DataSet CheckAppointmentList(Appts Obj)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                string StrSPName = "GetAllAppointmentdetails";
+
+                SqlParameter[] param = new SqlParameter[4];
+
+                param[0] = new SqlParameter("@AptBookingdate", SqlDbType.NVarChar);
+                param[0].Value = Obj.AptBookingDate;
+                param[1] = new SqlParameter("@AptBokingtime", SqlDbType.NVarChar);
+                param[1].Value = Obj.AptBookingTime; ;
+                param[2] = new SqlParameter("@PFname", SqlDbType.NVarChar);
+                param[2].Value = Obj.PatientFirstName;
+                param[3] = new SqlParameter("@DFname", SqlDbType.NVarChar);
+                param[3].Value = Obj.DoctorFirstName;
+                
+
+
+
+                ds = Obj_SqlDataAccess.GetDataWithParamStoredprocedure(StrSPName, param);
+
+                return ds ;
+            }
+
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+        }
         public DataSet SaveAppointment(Appts Obj)
         {
 
@@ -104,8 +199,8 @@ namespace Zencareservice.Repository
                 param[2].Value = Obj.PatientEmail;
                 param[3] = new SqlParameter("@DoctorFirstname", SqlDbType.NVarChar);
                 param[3].Value = Obj.DoctorFirstName;
-                param[4] = new SqlParameter("@DoctorLastname", SqlDbType.NVarChar);
-                param[4].Value = Obj.DoctorLastName;
+                param[4] = new SqlParameter("@AptCategory", SqlDbType.NVarChar);
+                param[4].Value = Obj.AptCategory;
                 param[5] = new SqlParameter("@Patgender", SqlDbType.NVarChar);
                 param[5].Value = Obj.PatientGender;
                 param[6] = new SqlParameter("@AptBookdate", SqlDbType.Date);
@@ -116,8 +211,10 @@ namespace Zencareservice.Repository
                 param[8].Value = Obj.RCode;
                 param[9] = new SqlParameter("@ReasonType", SqlDbType.VarChar);
                 param[9].Value = Obj.ReasonType;
+                param[10] = new SqlParameter("@PatientContact", SqlDbType.VarChar);
+                param[10].Value = Obj.Patientphoneno;
 
-        
+
 
                 ds = Obj_SqlDataAccess.GetDataWithParamStoredprocedure(StrSPName, param);
 
@@ -196,7 +293,7 @@ namespace Zencareservice.Repository
             }
         }
 
-        public DataSet GetProfile( string UsrId)
+        public DataSet GetProfile( int Id)
         {
 
             try
@@ -206,8 +303,8 @@ namespace Zencareservice.Repository
 
                 SqlParameter[] param = new SqlParameter[1];
 
-                param[0] = new SqlParameter("@UsrId", SqlDbType.Int);
-                param[0].Value = UsrId;
+                param[0] = new SqlParameter("@Id", SqlDbType.Int);
+                param[0].Value = Id;
 
                 ds = Obj_SqlDataAccess.GetDataWithParamStoredprocedure(StrSPName, param);
 
@@ -220,6 +317,9 @@ namespace Zencareservice.Repository
 
 
         }
+
+
+
         public DataSet GetAppointments(string UsrId)
         {
 
@@ -273,6 +373,28 @@ namespace Zencareservice.Repository
 
         }
 
+        public DataSet SetSelfAppointment(string UsrId)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                string StrSPName = "GetSelfAppointment";
+
+                SqlParameter[] param = new SqlParameter[1];
+
+                param[0] = new SqlParameter("@UsrId", SqlDbType.VarChar);
+                param[0].Value = UsrId;
+
+                ds = Obj_SqlDataAccess.GetDataWithParamStoredprocedure(StrSPName, param);
+
+                return ds;
+
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
 
         public DataSet GetUserList(string Role)
         {
