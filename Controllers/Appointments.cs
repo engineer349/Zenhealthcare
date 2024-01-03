@@ -21,6 +21,7 @@ using Newtonsoft.Json;
 using System.Drawing;
 using System.Xml.Linq;
 using System.ComponentModel;
+using System.Diagnostics.Eventing.Reader;
 
 namespace Zencareservice.Controllers
 {
@@ -33,9 +34,9 @@ namespace Zencareservice.Controllers
 
             TempData["UserId"] = UsrId;
 
-            string UsrName = Request.Cookies["UsrName"];
+            string Role = Request.Cookies["Role"];
 
-            if (string.IsNullOrEmpty(UsrId) || string.IsNullOrEmpty(UsrName))
+            if (string.IsNullOrEmpty(UsrId) || string.IsNullOrEmpty(Role))
             {
                 return RedirectToAction("PatientLogin", "Account");
             }
@@ -44,48 +45,124 @@ namespace Zencareservice.Controllers
             {
                 DataAccess Obj_DataAccess = new DataAccess();
                 DataSet ds = new DataSet();
-                ds = Obj_DataAccess.GetAppointmentList(UsrId);
+                ds = Obj_DataAccess.GetAppointmentList(UsrId, Role);
 
-
-
-                List<Appts> AptList = new List<Appts>();
-
-                foreach (DataRow row in ds.Tables[0].Rows)
+                if (Role == "Patient")
                 {
+                    List<Appts> AptList = new List<Appts>();
 
-                    Appts apts = new Appts();
+                    foreach (DataRow row in ds.Tables[0].Rows)
                     {
-                        apts.RCode = row["RCode"].ToString();
-                        apts.DoctorFirstName = row["DFname"].ToString();
-                        //apts.DoctorLastName = row["DLname"].ToString();
-                        apts.AptBookingDate = Convert.ToDateTime(row["AptBookingdate"]);
-                        apts.ReasonType = row["Reasontype"].ToString();
-                        apt.AptBookingTime = row["AptTime"].ToString();
-                        apts.DEmail = row["DEmail"].ToString();
-                        apts.DContact = row["DContactno"].ToString();
-                        apts.Aptbookconfirm = Convert.ToInt32 (row["Aptbookingconfirm"]);
-                        apts.Aptbookstatus = Convert.ToInt32(row["Aptbookingstatusconfirm"]);
-                        
 
-
-                        if(apts.Aptbookconfirm == 1 && apts.Aptbookstatus == 1 ) 
+                        Appts apts = new Appts();
                         {
-                            apts.Aptbookingstatusconfirm = "BookingConfirmed";
-                            
-                        }
-                        else
-                        {
-                            apts.Aptbookingstatusconfirm = "Pending";
-                        }
-                        
+                            apts.RCode = row["RCode"].ToString();
 
-                    };
-                    AptList.Add(apts);
+                            apts.DoctorFirstName = row["DFname"].ToString();
+                            //apts.DoctorLastName = row["DLname"].ToString();
+
+
+                            apts.AptBookingDate = Convert.ToDateTime(row["AptBookingdate"]);
+                            apts.ReasonType = row["Reasontype"].ToString();
+
+                            object aptbooktime = row["AptTime"];
+                            if (aptbooktime != DBNull.Value)
+                            {
+                                // Conversion is safe since the value is not DBNull
+                                apts.AptBookingTime = (TimeSpan?)aptbooktime;
+                            }
+
+                            else
+                            {
+                                apts.AptBookingTime = DateTime.Now.TimeOfDay;
+                            }
+
+
+                            apts.DEmail = row["DEmail"].ToString();
+
+                            apts.DContact = row["DContactno"].ToString();
+
+                            apts.Aptbookconfirm = Convert.ToInt32(row["Aptbookingconfirm"]);
+                            apts.Aptbookstatus = Convert.ToInt32(row["Aptbookingstatusconfirm"]);
+
+
+
+                            if (apts.Aptbookconfirm == 1 && apts.Aptbookstatus == 1)
+                            {
+                                apts.Aptbookingstatusconfirm = "BookingConfirmed";
+
+                            }
+                            else
+                            {
+                                apts.Aptbookingstatusconfirm = "Pending";
+                            }
+
+
+                        };
+                        AptList.Add(apts);
+                    }
+                    apt.showlist = AptList;
+
                 }
-                apt.showlist = AptList;
+                else
+                {
+                    List<Appts> AptList = new List<Appts>();
 
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+
+                        Appts apts = new Appts();
+                        {
+                            apts.RCode = row["RCode"].ToString();
+                            apts.DoctorFirstName = row["DFname"].ToString();
+                            //apts.DoctorLastName = row["DLname"].ToString();
+
+
+                       
+                            apts.AptBookingDate = Convert.ToDateTime(row["AptBookingdate"]);
+
+
+                            apts.ReasonType = row["Reasontype"].ToString();
+
+                            object aptbooktime = row["AptTime"];
+                            if (aptbooktime != DBNull.Value)
+                            {
+                                // Conversion is safe since the value is not DBNull
+                                apts.AptBookingTime = (TimeSpan?)aptbooktime;
+                            }
+
+                            else
+                            {
+                                apts.AptBookingTime = DateTime.Now.TimeOfDay;
+                            }
+
+                            apts.DEmail = row["DEmail"].ToString();
+                            apts.DContact = row["DContactno"].ToString();
+
+                            apts.Aptbookconfirm = Convert.ToInt32(row["Aptbookingconfirm"]);
+
+                            apts.Aptbookstatus = Convert.ToInt32(row["Aptbookingstatusconfirm"]);
+
+
+
+                            if (apts.Aptbookconfirm == 1 && apts.Aptbookstatus == 1)
+                            {
+                                apts.Aptbookingstatusconfirm = "BookingConfirmed";
+
+                            }
+                            else
+                            {
+                                apts.Aptbookingstatusconfirm = "Pending";
+                            }
+
+
+                        };
+                        AptList.Add(apts);
+                    }
+                    apt.showlist = AptList;
+                }
             }
-
+            
 
             return View(apt);
 
@@ -98,9 +175,9 @@ namespace Zencareservice.Controllers
 
             TempData["UserId"] = UsrId;
 
-            string UsrName = Request.Cookies["UsrName"];
+            string Role = Request.Cookies["Role"];
 
-            if (string.IsNullOrEmpty(UsrId) || string.IsNullOrEmpty(UsrName))
+            if (string.IsNullOrEmpty(UsrId) || string.IsNullOrEmpty(Role))
             {
                 return RedirectToAction("PatientLogin", "Account");
             }
@@ -109,7 +186,7 @@ namespace Zencareservice.Controllers
             {
                 DataAccess Obj_DataAccess = new DataAccess();
                 DataSet ds = new DataSet();
-                ds = Obj_DataAccess.GetAppointmentList(UsrId);
+                ds = Obj_DataAccess.GetAppointmentList(UsrId ,Role);
 
 
 
@@ -118,26 +195,74 @@ namespace Zencareservice.Controllers
                 foreach (DataRow row in ds.Tables[0].Rows)
                 {
 
-                    //string pfname = ds.Tables[0].Rows[0]["PFname"].ToString();
-                    //string plname = ds.Tables[0].Rows[0]["PLname"].ToString();
-                    //string patphoneno = ds.Tables[0].Rows[0]["Patphone"].ToString();
-                    //string pemail = ds.Tables[0].Rows[0]["PatientEmail"].ToString();
-                    //string aptdate = ds.Tables[0].Rows[0]["AptBookingdate"].ToString();
-                    ////string apttime = ds.Tables[0].Rows[0]["AptTime"].ToString();
-                    //string PRCode = ds.Tables[0].Rows[0]["Rcode"].ToString();
-
-
-
                     Appts apts = new Appts();
                     {
                         apts.RCode = row["RCode"].ToString();
+
+                        
+                        StringBuilder builder1 = new StringBuilder();
+
                         apts.PatientFirstName = row["PFname"].ToString();
                         apts.PatientLastName = row["PLname"].ToString();
+
+                        string pfname = apts.PatientFirstName;
+                        string plname = apts.PatientLastName;
+
+                        builder1.Append(pfname);
+                        builder1.Append(plname);
+
+                        string patientname = builder1.ToString();
+                        apts.PatientFirstName = patientname;
                         apts.Patientphoneno = row["Patphone"].ToString();
                         apts.PatientEmail = row["PatientEmail"].ToString();
+
                         apts.AptBookingDate = Convert.ToDateTime(row["AptBookingdate"]);
+
+
+                        object aptRescheduleTime = row["Aptrescheduletime"];
+
+                        if (aptRescheduleTime != DBNull.Value)
+                        {
+                            // Conversion is safe since the value is not DBNull
+                            apts.RescheduleAppointmentTime = (TimeSpan?)aptRescheduleTime;
+                        }
+                        else
+                        {
+                            // Handle the case when the value is DBNull (e.g., set a default value)
+                            apts.RescheduleAppointmentTime = DateTime.Now.TimeOfDay;
+                            // Or set to a default Nullable<TimeSpan> value
+                        }
+                        apts.Aptbookconfirm = Convert.ToInt32(row["Aptbookingconfirm"]);
+                        apts.Aptbookstatus = Convert.ToInt32(row["Aptbookingstatusconfirm"]);
+
+
+
+                        if (apts.Aptbookconfirm == 1 && apts.Aptbookstatus == 1)
+                        {
+                            apts.Aptbookingstatusconfirm = "BookingConfirmed";
+
+                        }
+                        else
+                        {
+                            apts.Aptbookingstatusconfirm = "Pending";
+                        }
+
+                        object aptRescheduleDate = row["Aptrescheduledate"];
+
+                        if (aptRescheduleDate != DBNull.Value)
+                        {
+                            apts.RescheduleAppointmentDate = Convert.ToDateTime(aptRescheduleDate);
+                        }
+                        else
+                        {
+                            apts.RescheduleAppointmentDate = DateTime.Now; 
+                        }
                         apts.ReasonType = row["Reasontype"].ToString();
-                        //apts.AptBookingTime = Convert.ToUInt64(row["AptTime"]));
+                        apts.AptBookingTime = ((TimeSpan?)row["AptTime"]);
+
+
+
+                       
 
                     };
                     AptList.Add(apts);
@@ -166,6 +291,9 @@ namespace Zencareservice.Controllers
 
         public IActionResult CreateAppointment()
         {
+            string returnUrl = "/Appointment/CreateAppointment";
+            ViewData["ReturnUrl"] = returnUrl;
+
             string UsrId = Request.Cookies["UsrId"];
 
             TempData["UserId"] = UsrId;
@@ -177,11 +305,8 @@ namespace Zencareservice.Controllers
                 return RedirectToAction("PatientLogin", "Account");
             }
 
-
             else
             {
-
-
                 DataAccess Obj_DataAccess = new DataAccess();
                 DataSet ds = new DataSet();
                 ds = Obj_DataAccess.GetAppointments(UsrId);
@@ -386,8 +511,7 @@ namespace Zencareservice.Controllers
                     {
                         string pfname = ds.Tables[1].Rows[0]["PFname"].ToString();
                         string plname = ds.Tables[1].Rows[0]["PLname"].ToString();
-                        string dfname = ds.Tables[1].Rows[0]["DFname"].ToString();
-                        
+                        string dfname = ds.Tables[1].Rows[0]["DFname"].ToString();                       
                         string reasontype = ds.Tables[1].Rows[0]["Reasontype"].ToString();
                         string aptbookingdate = ds.Tables[1].Rows[0]["AptBookingdate"].ToString();
                         string aptbookingtime = ds.Tables[1].Rows[0]["AptTime"].ToString();
@@ -397,8 +521,7 @@ namespace Zencareservice.Controllers
                         {
                             apt.PatientFirstName = pfname;
                             apt.PatientLastName = plname;
-                            apt.DoctorFirstName = dfname;
-                           
+                            apt.DoctorFirstName = dfname;                          
                             apt.ReasonType = reasontype;
 
 
@@ -413,6 +536,7 @@ namespace Zencareservice.Controllers
             }
 
         }
+
         [HttpPost]
         public IActionResult GetCities(int stateId)
         {
@@ -429,75 +553,93 @@ namespace Zencareservice.Controllers
 
 
         [HttpPost]
-        public IActionResult Aptcrt(Appts Obj)
+        public IActionResult CreateAppointment(Appts Obj,string returnUrl)
         {
-
-            string UsrId = Request.Cookies["UsrId"];
-
-            TempData["UserId"] = UsrId;
-
-            string RCode = Request.Cookies["RCode"];
-
-            if (string.IsNullOrEmpty(UsrId) || string.IsNullOrEmpty(RCode))
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
             {
-                return RedirectToAction("PatientLogin", "Account");
+                string UsrId = Request.Cookies["UsrId"];
+
+                string RCode = Request.Cookies["RCode"];
+
+                if (string.IsNullOrEmpty(UsrId) || string.IsNullOrEmpty(RCode))
+                {
+                    return RedirectToAction("PatientLogin", "Account");
+                }
+
+
+                else
+                {
+                    try
+                    {
+                        if (ModelState.IsValid)
+                        {
+                            // If the model is not valid, return the view with the model
+                           
+                 
+
+                            Obj.UsrId = Convert.ToInt32(UsrId);
+                            string pfname = Obj.PatientFirstName;
+                            string plname = Obj.PatientLastName;
+                            string pemail = Obj.PatientEmail;
+                            string dfname = Obj.DoctorFirstName;
+                            //string dlname = Obj.DoctorLastName;
+                            string gender = Obj.PatientGender;
+
+                            Obj.RCode = Convert.ToString(TempData["RCode"]);
+                            DateTime aptbookdate = Obj.AptBookingDate;
+                            TimeSpan aptbooktime = (TimeSpan)Obj.AptBookingTime;
+
+
+                            DataAccess Obj_DataAccess = new DataAccess();
+                            DataSet ds = new DataSet();
+                            ds = Obj_DataAccess.CheckAppointmentList(Obj);
+
+                            if (ds.Tables[0].Rows.Count == 0)
+                            {
+
+
+                                ds = Obj_DataAccess.SaveAppointment(Obj);
+                                TempData["SwalMessage"] = "Your Appointment is saved.";
+                                TempData["SwalType"] = "success";
+
+                                return RedirectToAction("Aptlist", "Appointments");
+                            }
+                            else
+                            {
+                                TempData["SwalMessage"] = "Your Appointment is already booked.";
+                                TempData["SwalType"] = "error";
+
+                                return RedirectToAction("CreateAppointment", "Appointments");
+
+                            }
+                        }
+                        else
+                        {
+                            return RedirectToAction("CreateAppointment", "Appointments");
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+						TempData["SwalMessage"] = "An error occurred while processing your request.";
+						TempData["SwalType"] = "error";
+
+						return RedirectToAction("Error", "Home");
+
+					}
+
+                  
+
+
+				}
+
             }
-
-
             else
             {
-                try
-                {
-
-                    string pfname = Obj.PatientFirstName;
-                    string plname = Obj.PatientLastName;
-                    string pemail = Obj.PatientEmail;
-                    string dfname = Obj.DoctorFirstName;
-                    //string dlname = Obj.DoctorLastName;
-                    string gender = Obj.PatientGender;
-
-                    Obj.RCode = Convert.ToString(TempData["RCode"]);
-                    DateTime aptbookdate = Obj.AptBookingDate;
-                    string aptbooktime = Obj.AptBookingTime;
-
-                    
-
-                    DataAccess Obj_DataAccess = new DataAccess();
-                    DataSet ds = new DataSet();
-                    ds = Obj_DataAccess.CheckAppointmentList(Obj);
-
-                    if(ds.Tables[0].Rows.Count == 0)
-                    {
-                        ds = Obj_DataAccess.SaveAppointment(Obj);
-
-                        TempData["SwalMessage"] = "Your Appointment is saved.";
-                        TempData["SwalType"] = "success";
-
-                        return RedirectToAction("Aptlist", "Appointments");
-                    }
-                    else
-                    {
-                        TempData["SwalMessage"] = "Your Appointment is already booked.";
-                        TempData["SwalType"] = "error";
-
-                        return RedirectToAction("CreateAppointment", "Appointments");
-
-                    }
-                   
-
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-
-               
-
-
+                ViewBag.Message = "Pls tryagain!";
+                return RedirectToAction("CreateAppointment", "Appointments");
             }
-
-
-
+            
         }
 
     }

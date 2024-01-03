@@ -40,8 +40,8 @@
     <link rel="stylesheet" href="~/dist/css/adminlte.min.css">
 
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <link rel="stylesheet" href="../../plugins/pace-progress/themes/black/pace-theme-flat-top.css">
-
+    <link rel="stylesheet" href="~/plugins/pace-progress/themes/black/pace-theme-flat-top.css">
+    <link rel="stylesheet" href="~/plugins/overlayScrollbars/css/OverlayScrollbars.css">
 
    <!-- Calendar-->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -305,6 +305,14 @@
 
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
+            <div class="nav navbar navbar-expand-lg navbar-dark border-bottom border-dark p-0">
+                <a class="nav-link bg-danger" href="#" data-widget="iframe-close">Close</a>
+                <a class="nav-link bg-dark" href="#" data-widget="iframe-scrollleft"><i class="fas fa-angle-double-left"></i></a>
+                <ul class="navbar-nav" role="tablist">
+                </ul>
+                <a class="nav-link bg-dark" href="#" data-widget="iframe-scrollright"><i class="fas fa-angle-double-right"></i></a>
+                <a class="nav-link bg-dark" href="#" data-widget="iframe-fullscreen"><i class="fas fa-expand"></i></a>
+            </div>
             <section class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">

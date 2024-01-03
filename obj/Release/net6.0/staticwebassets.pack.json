@@ -573,6 +573,10 @@
       "PackagePath": "staticwebassets\\css\\termsofservice.css"
     },
     {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\css\\uregister.css",
+      "PackagePath": "staticwebassets\\css\\uregister.css"
+    },
+    {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\dist\\css\\adminlte.css",
       "PackagePath": "staticwebassets\\dist\\css\\adminlte.css"
     },
@@ -797,6 +801,14 @@
       "PackagePath": "staticwebassets\\forms\\mailsend.html"
     },
     {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\forms\\script.js",
+      "PackagePath": "staticwebassets\\forms\\script.js"
+    },
+    {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\forms\\style.css",
+      "PackagePath": "staticwebassets\\forms\\style.css"
+    },
+    {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\forms\\termsofservice.html",
       "PackagePath": "staticwebassets\\forms\\termsofservice.html"
     },
@@ -847,6 +859,10 @@
     {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\js\\toast.js",
+      "PackagePath": "staticwebassets\\js\\toast.js"
     },
     {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\js\\verifyotp.js",

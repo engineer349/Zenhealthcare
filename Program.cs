@@ -68,16 +68,18 @@ app.UseCookiePolicy();
 app.UseAuthentication();
 app.UseRouting();
 app.UseAuthorization();
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
         name: "default",
-       pattern: "{controller=Account}/{action=Login}/{id?}");
+       pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
 });
 
 app.Run();
+
 //using Microsoft.Extensions.FileProviders;
 
 //using Microsoft.AspNetCore.Builder;
@@ -182,7 +184,7 @@ app.Run();
 
 //            });
 
-  
+
 
 //            app.Run();
 

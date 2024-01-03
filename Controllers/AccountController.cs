@@ -135,7 +135,7 @@ namespace Zencareservice.Controllers
         {
             string gotp = Request.Cookies["OTP"];
 
-
+            ViewBag.Message = gotp;
 
             if (string.IsNullOrEmpty(gotp))
             {
@@ -168,7 +168,7 @@ namespace Zencareservice.Controllers
             if (TempData.TryGetValue("GOTP", out var gotp))
             {
 
-                ViewBag.Message = gotp;
+                
 
                 string _genotp = Convert.ToString(ViewBag.Message);
 
@@ -440,8 +440,20 @@ namespace Zencareservice.Controllers
                                     // var live = IsEmailAccountValid("live-com.olc.protection.outlook.com", "aa.aa@live.com");
                                     //Console.WriteLine($"Live account is valid - {live.ToString()}");
 
-                                    string SelectedRoleId = Obj.RoleId;
+                                   
                                     Obj.RoleId = "Patient";
+                                    if (Obj.RoleId == "Patient")
+                                    {
+                                        Obj.RCategory = "Patient";
+                                    }
+                                    else if (Obj.RoleId == "Doctor")
+                                    {
+                                        Obj.RCategory = "Employee";
+                                    }
+                                    else
+                                    {
+                                        Obj.RCategory = "Employee";
+                                    }
                                     Obj.Age = userAge;
                                     int agreeterms = Convert.ToInt32(Obj.agreeterm);
                                     string fname = Obj.Firstname;
@@ -495,7 +507,9 @@ namespace Zencareservice.Controllers
                         else
                         {
                             TempData["Email"] = "InvalidUser";
+
                             ViewBag.Message = "Invalid Emailaddress UserAccount can't create.Pls Enter a valid email address!";
+
                             return View();
 
                         }
@@ -571,24 +585,26 @@ namespace Zencareservice.Controllers
                                     string SelectedRoleId = Obj.RoleId;
                                     Obj.Age = userAge;
                                     
-                                    if(Obj.RoleId == "Patient")
-                                    {
-                                        Obj.RCategory = "Patient";
-                                    }
-                                    else if (Obj.RoleId == "Doctor")
+                                    if(Obj.RoleId == "Doctor")
                                     {
                                         Obj.RCategory = "Employee";
+                                        Obj.Username = "Employee";
+                                    }
+                                    else if (Obj.RoleId == "Staff")
+                                    {
+                                        Obj.RCategory = "Employee";
+                                        Obj.Username = "Employee";
                                     }
                                     else
                                     {
                                         Obj.RCategory = "Employee";
+                                        Obj.Username = "Employee";
                                     }
                                     int agreeterms = Convert.ToInt32(Obj.agreeterm);
                                     string fname = Obj.Firstname;
                                     string lname = Obj.Lastname;
                                     string password = Obj.Password;
-                                    string confirmpassword = Obj.Confirmpassword;
-                                    //string username = "";
+                                    string confirmpassword = Obj.Confirmpassword;                                 
                                     string phoneno = Obj.Phonenumber;
 
                                     DateTime Dob = Obj.Dob;
@@ -630,13 +646,22 @@ namespace Zencareservice.Controllers
                             else
                             {
                                 ViewBag.Message = "UserAlready Exsits";
-                            }
-                        }
+								TempData["SwalMessage"] = "UserAlready Exsits";
+								TempData["SwalType"] = "error";
+
+
+							}
+						}
                         else
                         {
                             TempData["Email"] = "InvalidUser";
-                            ViewBag.Message = "Invalid Emailaddress UserAccount can't create.Pls Enter a valid email address!";
-                            return View();
+							
+
+							ViewBag.Message = "Invalid Emailaddress UserAccount can't create.Pls Enter a valid email address!";
+
+							TempData["SwalMessage"] = "InvalidUser";
+							TempData["SwalType"] = "error";
+							return View();
 
                         }
 
@@ -694,7 +719,25 @@ namespace Zencareservice.Controllers
                                 {
                                     string validemail = Obj.Email;
                                     TempData["MyEmail"] = validemail;
-                                    string SelectedRoleId = "Admin";
+
+                                    //string SelectedRoleId = "Admin";
+
+                                    Obj.RoleId = "Admin";
+
+                                    if (Obj.RoleId == "Admin")
+                                    {
+                                        Obj.RCategory = "Admin";
+                                    }
+                                    else if (Obj.RoleId == "Doctor")
+                                    {
+                                        Obj.RCategory = "Employee";
+                                    }
+                                    else
+                                    {
+                                        Obj.RCategory = "Patient";
+                                    }
+
+
                                     Obj.Age = userAge;
                                     int agreeterms = Convert.ToInt32(Obj.agreeterm);
                                     string fname = Obj.Firstname;
@@ -736,13 +779,21 @@ namespace Zencareservice.Controllers
                                 {
                                     string msg = ex.Message.ToString();
                                     ViewBag.Message = msg;
-                                }
-                            }
+                                    TempData["SwalMessage"] = msg;
+								    TempData["SwalType"] = "error";
+
+
+							}
+						}
                             else
                             {
                                 ViewBag.Message = "UserAlready Exsits";
-                            }
-                        }
+							    TempData["SwalMessage"] = "User Exists!";
+							    TempData["SwalType"] = "warning!";
+
+
+						}
+					}
                         else
                         {
                             TempData["Email"] = "InvalidUser";

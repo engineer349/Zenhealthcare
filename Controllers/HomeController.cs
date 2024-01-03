@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Xml.Linq;
 using Zencareservice.Models;
@@ -13,6 +14,8 @@ namespace Zencareservice.Controllers
         {
             _logger = logger;
         }
+
+       
 
         public IActionResult CapturePhoto()
         {
@@ -49,7 +52,15 @@ namespace Zencareservice.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var exceptionDetails = HttpContext.Features.Get<IExceptionHandlerFeature>();
+            var problemDetails = new ProblemDetails
+            {
+                Title = "An error occurred while processing your request.",
+                Detail = exceptionDetails?.Error.Message,
+                Status = 500 // Internal Server Error
+                             // Add other properties as needed
+            };
+            return View("Error", problemDetails);
         }
     }
 }
