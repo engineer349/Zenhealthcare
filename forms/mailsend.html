@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+
+<html lang="" en"">
+<head>
+    <meta charset=" UTF-8">
+    <meta name=" viewport" content="" width=device-width, initial-scale=1.0>
+    <title>Email Verification</title>
+    <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 0;
+                    padding: 0;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                    background-color: #f4f4f4;
+                }
+
+                .logo {
+                    max-width: 200px;
+                    height: auto;
+                    margin-bottom: 20px;
+                }
+
+                .verification-container {
+                    background-color: #fff;
+                    padding: 20px;
+                    border-radius: 5px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                    text-align: center;
+                }
+
+                .verification-code {
+                    font-size: 24px;
+                    font-weight: bold;
+                    color: #007bff;
+                    margin-bottom: 20px;
+                }
+
+                .verification-instructions {
+                    color: #555;
+                    margin-bottom: 20px;
+                }
+
+                .verification-btn {
+                    padding: 10px;
+                    background-color: #007bff;
+                    color: #fff;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                }
+    </style>
+</head>
+<body>
+    <img src=" ~/images/zencare-logo1.png" alt="" Your Logo"" class="" logo"">
+    <div class="" verification-container"">
+
+        <h2>
+            Hi {fname},
+        </h2>
+            <p>Thank you for using Zenhealthcareservice! To ensure the security of your account.</p>
+             <p>we have generated a One-Time Password (OTP) for you.</p>
+            <p class="verification-code">Your Verification Code:{_generatedOtp}</p>
+            <p class="verification-instructions">Please use the above code to verify your email address.</p>
+
+    </div>
+</body>
+</html>
